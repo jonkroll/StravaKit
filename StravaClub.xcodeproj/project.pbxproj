@@ -1,0 +1,302 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FAB8156CC7960063471D /* UIKit.framework */; };
+		6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FABA156CC7960063471D /* Foundation.framework */; };
+		6E81FABD156CC7960063471D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FABC156CC7960063471D /* CoreGraphics.framework */; };
+		6E81FAC3156CC7960063471D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6E81FAC1156CC7960063471D /* InfoPlist.strings */; };
+		6E81FAC5156CC7960063471D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAC4156CC7960063471D /* main.m */; };
+		6E81FAC9156CC7960063471D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAC8156CC7960063471D /* AppDelegate.m */; };
+		6E81FACC156CC7960063471D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */; };
+		6E81FACF156CC7960063471D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */; };
+		6E81FAD2156CC7960063471D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAD1156CC7960063471D /* MasterViewController.m */; };
+		6E81FAD5156CC7960063471D /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAD4156CC7960063471D /* DetailViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6E81FAB4156CC7960063471D /* StravaClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StravaClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E81FAB8156CC7960063471D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6E81FABA156CC7960063471D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6E81FABC156CC7960063471D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6E81FAC0156CC7960063471D /* StravaClub-Info.plist */ = {isa = PBXFileReference; path = "StravaClub-Info.plist"; sourceTree = "<group>"; };
+		6E81FAC2156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6E81FAC4156CC7960063471D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6E81FAC6156CC7960063471D /* StravaClub-Prefix.pch */ = {isa = PBXFileReference; path = "StravaClub-Prefix.pch"; sourceTree = "<group>"; };
+		6E81FAC7156CC7960063471D /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		6E81FAC8156CC7960063471D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6E81FACB156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		6E81FACE156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		6E81FAD0156CC7960063471D /* MasterViewController.h */ = {isa = PBXFileReference; path = MasterViewController.h; sourceTree = "<group>"; };
+		6E81FAD1156CC7960063471D /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		6E81FAD3156CC7960063471D /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
+		6E81FAD4156CC7960063471D /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6E81FAB1156CC7960063471D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */,
+				6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */,
+				6E81FABD156CC7960063471D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6E81FAA9156CC7950063471D = {
+			isa = PBXGroup;
+			children = (
+				6E81FABE156CC7960063471D /* StravaClub */,
+				6E81FAB7156CC7960063471D /* Frameworks */,
+				6E81FAB5156CC7960063471D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6E81FAB5156CC7960063471D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FAB4156CC7960063471D /* StravaClub.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6E81FAB7156CC7960063471D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FAB8156CC7960063471D /* UIKit.framework */,
+				6E81FABA156CC7960063471D /* Foundation.framework */,
+				6E81FABC156CC7960063471D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6E81FABE156CC7960063471D /* StravaClub */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FAC7156CC7960063471D /* AppDelegate.h */,
+				6E81FAC8156CC7960063471D /* AppDelegate.m */,
+				6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */,
+				6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */,
+				6E81FAD0156CC7960063471D /* MasterViewController.h */,
+				6E81FAD1156CC7960063471D /* MasterViewController.m */,
+				6E81FAD3156CC7960063471D /* DetailViewController.h */,
+				6E81FAD4156CC7960063471D /* DetailViewController.m */,
+				6E81FABF156CC7960063471D /* Supporting Files */,
+			);
+			path = StravaClub;
+			sourceTree = "<group>";
+		};
+		6E81FABF156CC7960063471D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FAC0156CC7960063471D /* StravaClub-Info.plist */,
+				6E81FAC1156CC7960063471D /* InfoPlist.strings */,
+				6E81FAC4156CC7960063471D /* main.m */,
+				6E81FAC6156CC7960063471D /* StravaClub-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6E81FAB3156CC7960063471D /* StravaClub */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaClub" */;
+			buildPhases = (
+				6E81FAB0156CC7960063471D /* Sources */,
+				6E81FAB1156CC7960063471D /* Frameworks */,
+				6E81FAB2156CC7960063471D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StravaClub;
+			productName = StravaClub;
+			productReference = 6E81FAB4156CC7960063471D /* StravaClub.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6E81FAAB156CC7950063471D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Optionetics, Inc.";
+			};
+			buildConfigurationList = 6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaClub" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6E81FAA9156CC7950063471D;
+			productRefGroup = 6E81FAB5156CC7960063471D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6E81FAB3156CC7960063471D /* StravaClub */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6E81FAB2156CC7960063471D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E81FAC3156CC7960063471D /* InfoPlist.strings in Resources */,
+				6E81FACC156CC7960063471D /* MainStoryboard_iPhone.storyboard in Resources */,
+				6E81FACF156CC7960063471D /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6E81FAB0156CC7960063471D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E81FAC5156CC7960063471D /* main.m in Sources */,
+				6E81FAC9156CC7960063471D /* AppDelegate.m in Sources */,
+				6E81FAD2156CC7960063471D /* MasterViewController.m in Sources */,
+				6E81FAD5156CC7960063471D /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6E81FAC1156CC7960063471D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E81FAC2156CC7960063471D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E81FACB156CC7960063471D /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E81FACE156CC7960063471D /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6E81FAD6156CC7960063471D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6E81FAD7156CC7960063471D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6E81FAD9156CC7960063471D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StravaClub/StravaClub-Prefix.pch";
+				INFOPLIST_FILE = "StravaClub/StravaClub-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6E81FADA156CC7960063471D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StravaClub/StravaClub-Prefix.pch";
+				INFOPLIST_FILE = "StravaClub/StravaClub-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaClub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E81FAD6156CC7960063471D /* Debug */,
+				6E81FAD7156CC7960063471D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaClub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E81FAD9156CC7960063471D /* Debug */,
+				6E81FADA156CC7960063471D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6E81FAAB156CC7950063471D /* Project object */;
+}
