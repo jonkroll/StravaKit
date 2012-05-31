@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Optionetics, Inc. All rights reserved.
 //
 
+#import <Foundation/NSJSONSerialization.h> 
 #import "MasterViewController.h"
 
-#import "DetailViewController.h"
+#import "RideListViewController.h"
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
@@ -36,7 +37,7 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (RideListViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)viewDidUnload
@@ -66,11 +67,6 @@
 
 #pragma mark - Table View
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _objects.count;
@@ -80,8 +76,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    NSDate *object = [_objects objectAtIndex:indexPath.row];
-    cell.textLabel.text = [object description];
+    NSDictionary *object = [_objects objectAtIndex:indexPath.row];
+    cell.textLabel.text = [object objectForKey:@"name"];
     return cell;
 }
 
@@ -101,27 +97,16 @@
     }
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSDate *object = [_objects objectAtIndex:indexPath.row];
         self.detailViewController.detailItem = object;
+        
+        RideListViewController *vc = (RideListViewController *)self.detailViewController;
+        
+        vc.clubID = [(NSNumber*)[(NSDictionary *)object objectForKey:@"id"] intValue];        
     }
 }
 
@@ -133,5 +118,38 @@
         [[segue destinationViewController] setDetailItem:object];
     }
 }
+
+#pragma mark - UISearchBarDelegate methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/clubs?name=%@", searchText];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
+        
+        NSURLResponse *response = nil;
+        NSError *error = nil;
+        NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
+                                                     returningResponse:&response
+                                                                 error:&error];
+        // TODO: check for error
+
+        NSDictionary *json = [NSJSONSerialization
+                               JSONObjectWithData:receivedData
+                               options:NSJSONReadingMutableLeaves
+                               error:&error];
+        
+        NSArray *clubs = [json objectForKey:@"clubs"];
+        _objects = [NSArray arrayWithArray:clubs];
+        
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                
+    });
+    
+}
+
 
 @end

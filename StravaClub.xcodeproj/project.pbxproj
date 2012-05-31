@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E705B6F157289DD00609596 /* CoreLocation.framework */; };
+		6E705B7B1573D15000609596 /* api call examples.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B7A1573D15000609596 /* api call examples.txt */; };
+		6E705B811573D7B100609596 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B801573D7B100609596 /* MBProgressHUD.m */; };
+		6E705B8B157476D400609596 /* NSDictionary+StravaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */; };
+		6E705BA31575CED100609596 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B991575CED100609596 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6E705BA41575CED100609596 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9B1575CED100609596 /* blackArrow.png */; };
+		6E705BA51575CED100609596 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9C1575CED100609596 /* blackArrow@2x.png */; };
+		6E705BA61575CED100609596 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9D1575CED100609596 /* blueArrow.png */; };
+		6E705BA71575CED100609596 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9E1575CED100609596 /* blueArrow@2x.png */; };
+		6E705BA81575CED100609596 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9F1575CED100609596 /* grayArrow.png */; };
+		6E705BA91575CED100609596 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705BA01575CED100609596 /* grayArrow@2x.png */; };
+		6E705BAA1575CED100609596 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705BA11575CED100609596 /* whiteArrow.png */; };
+		6E705BAB1575CED100609596 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705BA21575CED100609596 /* whiteArrow@2x.png */; };
+		6E705BAE1575D1F200609596 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E705BAD1575D1F200609596 /* QuartzCore.framework */; };
 		6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FAB8156CC7960063471D /* UIKit.framework */; };
 		6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FABA156CC7960063471D /* Foundation.framework */; };
 		6E81FABD156CC7960063471D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FABC156CC7960063471D /* CoreGraphics.framework */; };
@@ -16,26 +30,71 @@
 		6E81FACC156CC7960063471D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */; };
 		6E81FACF156CC7960063471D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */; };
 		6E81FAD2156CC7960063471D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAD1156CC7960063471D /* MasterViewController.m */; };
-		6E81FAD5156CC7960063471D /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAD4156CC7960063471D /* DetailViewController.m */; };
+		6E81FAD5156CC7960063471D /* RideListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAD4156CC7960063471D /* RideListViewController.m */; };
+		6E81FAF9156E0C160063471D /* RideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAF8156E0C160063471D /* RideViewController.m */; };
+		6E81FAFD156E1DBB0063471D /* StravaClub.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAFC156E1DBB0063471D /* StravaClub.m */; };
+		6E81FB00156E1DDF0063471D /* StravaRide.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FAFF156E1DDF0063471D /* StravaRide.m */; };
+		6E81FB03156E1F500063471D /* StravaBike.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FB02156E1F500063471D /* StravaBike.m */; };
+		6E81FB06156E1F5C0063471D /* StravaAthlete.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FB05156E1F5C0063471D /* StravaAthlete.m */; };
+		6E81FB11156EE4450063471D /* StravaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E81FB10156EE4450063471D /* StravaClient.m */; };
+		6E81FB18156EF4F50063471D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81FB17156EF4F50063471D /* MapKit.framework */; };
+		6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DE91575F74F00041239 /* StravaEffort.m */; };
+		6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DED1575F75A00041239 /* StravaSegment.m */; };
+		6EB63DF11576A3DC00041239 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63DF01576A3DC00041239 /* todo.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E705B6F157289DD00609596 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6E705B7A1573D15000609596 /* api call examples.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "api call examples.txt"; sourceTree = "<group>"; };
+		6E705B7F1573D7B100609596 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		6E705B801573D7B100609596 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		6E705B89157476D400609596 /* NSDictionary+StravaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StravaClient.h"; sourceTree = "<group>"; };
+		6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StravaClient.m"; sourceTree = "<group>"; };
+		6E705B981575CED100609596 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		6E705B991575CED100609596 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		6E705B9B1575CED100609596 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		6E705B9C1575CED100609596 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		6E705B9D1575CED100609596 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		6E705B9E1575CED100609596 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		6E705B9F1575CED100609596 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		6E705BA01575CED100609596 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		6E705BA11575CED100609596 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		6E705BA21575CED100609596 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		6E705BAD1575D1F200609596 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6E81FAB4156CC7960063471D /* StravaClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StravaClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E81FAB8156CC7960063471D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6E81FABA156CC7960063471D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6E81FABC156CC7960063471D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6E81FAC0156CC7960063471D /* StravaClub-Info.plist */ = {isa = PBXFileReference; path = "StravaClub-Info.plist"; sourceTree = "<group>"; };
+		6E81FAC0156CC7960063471D /* StravaClub-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StravaClub-Info.plist"; sourceTree = "<group>"; };
 		6E81FAC2156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6E81FAC4156CC7960063471D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6E81FAC6156CC7960063471D /* StravaClub-Prefix.pch */ = {isa = PBXFileReference; path = "StravaClub-Prefix.pch"; sourceTree = "<group>"; };
-		6E81FAC7156CC7960063471D /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		6E81FAC6156CC7960063471D /* StravaClub-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StravaClub-Prefix.pch"; sourceTree = "<group>"; };
+		6E81FAC7156CC7960063471D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6E81FAC8156CC7960063471D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6E81FACB156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		6E81FACE156CC7960063471D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		6E81FAD0156CC7960063471D /* MasterViewController.h */ = {isa = PBXFileReference; path = MasterViewController.h; sourceTree = "<group>"; };
+		6E81FAD0156CC7960063471D /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		6E81FAD1156CC7960063471D /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		6E81FAD3156CC7960063471D /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
-		6E81FAD4156CC7960063471D /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		6E81FAD3156CC7960063471D /* RideListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RideListViewController.h; sourceTree = "<group>"; };
+		6E81FAD4156CC7960063471D /* RideListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RideListViewController.m; sourceTree = "<group>"; };
+		6E81FAF7156E0C160063471D /* RideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideViewController.h; sourceTree = "<group>"; };
+		6E81FAF8156E0C160063471D /* RideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideViewController.m; sourceTree = "<group>"; };
+		6E81FAFB156E1DBB0063471D /* StravaClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaClub.h; sourceTree = "<group>"; };
+		6E81FAFC156E1DBB0063471D /* StravaClub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaClub.m; sourceTree = "<group>"; };
+		6E81FAFE156E1DDF0063471D /* StravaRide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaRide.h; sourceTree = "<group>"; };
+		6E81FAFF156E1DDF0063471D /* StravaRide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaRide.m; sourceTree = "<group>"; };
+		6E81FB01156E1F500063471D /* StravaBike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaBike.h; sourceTree = "<group>"; };
+		6E81FB02156E1F500063471D /* StravaBike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaBike.m; sourceTree = "<group>"; };
+		6E81FB04156E1F5C0063471D /* StravaAthlete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaAthlete.h; sourceTree = "<group>"; };
+		6E81FB05156E1F5C0063471D /* StravaAthlete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaAthlete.m; sourceTree = "<group>"; };
+		6E81FB0F156EE4450063471D /* StravaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaClient.h; sourceTree = "<group>"; };
+		6E81FB10156EE4450063471D /* StravaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaClient.m; sourceTree = "<group>"; };
+		6E81FB17156EF4F50063471D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6EB63DE81575F74F00041239 /* StravaEffort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaEffort.h; sourceTree = "<group>"; };
+		6EB63DE91575F74F00041239 /* StravaEffort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaEffort.m; sourceTree = "<group>"; };
+		6EB63DEC1575F75A00041239 /* StravaSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaSegment.h; sourceTree = "<group>"; };
+		6EB63DED1575F75A00041239 /* StravaSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaSegment.m; sourceTree = "<group>"; };
+		6EB63DF01576A3DC00041239 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +102,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E705BAE1575D1F200609596 /* QuartzCore.framework in Frameworks */,
+				6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */,
+				6E81FB18156EF4F50063471D /* MapKit.framework in Frameworks */,
 				6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */,
 				6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */,
 				6E81FABD156CC7960063471D /* CoreGraphics.framework in Frameworks */,
@@ -52,10 +114,87 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E705B7E1573D7B100609596 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				6E705B7F1573D7B100609596 /* MBProgressHUD.h */,
+				6E705B801573D7B100609596 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		6E705B831573D80A00609596 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */,
+				6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		6E705B841573D81E00609596 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FAD0156CC7960063471D /* MasterViewController.h */,
+				6E81FAD1156CC7960063471D /* MasterViewController.m */,
+				6E81FAD3156CC7960063471D /* RideListViewController.h */,
+				6E81FAD4156CC7960063471D /* RideListViewController.m */,
+				6E81FAF7156E0C160063471D /* RideViewController.h */,
+				6E81FAF8156E0C160063471D /* RideViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		6E705B951575CED100609596 /* EGOTableViewPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				6E705B961575CED100609596 /* Classes */,
+				6E705B9A1575CED100609596 /* Resources */,
+			);
+			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		6E705B961575CED100609596 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6E705B971575CED100609596 /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		6E705B971575CED100609596 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6E705B981575CED100609596 /* EGORefreshTableHeaderView.h */,
+				6E705B991575CED100609596 /* EGORefreshTableHeaderView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6E705B9A1575CED100609596 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6E705B9B1575CED100609596 /* blackArrow.png */,
+				6E705B9C1575CED100609596 /* blackArrow@2x.png */,
+				6E705B9D1575CED100609596 /* blueArrow.png */,
+				6E705B9E1575CED100609596 /* blueArrow@2x.png */,
+				6E705B9F1575CED100609596 /* grayArrow.png */,
+				6E705BA01575CED100609596 /* grayArrow@2x.png */,
+				6E705BA11575CED100609596 /* whiteArrow.png */,
+				6E705BA21575CED100609596 /* whiteArrow@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		6E81FAA9156CC7950063471D = {
 			isa = PBXGroup;
 			children = (
-				6E81FABE156CC7960063471D /* StravaClub */,
+				6EB63DF01576A3DC00041239 /* todo.txt */,
+				6E705B7A1573D15000609596 /* api call examples.txt */,
+				6E705B951575CED100609596 /* EGOTableViewPullRefresh */,
+				6E705B7E1573D7B100609596 /* MBProgressHUD */,
+				6E81FAFA156E1D870063471D /* StravaKit */,
+				6E81FABE156CC7960063471D /* Demo App */,
 				6E81FAB7156CC7960063471D /* Frameworks */,
 				6E81FAB5156CC7960063471D /* Products */,
 			);
@@ -72,6 +211,9 @@
 		6E81FAB7156CC7960063471D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E705BAD1575D1F200609596 /* QuartzCore.framework */,
+				6E705B6F157289DD00609596 /* CoreLocation.framework */,
+				6E81FB17156EF4F50063471D /* MapKit.framework */,
 				6E81FAB8156CC7960063471D /* UIKit.framework */,
 				6E81FABA156CC7960063471D /* Foundation.framework */,
 				6E81FABC156CC7960063471D /* CoreGraphics.framework */,
@@ -79,19 +221,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6E81FABE156CC7960063471D /* StravaClub */ = {
+		6E81FABE156CC7960063471D /* Demo App */ = {
 			isa = PBXGroup;
 			children = (
+				6E705B831573D80A00609596 /* Storyboard */,
+				6E705B841573D81E00609596 /* View Controllers */,
 				6E81FAC7156CC7960063471D /* AppDelegate.h */,
 				6E81FAC8156CC7960063471D /* AppDelegate.m */,
-				6E81FACA156CC7960063471D /* MainStoryboard_iPhone.storyboard */,
-				6E81FACD156CC7960063471D /* MainStoryboard_iPad.storyboard */,
-				6E81FAD0156CC7960063471D /* MasterViewController.h */,
-				6E81FAD1156CC7960063471D /* MasterViewController.m */,
-				6E81FAD3156CC7960063471D /* DetailViewController.h */,
-				6E81FAD4156CC7960063471D /* DetailViewController.m */,
 				6E81FABF156CC7960063471D /* Supporting Files */,
 			);
+			name = "Demo App";
 			path = StravaClub;
 			sourceTree = "<group>";
 		};
@@ -104,6 +243,38 @@
 				6E81FAC6156CC7960063471D /* StravaClub-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6E81FAFA156E1D870063471D /* StravaKit */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FB0F156EE4450063471D /* StravaClient.h */,
+				6E81FB10156EE4450063471D /* StravaClient.m */,
+				6EB63DEF1575F77600041239 /* Model */,
+				6E705B89157476D400609596 /* NSDictionary+StravaClient.h */,
+				6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */,
+			);
+			name = StravaKit;
+			path = StravaClub;
+			sourceTree = "<group>";
+		};
+		6EB63DEF1575F77600041239 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E81FB04156E1F5C0063471D /* StravaAthlete.h */,
+				6E81FB05156E1F5C0063471D /* StravaAthlete.m */,
+				6E81FB01156E1F500063471D /* StravaBike.h */,
+				6E81FB02156E1F500063471D /* StravaBike.m */,
+				6E81FAFB156E1DBB0063471D /* StravaClub.h */,
+				6E81FAFC156E1DBB0063471D /* StravaClub.m */,
+				6EB63DE81575F74F00041239 /* StravaEffort.h */,
+				6EB63DE91575F74F00041239 /* StravaEffort.m */,
+				6E81FAFE156E1DDF0063471D /* StravaRide.h */,
+				6E81FAFF156E1DDF0063471D /* StravaRide.m */,
+				6EB63DEC1575F75A00041239 /* StravaSegment.h */,
+				6EB63DED1575F75A00041239 /* StravaSegment.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +331,16 @@
 				6E81FAC3156CC7960063471D /* InfoPlist.strings in Resources */,
 				6E81FACC156CC7960063471D /* MainStoryboard_iPhone.storyboard in Resources */,
 				6E81FACF156CC7960063471D /* MainStoryboard_iPad.storyboard in Resources */,
+				6E705B7B1573D15000609596 /* api call examples.txt in Resources */,
+				6E705BA41575CED100609596 /* blackArrow.png in Resources */,
+				6E705BA51575CED100609596 /* blackArrow@2x.png in Resources */,
+				6E705BA61575CED100609596 /* blueArrow.png in Resources */,
+				6E705BA71575CED100609596 /* blueArrow@2x.png in Resources */,
+				6E705BA81575CED100609596 /* grayArrow.png in Resources */,
+				6E705BA91575CED100609596 /* grayArrow@2x.png in Resources */,
+				6E705BAA1575CED100609596 /* whiteArrow.png in Resources */,
+				6E705BAB1575CED100609596 /* whiteArrow@2x.png in Resources */,
+				6EB63DF11576A3DC00041239 /* todo.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +354,18 @@
 				6E81FAC5156CC7960063471D /* main.m in Sources */,
 				6E81FAC9156CC7960063471D /* AppDelegate.m in Sources */,
 				6E81FAD2156CC7960063471D /* MasterViewController.m in Sources */,
-				6E81FAD5156CC7960063471D /* DetailViewController.m in Sources */,
+				6E81FAD5156CC7960063471D /* RideListViewController.m in Sources */,
+				6E81FAF9156E0C160063471D /* RideViewController.m in Sources */,
+				6E81FAFD156E1DBB0063471D /* StravaClub.m in Sources */,
+				6E81FB00156E1DDF0063471D /* StravaRide.m in Sources */,
+				6E81FB03156E1F500063471D /* StravaBike.m in Sources */,
+				6E81FB06156E1F5C0063471D /* StravaAthlete.m in Sources */,
+				6E81FB11156EE4450063471D /* StravaClient.m in Sources */,
+				6E705B811573D7B100609596 /* MBProgressHUD.m in Sources */,
+				6E705B8B157476D400609596 /* NSDictionary+StravaClient.m in Sources */,
+				6E705BA31575CED100609596 /* EGORefreshTableHeaderView.m in Sources */,
+				6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */,
+				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +487,7 @@
 				6E81FADA156CC7960063471D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
