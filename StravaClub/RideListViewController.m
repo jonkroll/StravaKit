@@ -107,7 +107,7 @@
     
     //NSString *urlString = @"http://app.strava.com/api/v1/rides?athleteName=jonkroll";
     
-    NSLog(@"%@",urlString);
+    //NSLog(@"%@",urlString);
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

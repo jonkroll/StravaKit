@@ -12,5 +12,12 @@
 
 @property (nonatomic) int id;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic) BOOL defaultBike;
+@property (nonatomic) double weight;
+@property (nonatomic) int frameType;  // 1=mtn, 2=cross, 3=road, 4=tt
+@property (nonatomic, strong) NSString *notes;
+@property (nonatomic) BOOL retired;
+
+@property (nonatomic) int athleteId;
 
 @end
