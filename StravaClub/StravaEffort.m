@@ -11,7 +11,12 @@
 @implementation StravaEffort
 
 @synthesize id = _id;
+@synthesize startDateLocal = _startDateLocal;
 @synthesize elapsedTime = _elapsedTime;
+@synthesize movingTime = _movingTime;
+@synthesize distance = _distance;
+@synthesize averageSpeed = _averageSpeed;
+
 @synthesize segment = _segment;
 
 @end

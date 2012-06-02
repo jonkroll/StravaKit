@@ -137,11 +137,9 @@
     }];
 }
 
-
-
 + (void)loadRideEfforts:(int)rideID delegate:(id<StravaClientDelegate>)delegate 
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides/%d/efforts", rideID];
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v2/rides/%d/efforts", rideID];
     
     [StravaClient stravaAPIRequest:(NSString*)urlString 
                          withBlock:^(id json) {
@@ -153,16 +151,34 @@
                              
          for (NSDictionary *effortInfo in effortsArray) {
          
+             NSDictionary *effortDict = [effortInfo objectForKey:@"effort"];             
              StravaEffort *effort = [[StravaEffort alloc] init];
              
-             effort.id = [effortInfo intForKey:@"id"];
-             effort.elapsedTime = [effortInfo intForKey:@"elapsed_time"];
+             effort.id = [effortDict intForKey:@"id"];
+             effort.startDateLocal = [effortDict dateForKey:@"start_date_local"];
+             effort.elapsedTime = [effortDict intForKey:@"elapsed_time"];
+             effort.movingTime = [effortDict intForKey:@"moving_time"];
+             effort.distance = [effortDict doubleForKey:@"distance"];
+             effort.averageSpeed = [effortDict doubleForKey:@"average_speed"];
+
              
-             NSDictionary *segmentInfo = [effortInfo objectForKey:@"segment"];
+             NSDictionary *segmentDict = [effortInfo objectForKey:@"segment"];
              StravaSegment *segment = [[StravaSegment alloc] init];
              
-             segment.id = [segmentInfo intForKey:@"id"];
-             segment.name = [segmentInfo objectForKey:@"name"];
+             segment.id = [segmentDict intForKey:@"id"];
+             segment.name = [segmentDict objectForKey:@"name"];
+             segment.climbCategory = [segmentDict intForKey:@"climb_category"];
+             segment.averageGrade = [segmentDict doubleForKey:@"average_grade"];
+             segment.elevationDifference = [segmentDict doubleForKey:@"elev_difference"];
+             
+             NSArray *startLoc = [segmentDict objectForKey:@"start_latlng"];
+             NSArray *endLoc = [segmentDict objectForKey:@"end_latlng"];
+             
+             segment.startLatLong = CLLocationCoordinate2DMake([[startLoc objectAtIndex:0] doubleValue],
+                                                               [[startLoc objectAtIndex:1] doubleValue]);
+             segment.endLatLong = CLLocationCoordinate2DMake([[endLoc objectAtIndex:0] doubleValue],
+                                                               [[endLoc objectAtIndex:1] doubleValue]);
+
              
              effort.segment = segment;
              
