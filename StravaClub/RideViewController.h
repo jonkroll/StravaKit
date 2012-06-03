@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "StravaClient.h"
+#import "DDPageControl.h"
 
-@interface RideViewController : UIViewController <StravaClientDelegate, MKMapViewDelegate>
+@interface RideViewController : UIViewController <StravaClientDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) int rideID;
 
@@ -22,9 +23,17 @@
 @property (nonatomic, strong) IBOutlet UILabel *location;
 @property (nonatomic, strong) IBOutlet UILabel *athleteName;
 
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
+
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 
 @property (nonatomic, strong) MKPolyline *routeLine;
 @property (nonatomic, retain) MKPolylineView* routeLineView;
+
+@property (nonatomic, strong) NSArray *efforts;
+@property (nonatomic, strong) IBOutlet UITableView *effortsTable;
+
+@property (nonatomic, strong) IBOutlet DDPageControl *pageControl;
+
 
 @end

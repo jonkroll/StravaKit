@@ -20,6 +20,9 @@
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
     }
+    
+    [self customizeAppearance];
+    
     return YES;
 }
 							
@@ -48,6 +51,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)customizeAppearance
+{
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:252.0/255 green:76.0/255 blue:2.0/255 alpha:1.0]];    
+    
+    // make background of navbar solid like this:
+    // http://foobarpig.com/iphone/uinavigationbar-with-solid-color-or-image-background.html
 }
 
 @end

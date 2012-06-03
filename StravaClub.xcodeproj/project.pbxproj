@@ -41,6 +41,7 @@
 		6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DE91575F74F00041239 /* StravaEffort.m */; };
 		6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DED1575F75A00041239 /* StravaSegment.m */; };
 		6EB63DF11576A3DC00041239 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63DF01576A3DC00041239 /* todo.txt */; };
+		6EB63E05157B291C00041239 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63E04157B291C00041239 /* DDPageControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,8 @@
 		6EB63DEC1575F75A00041239 /* StravaSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaSegment.h; sourceTree = "<group>"; };
 		6EB63DED1575F75A00041239 /* StravaSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaSegment.m; sourceTree = "<group>"; };
 		6EB63DF01576A3DC00041239 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
+		6EB63E03157B291C00041239 /* DDPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPageControl.h; sourceTree = "<group>"; };
+		6EB63E04157B291C00041239 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,7 @@
 				6EB63DF01576A3DC00041239 /* todo.txt */,
 				6E705B7A1573D15000609596 /* api call examples.txt */,
 				6E705B951575CED100609596 /* EGOTableViewPullRefresh */,
+				6EB63E02157B291B00041239 /* DDPageControl */,
 				6E705B7E1573D7B100609596 /* MBProgressHUD */,
 				6E81FAFA156E1D870063471D /* StravaKit */,
 				6E81FABE156CC7960063471D /* Demo App */,
@@ -275,6 +279,15 @@
 				6EB63DED1575F75A00041239 /* StravaSegment.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		6EB63E02157B291B00041239 /* DDPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				6EB63E03157B291C00041239 /* DDPageControl.h */,
+				6EB63E04157B291C00041239 /* DDPageControl.m */,
+			);
+			path = DDPageControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,6 +379,7 @@
 				6E705BA31575CED100609596 /* EGORefreshTableHeaderView.m in Sources */,
 				6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */,
 				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
+				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,6 +56,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // override default text on back button when we go to detail view controller 
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	
     if (_refreshHeaderView == nil) {
         
@@ -103,11 +106,10 @@
     
     // get rides by the club
     NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];
-    
-    
+        
     //NSString *urlString = @"http://app.strava.com/api/v1/rides?athleteName=jonkroll";
     
-    //NSLog(@"%@",urlString);
+    NSLog(@"%@",urlString);
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

@@ -106,13 +106,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="LuD-xL-psc">
-                                <rect key="frame" x="20" y="226" width="280" height="170"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="YWl-NQ-Grq" id="PgC-rW-ye4"/>
-                                </connections>
-                            </mapView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="LUS-h7-Q4p" userLabel="Label - Athlete Name">
                                 <rect key="frame" x="20" y="194" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -120,12 +113,15 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="Ur9-81-flR">
-                                <rect key="frame" x="141" y="388" width="38" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pageControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="nA8-gC-T8n">
+                                <rect key="frame" x="0.0" y="256" width="320" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="YWl-NQ-Grq" id="4Os-eM-GQs"/>
+                                </connections>
+                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gB1-t1-sWg"/>
                     <connections>
@@ -134,8 +130,8 @@
                         <outlet property="distance" destination="tHJ-zE-3TN" id="CNV-9V-IO3"/>
                         <outlet property="elevationGain" destination="Llu-bG-h9w" id="UuM-kc-7E6"/>
                         <outlet property="location" destination="5Vn-WW-SOs" id="36L-pT-QRn"/>
-                        <outlet property="mapView" destination="LuD-xL-psc" id="xV6-ON-enI"/>
                         <outlet property="name" destination="m2f-RF-Rwo" id="beg-Oq-8Vr"/>
+                        <outlet property="scrollView" destination="nA8-gC-T8n" id="Sf9-Iw-Rlv"/>
                         <outlet property="startDate" destination="QUm-pd-Pyf" id="hdd-MI-jJC"/>
                     </connections>
                 </viewController>
@@ -162,6 +158,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="DDPageControl" superclassName="UIControl">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DDPageControl.h"/>
+        </class>
         <class className="RideListViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RideListViewController.h"/>
             <relationships>
@@ -174,10 +173,13 @@
                 <relationship kind="outlet" name="athleteName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="averageSpeed" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="distance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="effortsTable" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="elevationGain" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="location" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pageControl" candidateClass="DDPageControl"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="startDate" candidateClass="UILabel"/>
             </relationships>
         </class>
