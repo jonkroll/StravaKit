@@ -7,6 +7,7 @@
 //
 
 #import "RideViewController.h"
+#import "SegmentViewController.h"
 #import "MBProgressHUD.h"
 #import "StravaEffort.h"
 
@@ -227,9 +228,7 @@
         
     } else {
         
-        UIViewController *vc = [[UIViewController alloc] init];
-        
-        [self.navigationController pushViewController:vc animated:YES];
+        [self performSegueWithIdentifier:@"ShowSegment" sender:self];
     }
 }
 

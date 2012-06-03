@@ -42,6 +42,7 @@
 		6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DED1575F75A00041239 /* StravaSegment.m */; };
 		6EB63DF11576A3DC00041239 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63DF01576A3DC00041239 /* todo.txt */; };
 		6EB63E05157B291C00041239 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63E04157B291C00041239 /* DDPageControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63E0C157B41EA00041239 /* SegmentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,8 @@
 		6EB63DF01576A3DC00041239 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		6EB63E03157B291C00041239 /* DDPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPageControl.h; sourceTree = "<group>"; };
 		6EB63E04157B291C00041239 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
+		6EB63E0B157B41EA00041239 /* SegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentViewController.h; sourceTree = "<group>"; };
+		6EB63E0C157B41EA00041239 /* SegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 				6E81FAD4156CC7960063471D /* RideListViewController.m */,
 				6E81FAF7156E0C160063471D /* RideViewController.h */,
 				6E81FAF8156E0C160063471D /* RideViewController.m */,
+				6EB63E0B157B41EA00041239 /* SegmentViewController.h */,
+				6EB63E0C157B41EA00041239 /* SegmentViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */,
 				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
 				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
+				6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
