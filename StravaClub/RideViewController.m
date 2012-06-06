@@ -35,6 +35,8 @@
 @synthesize routeLine = _routeLine;
 @synthesize routeLineView = _routeLineView;
 
+@synthesize chartWebView = _chartWebView;
+
 @synthesize efforts = _efforts;
 @synthesize effortsTable = _effortsTable;
 
@@ -48,14 +50,18 @@
     // set title
     self.navigationItem.title = [NSString stringWithFormat:@"%d", self.rideID];
     
-    // ???
     self.scrollView.contentSize = CGSizeMake(960, self.scrollView.frame.size.height);
+    
+    
+    // (1) set up map view
     
     self.mapView = [[MKMapView alloc] init];
     self.mapView.frame = CGRectMake(0, 0, 320, 160);
     self.mapView.scrollEnabled = NO;
     self.mapView.zoomEnabled = NO;
     self.mapView.delegate = self;
+    [self.mapView setHidden:YES];  // hide map until points load
+    
 
     [self.scrollView addSubview:self.mapView];
 
@@ -63,16 +69,32 @@
     UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
     [self.scrollView addSubview:mapButton];
     [self.scrollView bringSubviewToFront:mapButton];
-    [mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //[mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     
+    // (2) set up elevation chart
+    
+    self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
+    self.chartWebView.userInteractionEnabled=NO;
+    
+    
+    [self.scrollView addSubview:self.chartWebView];
+   
+    
+    
+    
+    // (3) set up eforts table
     
     self.effortsTable = [[UITableView alloc] init];
-    self.effortsTable.frame = CGRectMake(320, 0, 320, 160);
+    self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
     self.effortsTable.delegate = self;
     self.effortsTable.dataSource = self;
 
     [self.scrollView addSubview:self.effortsTable];
 
+    
+    
+    // set up page control
     
     self.pageControl = [[DDPageControl alloc] init];    
     self.pageControl.center = CGPointMake(160,240);
@@ -90,13 +112,17 @@
 
     [self.view addSubview:self.pageControl];
     
+    
+    
+    
     // show spinner
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     // load info
-    [StravaClient loadRide:self.rideID delegate:self];
-    [StravaClient loadMapRoute:self.rideID delegate:self];  
-    [StravaClient loadRideEfforts:self.rideID delegate:self];
+    [StravaManager loadRide:self.rideID delegate:self];
+    //[StravaManager loadMapRoute:self.rideID delegate:self];  
+    [StravaManager loadRideStreams:self.rideID delegate:self];
+    [StravaManager loadRideEfforts:self.rideID delegate:self];
     
     _pendingRequests = 3;
 
@@ -132,13 +158,18 @@
     }
 }
 
-- (void)rideID:(int)rideID mapRouteDidLoad:(MKPolyline*)polyline boundingBox:(MKMapRect)boundingBox {
-
+- (void)rideID:(int)rideID rideStreamsDidLoad:(NSDictionary*)streams
+{
+    MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+    
     self.routeLine = polyline;
     
     [self.mapView addOverlay:self.routeLine];    
-    [self.mapView setVisibleMapRect:boundingBox];
-    //[self.mapView setHidden:NO];
+    [self.mapView setVisibleMapRect:polyline.boundingMapRect];
+    [self.mapView setHidden:NO];
+
+    [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+
     
     
     _pendingRequests--;
@@ -193,7 +224,7 @@
         
         UIViewController *vc = [[UIViewController alloc] init];
         
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:vc animated:NO];
     }  
 }
 
@@ -266,6 +297,52 @@
 {
 	// if we are animating (triggered by clicking on the page control), we update the page control
 	[self.pageControl updateCurrentPageDisplay] ;
+}
+
+
+
+#pragma mark
+
+
+- (NSString*)buildAltitudeChartHTMLFromStreams:(NSDictionary*)streams
+{    
+    NSError *err;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:streams options:0 error:&err];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
+    
+    NSMutableString *html = [[NSMutableString alloc] init];
+    
+    [html appendString:@"<script>"];
+    
+    NSString *filePath;
+
+    filePath = [[NSBundle mainBundle] pathForResource:@"raphael-min" ofType:@"js"];  
+    if (filePath) {  
+        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+    }  
+    filePath = [[NSBundle mainBundle] pathForResource:@"g.raphael-min" ofType:@"js"];  
+    if (filePath) {  
+        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+    }  
+    filePath = [[NSBundle mainBundle] pathForResource:@"g.line-min" ofType:@"js"];  
+    if (filePath) {  
+        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+    }  
+
+    [html appendString:@"</script>"];
+    
+    
+    [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@;</script>", jsonString]]; 
+   
+    
+    filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
+    if (filePath) {  
+        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+    }  
+
+    return html;
+    
 }
 
 @end
