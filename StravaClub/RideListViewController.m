@@ -164,8 +164,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if (IDIOM == IPAD) {
 
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSString *object = [_objects objectAtIndex:indexPath.row];
+        
+        int rideID = [(NSNumber*)[(NSDictionary *)object objectForKey:@"id"] intValue];
+
+        UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
+
+        RideViewController *vc = [(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
+        
+        
+        
+        [vc loadRideDetails:rideID];
+        
     }
 }
 

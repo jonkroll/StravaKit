@@ -46,54 +46,66 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.rideID > 0) {
+        [self loadRideDetails:self.rideID];
+    }
+    
+}
+
+- (void)loadRideDetails:(int)rideID
+{
 
     // set title
-    self.navigationItem.title = [NSString stringWithFormat:@"%d", self.rideID];
+    self.navigationItem.title = [NSString stringWithFormat:@"%d", rideID];
     
     
-    // scrollView width = 960 (320 * 3 = three sliding content panels)
-    self.scrollView.contentSize = CGSizeMake(960, self.scrollView.frame.size.height);
+    if (IDIOM == IPHONE) {
     
-    
-    // (1) set up map view
-    
-    self.mapView = [[MKMapView alloc] init];
-    self.mapView.frame = CGRectMake(0, 0, 320, 160);
-    self.mapView.scrollEnabled = NO;
-    self.mapView.zoomEnabled = NO;
-    self.mapView.delegate = self;
-    [self.mapView setHidden:YES];  // hide map until points load
-    [self.scrollView addSubview:self.mapView];
+        // scrollView width = 960 (320 * 3 = three sliding content panels)
+        self.scrollView.contentSize = CGSizeMake(960, self.scrollView.frame.size.height);
+        
+        
+        // (1) set up map view
+        
+        self.mapView = [[MKMapView alloc] init];
+        self.mapView.frame = CGRectMake(0, 0, 320, 160);
+        self.mapView.scrollEnabled = NO;
+        self.mapView.zoomEnabled = NO;
+        self.mapView.delegate = self;
+        [self.mapView setHidden:YES];  // hide map until points load
+        [self.scrollView addSubview:self.mapView];
 
-    // add empty view on top of the mapView so it can respond to touch event
-    UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
-    [self.scrollView addSubview:mapButton];
-    [self.scrollView bringSubviewToFront:mapButton];
-    //[mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        // add empty view on top of the mapView so it can respond to touch event
+        UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
+        [self.scrollView addSubview:mapButton];
+        [self.scrollView bringSubviewToFront:mapButton];
+        //[mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    
-    // (2) set up elevation chart
-    
-    self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
-    self.chartWebView.userInteractionEnabled=NO;
-    [self.scrollView addSubview:self.chartWebView];
-   
-    
-    // (3) set up eforts table
-    
-    self.effortsTable = [[UITableView alloc] init];
-    self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
-    self.effortsTable.delegate = self;
-    self.effortsTable.dataSource = self;
+        
+        // (2) set up elevation chart
+        
+        self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
+        self.chartWebView.userInteractionEnabled=NO;
+        [self.scrollView addSubview:self.chartWebView];
+       
+        
+        // (3) set up eforts table
+        
+        self.effortsTable = [[UITableView alloc] init];
+        self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
+        self.effortsTable.delegate = self;
+        self.effortsTable.dataSource = self;
 
-    [self.scrollView addSubview:self.effortsTable];
+        [self.scrollView addSubview:self.effortsTable];
 
+    }
 
     // show spinner
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     // load info    
-    [StravaManager fetchRideWithID:self.rideID
+    [StravaManager fetchRideWithID:rideID
                         completionHandler:(^(StravaRide *ride, NSError *error) {
         
             if (error) {
@@ -107,10 +119,13 @@
 
         })];
     
-    [StravaManager fetchRideStreams:self.rideID
+    [StravaManager fetchRideStreams:rideID
                         completion:(^(NSDictionary *streams) {
 
-        MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+            MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+        
+            [self.mapView removeOverlays:[self.mapView overlays]];
+        
             self.routeLine = polyline;
             [self.mapView addOverlay:self.routeLine];    
             [self.mapView setVisibleMapRect:polyline.boundingMapRect];
@@ -124,7 +139,7 @@
                              error:nil   
      ];    
     
-    [StravaManager fetchRideEfforts:(int)self.rideID
+    [StravaManager fetchRideEfforts:rideID
                          completion:(^(NSArray *efforts) {
                                    
             self.efforts = efforts;
@@ -141,7 +156,11 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if (IDIOM == IPAD) {
+        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);        
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }   
 }
 
 - (void)decrementPendingRequests
@@ -150,23 +169,24 @@
     if (_pendingRequests <= 0) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        
-        // set up page control
-        
-        self.pageControl = [[DDPageControl alloc] init];    
-        self.pageControl.center = CGPointMake(160,240);
-        self.pageControl.numberOfPages = 3;
-        self.pageControl.currentPage = 0;
-        
-        [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
-        [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
-        [self.pageControl setOnColor:[UIColor lightGrayColor]];
-        [self.pageControl setOffColor:[UIColor lightGrayColor]];
-        [self.pageControl setIndicatorDiameter: 10.0f];
-        [self.pageControl setIndicatorSpace: 10.0f];
-        
-        
-        [self.view addSubview:self.pageControl];
+        if (IDIOM == IPHONE) {
+            // set up page control
+            
+            self.pageControl = [[DDPageControl alloc] init];    
+            self.pageControl.center = CGPointMake(160,240);
+            self.pageControl.numberOfPages = 3;
+            self.pageControl.currentPage = 0;
+            
+            [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
+            [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
+            [self.pageControl setOnColor:[UIColor lightGrayColor]];
+            [self.pageControl setOffColor:[UIColor lightGrayColor]];
+            [self.pageControl setIndicatorDiameter: 10.0f];
+            [self.pageControl setIndicatorSpace: 10.0f];
+            
+            
+            [self.view addSubview:self.pageControl];
+        }
     }    
 }
 
@@ -193,7 +213,7 @@
     
     if (overlay == self.routeLine)
     {
-        if (nil == self.routeLineView)
+        if (nil == self.routeLineView || self.routeLineView.overlay != overlay)
         {
             self.routeLineView = [[MKPolylineView alloc] initWithPolyline:self.routeLine];
             self.routeLineView.fillColor = [UIColor redColor];

@@ -36,5 +36,7 @@
 
 @property (nonatomic, strong) IBOutlet DDPageControl *pageControl;
 
+- (void)loadRideDetails:(int)rideID;
+
 
 @end

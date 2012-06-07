@@ -1,0 +1,117 @@
+
+CorePlot: http://code.google.com/p/core-plot/w/list
+
+
+CLUBS
+-----
+// get clubs that have a partially matching name
+http://app.strava.com/api/v1/clubs?name=mission
+
+
+// extended info about the club
+http://app.strava.com/api/v1/clubs/9
+
+
+// here's how to get the members of the club
+http://app.strava.com/api/v1/clubs/9/members
+
+
+
+RIDES
+-----
+
+// here's how to get rides by members of a sepcific club this week 
+// (in increments of 50, need to keep calling and increasing the offset until no more results returned)
+http://app.strava.com/api/v1/rides?clubId=9&startDate=2012-05-20&offset=50
+
+
+// here's how to get rides by a specific athlete ID
+http://app.strava.com/api/v1/rides?athleteId=4793
+
+
+// or by username
+http://app.strava.com/api/v1/rides?athleteName=jonkroll
+
+// can also search using startDate, endDate, and offset
+
+
+
+// here's how to get info about a particular ride (includes elevation and athlete id & name)
+http://app.strava.com/api/v1/rides/9090045
+
+
+// to see the efforts for a a particular ride:
+http://app.strava.com/api/v1/rides/9090045/efforts
+
+// the v2 version of the API has more info:
+http://app.strava.com/api/v2/rides/9090045/efforts
+
+
+
+// here's how to get the map details for a particular ride 
+// (but it must be your own an you must authenticate with a token??)
+http://app.strava.com/api/v2/rides/8797398/map_details?token=e5dd52073802a5cd0eee
+
+
+// what does this data represent???
+
+http://app.strava.com/api/v1/stream/static-map/9133965
+
+
+
+
+
+// here's how to get altitude data
+http://app.strava.com/api/v1/streams/9573501?streams[]=latlng,distance,altitude
+
+// get all streams
+http://app.strava.com/api/v1/streams/3663331
+
+
+SEGMENTS
+--------
+
+// here's how to get a segment
+http://app.strava.com/api/v1/segments/3915
+
+// this gives the efforts for a segment
+http://app.strava.com/api/v1/segments/3915/efforts
+
+// this gives the leaderboard (best efforts for a segment)
+http://www.strava.com/api/v1/segments/3915/efforts?best=true
+
+
+
+
+
+
+ATHLETES
+--------
+
+https://www.strava.com/api/v3/athletes/4793/activities
+
+
+// here's how to get a photo: (the first number is the althete id, but I don't know how to get the second number...)
+http://dgalywyr863hv.cloudfront.net/pictures/athletes/230778/41918/1/medium.jpg
+
+http://dgalywyr863hv.cloudfront.net/pictures/athletes/7421/7278/1/large.jpg
+
+
+
+OTHER:
+------
+
+https://www.strava.com/api/v3/segments/explore?bounds=37.8092414665001,-122.5401306152344,37.90872098600488,-122.4302673339844&min_cat=0&max_cat=5&activity_type=cycling&client_id=1&client_secret=0012dc03a59bfd0340b1c75763e6e880985816a3
+
+https://www.strava.com/api/v3/segments/229781/leaderboard
+
+https://www.strava.com/api/v3/activities/9895305/streams/altitude,velocity_smooth,heartrate?series_type=distance&resolution=low
+
+https://www.strava.com/api/v3/oauth/internal/token
+
+
+
+
+
+
+

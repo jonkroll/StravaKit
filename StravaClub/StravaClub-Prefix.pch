@@ -13,3 +13,7 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define IDIOM   UI_USER_INTERFACE_IDIOM()
+#define IPAD    UIUserInterfaceIdiomPad
+#define IPHONE  UIUserInterfaceIdiomPhone

@@ -235,9 +235,11 @@
             if (error) {
                 NSLog(@"ERROR: %@", error);
                 
-                dispatch_sync(dispatch_get_main_queue(), ^{ 
-                    errorHandler(error);
-                });
+                if (errorHandler) {
+                    dispatch_sync(dispatch_get_main_queue(), ^{ 
+                        errorHandler(error);
+                    });
+                }
 
             } else {
                 if (completionHandler) {
