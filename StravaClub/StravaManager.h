@@ -10,25 +10,19 @@
 #import <MapKit/MapKit.h>
 #import "StravaRide.h"
 
-@protocol StravaManagerDelegate <NSObject>
-@optional
-
-- (void)rideDidLoad:(StravaRide*)ride;
-- (void)rideID:(int)rideID mapRouteDidLoad:(MKPolyline*)polyline boundingBox:(MKMapRect)boundingBox;
-- (void)rideID:(int)rideID rideStreamsDidLoad:(NSDictionary*)streams;
-- (void)rideID:(int)rideID rideEffortsDidLoad:(NSArray*)efforts;
-
-- (void)didFailWithError:(NSError*)error errorInfo:(NSDictionary*)errorInfo;
-
-@end
-
-
 @interface StravaManager : NSObject
 
-+ (void)loadRide:(int)rideID delegate:(id<StravaManagerDelegate>)delegate;
-+ (void)loadMapRoute:(int)rideID delegate:(id<StravaManagerDelegate>)delegate;
-+ (void)loadRideStreams:(int)rideID delegate:(id<StravaManagerDelegate>)delegate;
-+ (void)loadRideEfforts:(int)rideID delegate:(id<StravaManagerDelegate>)delegate;
++ (void)fetchRideWithID:(int)rideID
+             completionHandler:(void (^)(StravaRide *ride, NSError* error))handler;
+
++ (void)fetchRideStreams:(int)rideID
+             completion:(void (^)(NSDictionary *streams))completionHandler
+                  error:(void (^)(NSError *error))errorHandler;
+
++ (void)fetchRideEfforts:(int)rideID
+              completion:(void (^)(NSArray *efforts))completionHandler
+                   error:(void (^)(NSError *error))errorHandler;
+
 
 // map helper methods
 + (MKPolyline*)polylineForMapPoints:(NSArray*)latlng;

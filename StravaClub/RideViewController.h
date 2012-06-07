@@ -11,7 +11,7 @@
 #import "StravaManager.h"
 #import "DDPageControl.h"
 
-@interface RideViewController : UIViewController <StravaManagerDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface RideViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 
 @property (nonatomic) int rideID;
 

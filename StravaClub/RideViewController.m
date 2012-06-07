@@ -50,6 +50,8 @@
     // set title
     self.navigationItem.title = [NSString stringWithFormat:@"%d", self.rideID];
     
+    
+    // scrollView width = 960 (320 * 3 = three sliding content panels)
     self.scrollView.contentSize = CGSizeMake(960, self.scrollView.frame.size.height);
     
     
@@ -61,8 +63,6 @@
     self.mapView.zoomEnabled = NO;
     self.mapView.delegate = self;
     [self.mapView setHidden:YES];  // hide map until points load
-    
-
     [self.scrollView addSubview:self.mapView];
 
     // add empty view on top of the mapView so it can respond to touch event
@@ -76,12 +76,8 @@
     
     self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
     self.chartWebView.userInteractionEnabled=NO;
-    
-    
     [self.scrollView addSubview:self.chartWebView];
    
-    
-    
     
     // (3) set up eforts table
     
@@ -92,37 +88,51 @@
 
     [self.scrollView addSubview:self.effortsTable];
 
-    
-    
-    // set up page control
-    
-    self.pageControl = [[DDPageControl alloc] init];    
-    self.pageControl.center = CGPointMake(160,240);
-    
-    [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
 
-    [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
-    [self.pageControl setOnColor: [UIColor lightGrayColor]];
-    [self.pageControl setOffColor: [UIColor lightGrayColor]];
-    [self.pageControl setIndicatorDiameter: 10.0f];
-    [self.pageControl setIndicatorSpace: 10.0f];
-    
-    self.pageControl.numberOfPages = 3;
-    self.pageControl.currentPage = 0;
-
-    [self.view addSubview:self.pageControl];
-    
-    
-    
-    
     // show spinner
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    // load info
-    [StravaManager loadRide:self.rideID delegate:self];
-    //[StravaManager loadMapRoute:self.rideID delegate:self];  
-    [StravaManager loadRideStreams:self.rideID delegate:self];
-    [StravaManager loadRideEfforts:self.rideID delegate:self];
+    // load info    
+    [StravaManager fetchRideWithID:self.rideID
+                        completionHandler:(^(StravaRide *ride, NSError *error) {
+        
+            if (error) {
+                // handle error somehow
+            }
+ 
+            [self showRideDetails:ride];
+            [self decrementPendingRequests];
+        
+        [self.view setNeedsDisplay];
+
+        })];
+    
+    [StravaManager fetchRideStreams:self.rideID
+                        completion:(^(NSDictionary *streams) {
+
+        MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+            self.routeLine = polyline;
+            [self.mapView addOverlay:self.routeLine];    
+            [self.mapView setVisibleMapRect:polyline.boundingMapRect];
+            [self.mapView setHidden:NO];
+            
+            [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+            
+            [self decrementPendingRequests];
+
+        })
+                             error:nil   
+     ];    
+    
+    [StravaManager fetchRideEfforts:(int)self.rideID
+                         completion:(^(NSArray *efforts) {
+                                   
+            self.efforts = efforts;
+            [self.effortsTable reloadData];
+            [self decrementPendingRequests];
+        })
+                              error:nil   
+     ];
     
     _pendingRequests = 3;
 
@@ -134,63 +144,44 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)decrementPendingRequests
+{
+    _pendingRequests--;
+    if (_pendingRequests <= 0) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        
+        // set up page control
+        
+        self.pageControl = [[DDPageControl alloc] init];    
+        self.pageControl.center = CGPointMake(160,240);
+        self.pageControl.numberOfPages = 3;
+        self.pageControl.currentPage = 0;
+        
+        [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
+        [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
+        [self.pageControl setOnColor:[UIColor lightGrayColor]];
+        [self.pageControl setOffColor:[UIColor lightGrayColor]];
+        [self.pageControl setIndicatorDiameter: 10.0f];
+        [self.pageControl setIndicatorSpace: 10.0f];
+        
+        
+        [self.view addSubview:self.pageControl];
+    }    
+}
 
-#pragma mark - StravaClient delegate
+- (void)showRideDetails:(StravaRide *)ride {
 
-- (void)rideDidLoad:(StravaRide *)ride {
-    
-    self.name.text = ride.name;            
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMM dd, yyyy h:mm a"];          
     
-    self.startDate.text = [dateFormatter stringFromDate:ride.startDateLocal];            
-    self.distance.text = [NSString stringWithFormat:@"%.1f miles", ride.distanceInMiles];
-    self.averageSpeed.text = [NSString stringWithFormat:@"%.1f avg speed", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph
-    
+    self.name.text          = ride.name;            
+    self.location.text      = ride.location;       
+    self.athleteName.text   = ride.athlete.name;       
+    self.startDate.text     = [dateFormatter stringFromDate:ride.startDateLocal];            
+    self.distance.text      = [NSString stringWithFormat:@"%.1f miles", ride.distanceInMiles];
+    self.averageSpeed.text  = [NSString stringWithFormat:@"%.1f avg speed", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph    
     self.elevationGain.text = [NSString stringWithFormat:@"%d ft elevation gain", ride.elevationGainInFeet];
-    self.location.text = ride.location;       
-    self.athleteName.text = ride.athlete.name;   
-    
-    _pendingRequests--;
-    if (_pendingRequests <= 0) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
-}
-
-- (void)rideID:(int)rideID rideStreamsDidLoad:(NSDictionary*)streams
-{
-    MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
-    
-    self.routeLine = polyline;
-    
-    [self.mapView addOverlay:self.routeLine];    
-    [self.mapView setVisibleMapRect:polyline.boundingMapRect];
-    [self.mapView setHidden:NO];
-
-    [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
-
-    
-    
-    _pendingRequests--;
-    if (_pendingRequests <= 0) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
-}
-
-- (void)rideID:(int)rideID rideEffortsDidLoad:(NSArray*)efforts
-{
-    //NSLog(@"%d efforts found for this ride", [efforts count]);
-    
-    self.efforts = efforts;
-    
-    // reload table
-    [self.effortsTable reloadData];
-    
-    _pendingRequests--;
-    if (_pendingRequests <= 0) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
 }
 
 
@@ -231,7 +222,6 @@
 
 #pragma mark - Table View
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.efforts.count;
@@ -241,11 +231,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (!cell) {
-        
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-        
     }
-    
     
     StravaEffort *effort = [self.efforts objectAtIndex:indexPath.row];
     cell.textLabel.text = effort.segment.name;
@@ -300,9 +287,7 @@
 }
 
 
-
 #pragma mark
-
 
 - (NSString*)buildAltitudeChartHTMLFromStreams:(NSDictionary*)streams
 {    
@@ -331,11 +316,9 @@
     }  
 
     [html appendString:@"</script>"];
-    
-    
+        
     [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@;</script>", jsonString]]; 
    
-    
     filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
     if (filePath) {  
         [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
