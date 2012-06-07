@@ -105,9 +105,9 @@
     int clubID = self.clubID;
     
     // get rides by the club
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];
+    //NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];
         
-    //NSString *urlString = @"http://app.strava.com/api/v1/rides?athleteName=jonkroll";
+    NSString *urlString = @"http://app.strava.com/api/v1/rides?athleteName=jonkroll";
     
     NSLog(@"%@",urlString);
     
@@ -173,9 +173,7 @@
 
         UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
 
-        RideViewController *vc = [(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
-        
-        
+        RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
         
         [vc loadRideDetails:rideID];
         

@@ -58,8 +58,16 @@
 
     // set title
     self.navigationItem.title = [NSString stringWithFormat:@"%d", rideID];
-    
-    
+
+    if (IDIOM == IPAD) {
+
+        [self.mapView setHidden:YES];
+        [self.chartWebView setHidden:YES];
+        [self.chartWebView loadHTMLString:@"" baseURL:nil];
+        [self.effortsTable setHidden:YES];
+        
+    }
+        
     if (IDIOM == IPHONE) {
     
         // scrollView width = 960 (320 * 3 = three sliding content panels)
@@ -114,8 +122,6 @@
  
             [self showRideDetails:ride];
             [self decrementPendingRequests];
-        
-        [self.view setNeedsDisplay];
 
         })];
     
@@ -132,7 +138,9 @@
             [self.mapView setHidden:NO];
             
             [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+            [self.chartWebView setHidden:NO];
             
+        
             [self decrementPendingRequests];
 
         })
@@ -145,6 +153,7 @@
             self.efforts = efforts;
             [self.effortsTable reloadData];
             [self decrementPendingRequests];
+            [self.effortsTable setHidden:NO];
         })
                               error:nil   
      ];
@@ -337,8 +346,18 @@
 
     [html appendString:@"</script>"];
         
-    [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@;</script>", jsonString]]; 
-   
+    int chartHeight, chartWidth;
+    if (IDIOM == IPAD) {
+        chartWidth=360;
+        chartHeight=160;
+
+    } else {
+        chartWidth=280;        
+        chartHeight=120;
+    }
+    
+    [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@; var chartWidth=%d; var chartHeight=%d;</script>", jsonString, chartWidth, chartHeight]]; 
+
     filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
     if (filePath) {  
         [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
