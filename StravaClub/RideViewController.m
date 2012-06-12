@@ -56,8 +56,6 @@
 - (void)loadRideDetails:(int)rideID
 {
 
-    // set title
-    self.navigationItem.title = [NSString stringWithFormat:@"%d", rideID];
 
     if (IDIOM == IPAD) {
 
@@ -110,7 +108,10 @@
     }
 
     // show spinner
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if (![MBProgressHUD HUDForView:self.view]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
     
     // load info    
     [StravaManager fetchRideWithID:rideID
@@ -120,6 +121,9 @@
                 // handle error somehow
             }
  
+            // set title
+            self.navigationItem.title = ride.name;
+        
             [self showRideDetails:ride];
             [self decrementPendingRequests];
 
@@ -158,7 +162,7 @@
                               error:nil   
      ];
     
-    _pendingRequests = 3;
+    _pendingRequests += 3;
 
 }
 
@@ -175,6 +179,9 @@
 - (void)decrementPendingRequests
 {
     _pendingRequests--;
+    
+    NSLog(@"decremented, now => %d", _pendingRequests);
+    
     if (_pendingRequests <= 0) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
@@ -348,7 +355,7 @@
         
     int chartHeight, chartWidth;
     if (IDIOM == IPAD) {
-        chartWidth=360;
+        chartWidth=640;
         chartHeight=160;
 
     } else {
