@@ -55,7 +55,7 @@
 
 - (void)loadRideDetails:(int)rideID
 {
-
+    self.rideID = rideID;
 
     if (IDIOM == IPAD) {
 
@@ -116,53 +116,62 @@
     // load info    
     [StravaManager fetchRideWithID:rideID
                         completionHandler:(^(StravaRide *ride, NSError *error) {
-        
+
             if (error) {
                 // handle error somehow
             }
- 
-            // set title
-            self.navigationItem.title = ride.name;
-        
-            [self showRideDetails:ride];
-            [self decrementPendingRequests];
 
+        NSLog(@"%d", rideID);
+        NSLog(@"%d", self.rideID);
+        
+            if (rideID == self.rideID) {  // could be different if user has navigated to a different ride while we waited for response
+     
+                // set title
+                self.navigationItem.title = ride.name;
+            
+                [self showRideDetails:ride];
+                [self decrementPendingRequests];
+            }
+        
         })];
     
     [StravaManager fetchRideStreams:rideID
                         completion:(^(NSDictionary *streams) {
 
-            MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
-        
-            [self.mapView removeOverlays:[self.mapView overlays]];
-        
-            self.routeLine = polyline;
-            [self.mapView addOverlay:self.routeLine];    
-            [self.mapView setVisibleMapRect:polyline.boundingMapRect];
-            [self.mapView setHidden:NO];
+            if (rideID == self.rideID) { 
+                MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
             
-            [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
-            [self.chartWebView setHidden:NO];
+                [self.mapView removeOverlays:[self.mapView overlays]];
             
-        
-            [self decrementPendingRequests];
-
+                self.routeLine = polyline;
+                [self.mapView addOverlay:self.routeLine];    
+                [self.mapView setVisibleMapRect:polyline.boundingMapRect];
+                [self.mapView setHidden:NO];
+                
+                [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+                [self.chartWebView setHidden:NO];
+                
+            
+                [self decrementPendingRequests];
+            }
         })
                              error:nil   
      ];    
     
     [StravaManager fetchRideEfforts:rideID
                          completion:(^(NSArray *efforts) {
-                                   
-            self.efforts = efforts;
-            [self.effortsTable reloadData];
-            [self decrementPendingRequests];
-            [self.effortsTable setHidden:NO];
+                       
+            if (rideID == self.rideID) { 
+                self.efforts = efforts;
+                [self.effortsTable reloadData];
+                [self decrementPendingRequests];
+                [self.effortsTable setHidden:NO];
+            }
         })
                               error:nil   
      ];
     
-    _pendingRequests += 3;
+    _pendingRequests = 3;
 
 }
 
@@ -262,6 +271,12 @@
 {
     return self.efforts.count;
 }
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return (section == 0) ? @"Segments on this Ride" : @"";
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

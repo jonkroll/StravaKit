@@ -168,9 +168,13 @@
                                 </connections>
                             </webView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hud-8a-Z0n">
-                                <rect key="frame" x="408" y="206" width="320" height="300"/>
+                                <rect key="frame" x="411" y="206" width="280" height="300"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="bSp-N6-qVA" id="H6K-k1-Nyk"/>
+                                    <outlet property="delegate" destination="bSp-N6-qVA" id="xxf-cB-vRy"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
