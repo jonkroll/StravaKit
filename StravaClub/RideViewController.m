@@ -121,9 +121,6 @@
                 // handle error somehow
             }
 
-        NSLog(@"%d", rideID);
-        NSLog(@"%d", self.rideID);
-        
             if (rideID == self.rideID) {  // could be different if user has navigated to a different ride while we waited for response
      
                 // set title
@@ -188,8 +185,6 @@
 - (void)decrementPendingRequests
 {
     _pendingRequests--;
-    
-    NSLog(@"decremented, now => %d", _pendingRequests);
     
     if (_pendingRequests <= 0) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -75,11 +75,9 @@
 	}
     
     [self configureView];
-        
-    self.clubID = 9;
-    
-    [self loadClubInfo];
-    
+
+    //[self loadClubRides:9];
+    [self loadAthleteRides:@"jonkroll"];
     
 }
 
@@ -99,16 +97,25 @@
     }
 }
 
-- (void)loadClubInfo
-{
-    
-    int clubID = self.clubID;
-    
+
+- (void)loadClubRides:(int)clubID
+{    
     // get rides by the club
     NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];
-        
-    //NSString *urlString = @"http://app.strava.com/api/v1/rides?athleteName=jonkroll";
     
+    [self loadRides:urlString];
+}
+
+- (void)loadAthleteRides:(NSString*)username
+{    
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?athleteName=%@", username];
+    
+    [self loadRides:urlString];
+}
+
+
+- (void)loadRides:(NSString*)urlString
+{    
     NSLog(@"%@",urlString);
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -122,19 +129,27 @@
         NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
                                                      returningResponse:&response
                                                                  error:&error];
-        // TODO: check for error
+        if (error) {
+            NSLog(@"%@", error);
+        } else {
         
-        NSDictionary *json = [NSJSONSerialization
-                              JSONObjectWithData:receivedData
-                              options:NSJSONReadingMutableLeaves
-                              error:&error];
-        
-        NSArray *rides = [json objectForKey:@"rides"];
-        _objects = [NSArray arrayWithArray:rides];
-        
-        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-        [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) withObject:nil waitUntilDone:NO];
+            NSDictionary *json = [NSJSONSerialization
+                                  JSONObjectWithData:receivedData
+                                  options:NSJSONReadingMutableLeaves
+                                  error:&error];
+            
+            if (error) {
+                NSLog(@"%@", error);                
+            } else {
+            
+                NSArray *rides = [json objectForKey:@"rides"];
+                _objects = [NSArray arrayWithArray:rides];
+                
+                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                
+                [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) withObject:nil waitUntilDone:NO];
+            }
+        }
         
     });
 }
@@ -198,7 +213,7 @@
 - (void)reloadTableViewDataSource
 {    
 	_reloading = YES;    
-    [self loadClubInfo];
+    [self loadClubRides:9];  // TODO: fix this, should not be hard coded
 }
 
 - (void)doneLoadingTableViewData

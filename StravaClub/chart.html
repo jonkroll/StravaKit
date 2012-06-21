@@ -6,7 +6,10 @@
 			jdata.altitude[i] = jdata.altitude[i] * 3.2808399;  // convert from meters to feet
 		}
         r.text(100, 10, "Elevation Chart").attr(txtattr);
-        r.linechart(20, 10, 280, 120, jdata.distance, jdata.altitude, { shade: true, axis: "0 0 1 1" });
+        r.linechart(24, 10, chartWidth, chartHeight, jdata.distance, jdata.altitude, { shade: true, axis: "0 1 1 1" });
+        
+        // axisxstep / axisystep => to control sizing of the axes
+        
     };
 </script>
 <div id="holder"></div>
