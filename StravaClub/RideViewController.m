@@ -57,6 +57,9 @@
 {
     self.rideID = rideID;
 
+    // cancel any previous requests
+    [StravaManager cancelAllOperations];
+    
     if (IDIOM == IPAD) {
 
         [self.mapView setHidden:YES];
@@ -109,8 +112,10 @@
 
     // show spinner
     
-    if (![MBProgressHUD HUDForView:self.view]) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (IDIOM == IPHONE) {
+        if (![MBProgressHUD HUDForView:self.view]) {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        }
     }
     
     // load info    
@@ -186,12 +191,16 @@
 {
     _pendingRequests--;
     
+    NSLog(@"pendingRequests now: %d", _pendingRequests);
+    
+    
     if (_pendingRequests <= 0) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         if (IDIOM == IPHONE) {
-            // set up page control
+
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             
+            // set up page control
             self.pageControl = [[DDPageControl alloc] init];    
             self.pageControl.center = CGPointMake(160,240);
             self.pageControl.numberOfPages = 3;

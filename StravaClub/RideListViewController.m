@@ -76,8 +76,8 @@
     
     [self configureView];
 
-    //[self loadClubRides:9];
-    [self loadAthleteRides:@"jonkroll"];
+    [self loadClubRides:9];
+    //[self loadAthleteRides:@"jonkroll"];
     
 }
 
@@ -205,6 +205,7 @@
         int rideID = [(NSNumber*)[(NSDictionary *)object objectForKey:@"id"] intValue];
         
         [(RideViewController *)[segue destinationViewController] setRideID:rideID];
+        
     }
 }
 

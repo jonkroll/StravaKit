@@ -1,0 +1,41 @@
+
+
+* rename StravaClient to StravaManager
+
+
+use Raphael.js javascript library to render the charts
+
+
+use this as a model for releaseon GitHub and documentation:
+https://github.com/ForceDotComLabs/Salesforce-for-iPad
+
+
+
+use this for a side nagivation?
+https://github.com/futuresimple/FSVerticalTabBarController
+
+
+This version of Raphael allows you to show a background grid:
+https://github.com/wes/Beautiful-Analytics-Chart
+http://joedesigns.com/labs/Beautiful-Analytics-Chart/
+
+maybe this one too: http://softwarebyjosh.com/raphy-charts/
+
+
+
+More info about working with Raphael:
+http://www.exratione.com/2011/10/a-few-tips-for-graphael-line-charts/
+http://jburrows.wordpress.com/2011/02/21/documentation-for-graphael-g-line-js/
+https://github.com/kennyshen/g.raphael/blob/master/docs/line.md
+
+
+
+See also:
+https://gist.github.com/447379
+https://gist.github.com/451637
+
+
+
+Here are some other javascript charting libraries:
+http://alexyoung.github.com/ico/
+http://grafico.kilianvalkhof.com/documentation/index.html

@@ -12,6 +12,8 @@
 
 @interface StravaManager : NSObject
 
+
+// data request methods
 + (void)fetchRideWithID:(int)rideID
              completionHandler:(void (^)(StravaRide *ride, NSError* error))handler;
 
@@ -22,6 +24,11 @@
 + (void)fetchRideEfforts:(int)rideID
               completion:(void (^)(NSArray *efforts))completionHandler
                    error:(void (^)(NSError *error))errorHandler;
+
+
+// queue management methods
++ (NSOperationQueue*)queue;
++ (void)cancelAllOperations;
 
 
 // map helper methods

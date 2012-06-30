@@ -9,8 +9,32 @@
 #import "StravaManager.h"
 #import "StravaEffort.h"
 
+@interface StravaManager ()
+
+@property (nonatomic, strong) NSOperationQueue *queue;
+
+@end
+
 
 @implementation StravaManager
+
+@synthesize queue = _queue;
+
++ (NSOperationQueue*)queue
+{
+    static NSOperationQueue* queue = nil;
+    if (queue == nil)
+    {
+        queue = [[NSOperationQueue alloc] init];
+    }
+    return queue;
+}
+
++ (void)cancelAllOperations
+{
+    [[self queue] cancelAllOperations];
+}
+
 
 + (void)fetchRideWithID:(int)rideID 
       completionHandler:(void (^)(StravaRide *ride, NSError *error))handler
@@ -209,49 +233,55 @@
 {
     
     NSLog(@"%@",urlString);
+            
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSURLResponse *response = nil;
-        NSError *error = nil;
-        NSData *receivedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (error) {
-            NSLog(@"ERROR: %@", error);
-
-            if (errorHandler) {
-                errorHandler(error);
-            }
+    [NSURLConnection sendAsynchronousRequest:request 
+                                       queue:[self queue]
+                           completionHandler:^(NSURLResponse *response,
+                                                NSData *receivedData,
+                                                NSError *error) {
             
-        } else {
-            
-            // parse JSON
-            NSDictionary *json = [NSJSONSerialization
-                                  JSONObjectWithData:receivedData
-                                  options:NSJSONReadingMutableLeaves
-                                  error:&error];
             if (error) {
                 NSLog(@"ERROR: %@", error);
-                
-                if (errorHandler) {
-                    dispatch_sync(dispatch_get_main_queue(), ^{ 
-                        errorHandler(error);
-                    });
-                }
 
+                if (errorHandler) {
+                    errorHandler(error);
+                }
+                
             } else {
-                if (completionHandler) {
+                
+                // parse JSON
+                NSDictionary *json = [NSJSONSerialization
+                                      JSONObjectWithData:receivedData
+                                      options:NSJSONReadingMutableLeaves
+                                      error:&error];
+                if (error) {
+                    NSLog(@"ERROR: %@", error);
                     
-                    dispatch_sync(dispatch_get_main_queue(), ^{ 
-                        completionHandler(json);  
-                    });
-                    
+                    if (errorHandler) {
+                        dispatch_sync(dispatch_get_main_queue(), ^{ 
+                            errorHandler(error);
+                        });
+                    }
+
+                } else {
+                    if (completionHandler) {
+                        
+                        dispatch_sync(dispatch_get_main_queue(), ^{ 
+                            completionHandler(json);  
+                        });
+                        
+                    }
                 }
             }
-        }
-    });
+                               
+    }];
+    
+    NSLog(@"queue count now: %d", [[self queue] operationCount]);   
+    
+
 }
     
 @end
