@@ -15,20 +15,19 @@
 
 // data request methods
 + (void)fetchRideWithID:(int)rideID
-             completionHandler:(void (^)(StravaRide *ride, NSError* error))handler;
+             completion:(void (^)(StravaRide *ride, NSError* error))completionHandler;
 
 + (void)fetchRideStreams:(int)rideID
-             completion:(void (^)(NSDictionary *streams))completionHandler
-                  error:(void (^)(NSError *error))errorHandler;
+              completion:(void (^)(NSDictionary *streams, NSError *error))completionHandler;
 
 + (void)fetchRideEfforts:(int)rideID
-              completion:(void (^)(NSArray *efforts))completionHandler
-                   error:(void (^)(NSError *error))errorHandler;
+              completion:(void (^)(NSArray *efforts, NSError *error))completionHandler;
+
 
 
 // queue management methods
-+ (NSOperationQueue*)queue;
-+ (void)cancelAllOperations;
++ (NSMutableSet*)pendingRequests;
++ (void)cancelAllRequests;
 
 
 // map helper methods

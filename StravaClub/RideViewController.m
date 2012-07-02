@@ -58,7 +58,7 @@
     self.rideID = rideID;
 
     // cancel any previous requests
-    [StravaManager cancelAllOperations];
+    [StravaManager cancelAllRequests];
     
     if (IDIOM == IPAD) {
 
@@ -108,6 +108,17 @@
 
         [self.scrollView addSubview:self.effortsTable];
 
+    } else {
+        
+        // iPad
+        
+        // add empty view on top of the mapView so it can respond to touch event
+        UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
+        [self.scrollView addSubview:mapButton];
+        [self.scrollView bringSubviewToFront:mapButton];
+        [mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+        
     }
 
     // show spinner
@@ -120,7 +131,7 @@
     
     // load info    
     [StravaManager fetchRideWithID:rideID
-                        completionHandler:(^(StravaRide *ride, NSError *error) {
+                        completion:(^(StravaRide *ride, NSError *error) {
 
             if (error) {
                 // handle error somehow
@@ -138,7 +149,11 @@
         })];
     
     [StravaManager fetchRideStreams:rideID
-                        completion:(^(NSDictionary *streams) {
+                        completion:(^(NSDictionary *streams, NSError *error) {
+
+            if (error) {
+                // handle error somehow
+            }
 
             if (rideID == self.rideID) { 
                 MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
@@ -156,21 +171,23 @@
             
                 [self decrementPendingRequests];
             }
-        })
-                             error:nil   
+        }) 
      ];    
     
     [StravaManager fetchRideEfforts:rideID
-                         completion:(^(NSArray *efforts) {
-                       
+                         completion:(^(NSArray *efforts, NSError *error) {
+                      
+            if (error) {
+                // handle error somehow
+            }
+        
             if (rideID == self.rideID) { 
                 self.efforts = efforts;
                 [self.effortsTable reloadData];
                 [self decrementPendingRequests];
                 [self.effortsTable setHidden:NO];
             }
-        })
-                              error:nil   
+        })   
      ];
     
     _pendingRequests = 3;
@@ -190,9 +207,6 @@
 - (void)decrementPendingRequests
 {
     _pendingRequests--;
-    
-    NSLog(@"pendingRequests now: %d", _pendingRequests);
-    
     
     if (_pendingRequests <= 0) {
         
@@ -258,7 +272,18 @@
 
 - (void)mapViewClicked:(id)sender
 {
+    NSLog(@"mapView clicked");
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        
+        // expand map to cover entire view controller
+        
+        [UIView beginAnimations:nil context:NULL];
+
+        self.mapView.frame = self.view.frame;
+        
+        [UIView commitAnimations];
+
         
     } else {
         
@@ -351,46 +376,39 @@
     
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
     
-    NSMutableString *html = [[NSMutableString alloc] init];
-    
-    [html appendString:@"<script>"];
-    
-    NSString *filePath;
-
-    filePath = [[NSBundle mainBundle] pathForResource:@"raphael-min" ofType:@"js"];  
-    if (filePath) {  
-        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
-    }  
-    filePath = [[NSBundle mainBundle] pathForResource:@"g.raphael-min" ofType:@"js"];  
-    if (filePath) {  
-        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
-    }  
-    filePath = [[NSBundle mainBundle] pathForResource:@"g.line-min" ofType:@"js"];  
-    if (filePath) {  
-        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
-    }  
-
-    [html appendString:@"</script>"];
-        
     int chartHeight, chartWidth;
     if (IDIOM == IPAD) {
         chartWidth=640;
         chartHeight=160;
-
+        
     } else {
         chartWidth=280;        
         chartHeight=120;
     }
     
+    NSMutableString *html = [[NSMutableString alloc] init];
+    
+    NSArray *jsFileIncludes = [NSArray arrayWithObjects:@"raphael-min",@"g.raphael-min",@"g.line-min",nil];
+    
+    [html appendString:@"<script>"];
+    for (NSString *jsFilename in jsFileIncludes) {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:jsFilename ofType:@"js"];  
+        if (filePath) {  
+            [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+        } else {
+            NSLog(@"ERROR: missing javascript include file %@", jsFilename);
+        }
+    }
+    [html appendString:@"</script>"];
+    
     [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@; var chartWidth=%d; var chartHeight=%d;</script>", jsonString, chartWidth, chartHeight]]; 
 
-    filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
     if (filePath) {  
         [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
     }  
 
     return html;
-    
 }
 
 @end
