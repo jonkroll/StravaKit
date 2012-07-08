@@ -76,7 +76,8 @@
     
     [self configureView];
 
-    [self loadClubRides:9];
+    [self loadAllRides];
+    //[self loadClubRides:9];
     //[self loadAthleteRides:@"jonkroll"];
     
 }
@@ -97,22 +98,24 @@
     }
 }
 
+- (void)loadAllRides
+{    
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?startDate=2012-05-20"];    
+    [self loadRides:urlString];
+}
 
 - (void)loadClubRides:(int)clubID
 {    
     // get rides by the club
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];
-    
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];    
     [self loadRides:urlString];
 }
 
 - (void)loadAthleteRides:(NSString*)username
 {    
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?athleteName=%@", username];
-    
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?athleteName=%@", username];    
     [self loadRides:urlString];
 }
-
 
 - (void)loadRides:(NSString*)urlString
 {    
@@ -173,7 +176,19 @@
     
     NSDictionary *object = [_objects objectAtIndex:indexPath.row];
     cell.textLabel.text = [object objectForKey:@"name"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [object objectForKey:@"id"]];
+    //cell.detailTextLabel.text = @"";
+            
+    //cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [object objectForKey:@"id"]];
+    
+    [StravaManager fetchRideWithID:[[object objectForKey:@"id"] intValue]
+                        completion:^(StravaRide *ride, NSError *error) {
+                            
+                            // todo:   maybe we should start loading them all once the tableview loads, instead of only loading the cones that appear on the screen
+                            
+                            cell.detailTextLabel.text = ride.location;
+
+                            
+                        }];
     
     return cell;
 }

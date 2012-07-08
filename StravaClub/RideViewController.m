@@ -10,10 +10,12 @@
 #import "SegmentViewController.h"
 #import "MBProgressHUD.h"
 #import "StravaEffort.h"
+#import "MapAnnotation.h"
 
 @interface RideViewController ()
 {
     int _pendingRequests;
+    CGRect _originalMapFrame;
 }
 @end
 
@@ -28,18 +30,14 @@
 @synthesize elevationGain = _elevationGain;
 @synthesize location = _location;
 @synthesize athleteName = _athleteName;
-
 @synthesize scrollView = _scrollView;
-
+@synthesize mapButton = _mapButton;
 @synthesize mapView = _mapView;
 @synthesize routeLine = _routeLine;
 @synthesize routeLineView = _routeLineView;
-
 @synthesize chartWebView = _chartWebView;
-
 @synthesize efforts = _efforts;
 @synthesize effortsTable = _effortsTable;
-
 @synthesize pageControl = _pageControl;
 
 
@@ -50,7 +48,6 @@
     if (self.rideID > 0) {
         [self loadRideDetails:self.rideID];
     }
-    
 }
 
 - (void)loadRideDetails:(int)rideID
@@ -60,14 +57,6 @@
     // cancel any previous requests
     [StravaManager cancelAllRequests];
     
-    if (IDIOM == IPAD) {
-
-        [self.mapView setHidden:YES];
-        [self.chartWebView setHidden:YES];
-        [self.chartWebView loadHTMLString:@"" baseURL:nil];
-        [self.effortsTable setHidden:YES];
-        
-    }
         
     if (IDIOM == IPHONE) {
     
@@ -86,9 +75,9 @@
         [self.scrollView addSubview:self.mapView];
 
         // add empty view on top of the mapView so it can respond to touch event
-        UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
-        [self.scrollView addSubview:mapButton];
-        [self.scrollView bringSubviewToFront:mapButton];
+        self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
+        [self.scrollView addSubview:self.mapButton];
+        [self.scrollView bringSubviewToFront:self.mapButton];
         //[mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
 
         
@@ -108,27 +97,37 @@
 
         [self.scrollView addSubview:self.effortsTable];
 
-    } else {
-        
-        // iPad
-        
-        // add empty view on top of the mapView so it can respond to touch event
-        UIButton *mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
-        [self.scrollView addSubview:mapButton];
-        [self.scrollView bringSubviewToFront:mapButton];
-        [mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
-
-        
-    }
-
-    // show spinner
-    
-    if (IDIOM == IPHONE) {
+        // show spinner
         if (![MBProgressHUD HUDForView:self.view]) {
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         }
-    }
+        
+    } 
     
+    if (IDIOM == IPAD) {
+        
+        if (!CGRectEqualToRect(self.mapView.frame, self.view.frame)) {
+            // do not hide mapView during load if it is already full screen
+            [self.mapView setHidden:YES];
+        }
+        [self.chartWebView setHidden:YES];
+        [self.chartWebView loadHTMLString:@"" baseURL:nil];
+        [self.effortsTable setHidden:YES];
+        
+        // add empty view on top of the mapView so it can respond to touch event
+        
+        
+        if (CGRectIsEmpty(_originalMapFrame)) {
+            _originalMapFrame = self.mapView.frame;
+        }
+        
+        self.mapButton = [[UIButton alloc] initWithFrame:_originalMapFrame];
+        [self.view addSubview:self.mapButton];
+        [self.view bringSubviewToFront:self.mapButton];
+        [self.mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
+
     // load info    
     [StravaManager fetchRideWithID:rideID
                         completion:(^(StravaRide *ride, NSError *error) {
@@ -137,14 +136,11 @@
                 // handle error somehow
             }
 
-            if (rideID == self.rideID) {  // could be different if user has navigated to a different ride while we waited for response
-     
-                // set title
-                self.navigationItem.title = ride.name;
-            
-                [self showRideDetails:ride];
-                [self decrementPendingRequests];
-            }
+            // set title
+            self.navigationItem.title = ride.name;
+        
+            [self showRideDetails:ride];
+            [self decrementPendingRequests];
         
         })];
     
@@ -155,22 +151,58 @@
                 // handle error somehow
             }
 
-            if (rideID == self.rideID) { 
-                MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+            MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+        
+            [self.mapView removeOverlays:[self.mapView overlays]];
+            [self.mapView removeAnnotations:[self.mapView annotations]];
+        
+            self.routeLine = polyline;
+            [self.mapView addOverlay:self.routeLine];    
             
-                [self.mapView removeOverlays:[self.mapView overlays]];
             
-                self.routeLine = polyline;
-                [self.mapView addOverlay:self.routeLine];    
-                [self.mapView setVisibleMapRect:polyline.boundingMapRect];
-                [self.mapView setHidden:NO];
-                
-                [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
-                [self.chartWebView setHidden:NO];
-                
+            NSArray *firstPoint = (NSArray*)[[streams objectForKey:@"latlng"] objectAtIndex:0];
+            NSArray *lastPoint  = (NSArray*)[[streams objectForKey:@"latlng"] lastObject];
             
-                [self decrementPendingRequests];
-            }
+            
+            
+            CLLocationCoordinate2D startCoordinate = CLLocationCoordinate2DMake(
+                                            [[firstPoint objectAtIndex:0] doubleValue], 
+                                            [[firstPoint objectAtIndex:1] doubleValue]);
+            
+            MapAnnotation *startAnnotation = [[MapAnnotation alloc] initWithCoordinate:startCoordinate
+                                                                               withTag:0
+                                                                             withTitle:nil 
+                                                                          withSubtitle:nil];
+
+            
+            
+            CLLocationCoordinate2D endCoordinate = CLLocationCoordinate2DMake(
+                                            [[lastPoint objectAtIndex:0] doubleValue], 
+                                            [[lastPoint objectAtIndex:1] doubleValue]);
+
+            
+            MapAnnotation *endAnnotation = [[MapAnnotation alloc] initWithCoordinate:endCoordinate
+                                                                               withTag:1
+                                                                             withTitle:nil 
+                                                                          withSubtitle:nil];
+
+            
+            NSArray *annotations = [NSArray arrayWithObjects:startAnnotation, endAnnotation, nil];
+            
+            
+            [self.mapView addAnnotations:annotations];
+            
+            
+            [self.mapView setVisibleMapRect:polyline.boundingMapRect];
+            [self.mapView setHidden:NO];
+            
+            
+            [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+            [self.chartWebView setHidden:NO];
+            
+        
+            [self decrementPendingRequests];
+
         }) 
      ];    
     
@@ -181,12 +213,11 @@
                 // handle error somehow
             }
         
-            if (rideID == self.rideID) { 
-                self.efforts = efforts;
-                [self.effortsTable reloadData];
-                [self decrementPendingRequests];
-                [self.effortsTable setHidden:NO];
-            }
+            self.efforts = efforts;
+            [self.effortsTable reloadData];
+            [self decrementPendingRequests];
+            [self.effortsTable setHidden:NO];
+
         })   
      ];
     
@@ -269,21 +300,44 @@
     
     return overlayView;
 }
+     
+- (MKAnnotationView *) mapView:(MKMapView *)map viewForAnnotation:(id <MKAnnotation>) annotation
+{
+    MKPinAnnotationView *annView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation 
+                                                                   reuseIdentifier:@"Pin"];
+    if ([annotation isMemberOfClass:[MapAnnotation class]]) {
+        switch ([(MapAnnotation*)annotation tag]) {
+            case 0:
+                annView.pinColor = MKPinAnnotationColorGreen;  // start pin
+                break;
+            case 1:    
+                annView.pinColor = MKPinAnnotationColorRed;  // end pin
+                break;
+        }
+    }
+    
+    annView.animatesDrop = NO;
+    annView.canShowCallout = NO;
+    return annView;
+}
+        
 
 - (void)mapViewClicked:(id)sender
 {
-    NSLog(@"mapView clicked");
-    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        
-        // expand map to cover entire view controller
-        
+
+        [self.view bringSubviewToFront:self.mapView];
+
+        // expand map to cover entire view controller        
         [UIView beginAnimations:nil context:NULL];
-
         self.mapView.frame = self.view.frame;
-        
         [UIView commitAnimations];
-
+        
+        self.mapView.userInteractionEnabled = YES;
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMap)];
+        
+        [self.navigationItem setLeftBarButtonItem:doneButton];
         
     } else {
         
@@ -293,6 +347,20 @@
     }  
 }
 
+- (void)collapseMap
+{
+    self.mapView.userInteractionEnabled = NO;
+    
+    // collpase map to original size        
+    [UIView beginAnimations:nil context:NULL];
+    self.mapView.frame = _originalMapFrame;
+    [UIView commitAnimations];
+    
+    [self.view sendSubviewToBack:self.mapView];
+        
+    [self.navigationItem setLeftBarButtonItem:nil];
+
+}
 
 #pragma mark - Table View
 

@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) IBOutlet UIWebView *chartWebView;
+@property (nonatomic, strong) IBOutlet UIButton *mapButton;
 
 @property (nonatomic, strong) MKPolyline *routeLine;
 @property (nonatomic, retain) MKPolylineView* routeLineView;

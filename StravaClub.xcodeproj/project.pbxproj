@@ -49,6 +49,7 @@
 		6EB63E69157BCBF900041239 /* g.raphael-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E63157BC7E700041239 /* g.raphael-min.js */; };
 		6EB63E6A157BCBF900041239 /* raphael-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E64157BC7E700041239 /* raphael-min.js */; };
 		6EB63E6C157BCE5400041239 /* chart.html in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E6B157BCE5400041239 /* chart.html */; };
+		6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,7 +98,7 @@
 		6E81FB02156E1F500063471D /* StravaBike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaBike.m; sourceTree = "<group>"; };
 		6E81FB04156E1F5C0063471D /* StravaAthlete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaAthlete.h; sourceTree = "<group>"; };
 		6E81FB05156E1F5C0063471D /* StravaAthlete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaAthlete.m; sourceTree = "<group>"; };
-		6E81FB0F156EE4450063471D /* StravaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; path = StravaManager.h; sourceTree = "<group>"; };
+		6E81FB0F156EE4450063471D /* StravaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaManager.h; sourceTree = "<group>"; };
 		6E81FB10156EE4450063471D /* StravaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StravaManager.m; sourceTree = "<group>"; };
 		6E81FB17156EF4F50063471D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6EB63DE81575F74F00041239 /* StravaEffort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StravaEffort.h; sourceTree = "<group>"; };
@@ -113,6 +114,8 @@
 		6EB63E63157BC7E700041239 /* g.raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "g.raphael-min.js"; sourceTree = "<group>"; };
 		6EB63E64157BC7E700041239 /* raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "raphael-min.js"; sourceTree = "<group>"; };
 		6EB63E6B157BCE5400041239 /* chart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = chart.html; sourceTree = "<group>"; };
+		6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +264,8 @@
 				6E81FAC7156CC7960063471D /* AppDelegate.h */,
 				6E81FAC8156CC7960063471D /* AppDelegate.m */,
 				6E81FABF156CC7960063471D /* Supporting Files */,
+				6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */,
+				6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */,
 			);
 			name = "Demo App";
 			path = StravaClub;
@@ -426,6 +431,7 @@
 				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
 				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
 				6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */,
+				6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
