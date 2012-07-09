@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "StravaEffort.h"
 #import "MapAnnotation.h"
+#import "MKMapView+MapRectForOverlays.h"
 
 @interface RideViewController ()
 {
@@ -78,7 +79,7 @@
         self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
         [self.scrollView addSubview:self.mapButton];
         [self.scrollView bringSubviewToFront:self.mapButton];
-        //[mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        //[mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
 
         
         // (2) set up elevation chart
@@ -124,7 +125,7 @@
         self.mapButton = [[UIButton alloc] initWithFrame:_originalMapFrame];
         [self.view addSubview:self.mapButton];
         [self.view bringSubviewToFront:self.mapButton];
-        [self.mapButton addTarget:self action:@selector(mapViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
     }
 
 
@@ -164,7 +165,6 @@
             NSArray *lastPoint  = (NSArray*)[[streams objectForKey:@"latlng"] lastObject];
             
             
-            
             CLLocationCoordinate2D startCoordinate = CLLocationCoordinate2DMake(
                                             [[firstPoint objectAtIndex:0] doubleValue], 
                                             [[firstPoint objectAtIndex:1] doubleValue]);
@@ -192,12 +192,12 @@
             
             [self.mapView addAnnotations:annotations];
             
-            
-            [self.mapView setVisibleMapRect:polyline.boundingMapRect];
+            [self.mapView setVisibleMapRectForAllOverlays];
+
             [self.mapView setHidden:NO];
             
             
-            [self.chartWebView loadHTMLString:[self buildAltitudeChartHTMLFromStreams:streams] baseURL:nil];
+            [self.chartWebView loadHTMLString:[self buildElevationChartHTMLFromStreams:streams] baseURL:nil];
             [self.chartWebView setHidden:NO];
             
         
@@ -322,21 +322,24 @@
 }
         
 
-- (void)mapViewClicked:(id)sender
+- (void)expandMapView:(id)sender
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 
         [self.view bringSubviewToFront:self.mapView];
 
         // expand map to cover entire view controller        
-        [UIView beginAnimations:nil context:NULL];
+        [UIView beginAnimations:nil context:nil];
         self.mapView.frame = self.view.frame;
         [UIView commitAnimations];
         
+        [self.mapView setVisibleMapRectForAllOverlays];
+        
         self.mapView.userInteractionEnabled = YES;
+        self.mapView.scrollEnabled = YES;
+        self.mapView.zoomEnabled = YES;
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMap)];
-        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
         [self.navigationItem setLeftBarButtonItem:doneButton];
         
     } else {
@@ -347,7 +350,7 @@
     }  
 }
 
-- (void)collapseMap
+- (void)collapseMapView:(id)sender
 {
     self.mapView.userInteractionEnabled = NO;
     
@@ -355,6 +358,8 @@
     [UIView beginAnimations:nil context:NULL];
     self.mapView.frame = _originalMapFrame;
     [UIView commitAnimations];
+    
+    [self.mapView setVisibleMapRectForAllOverlays];
     
     [self.view sendSubviewToBack:self.mapView];
         
@@ -390,12 +395,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        
-    } else {
-        
-        [self performSegueWithIdentifier:@"ShowSegment" sender:self];
-    }
+//    if (IDIOM == IPAD) {
+//
+//    } else {
+//        [self performSegueWithIdentifier:@"ShowSegment" sender:self];
+//    }
 }
 
 
@@ -437,7 +441,7 @@
 
 #pragma mark
 
-- (NSString*)buildAltitudeChartHTMLFromStreams:(NSDictionary*)streams
+- (NSString*)buildElevationChartHTMLFromStreams:(NSDictionary*)streams
 {    
     NSError *err;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:streams options:0 error:&err];
@@ -446,12 +450,12 @@
     
     int chartHeight, chartWidth;
     if (IDIOM == IPAD) {
-        chartWidth=640;
-        chartHeight=160;
+        chartWidth  = 640;
+        chartHeight = 160;
         
     } else {
-        chartWidth=280;        
-        chartHeight=120;
+        chartWidth  = 280;        
+        chartHeight = 120;
     }
     
     NSMutableString *html = [[NSMutableString alloc] init];
@@ -464,7 +468,7 @@
         if (filePath) {  
             [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
         } else {
-            NSLog(@"ERROR: missing javascript include file %@", jsFilename);
+            NSLog(@"ERROR: missing javascript include file %@.js", jsFilename);
         }
     }
     [html appendString:@"</script>"];
@@ -473,7 +477,9 @@
 
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
     if (filePath) {  
-        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]]; 
+    } else {
+        NSLog(@"ERROR: missing html file %@", @"chart.html");
     }  
 
     return html;

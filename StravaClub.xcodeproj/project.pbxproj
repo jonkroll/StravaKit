@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6E2DF5B0157C9FDA00C24BFE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E2DF5AE157C9FDA00C24BFE /* Icon.png */; };
 		6E2DF5B1157C9FDA00C24BFE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E2DF5AF157C9FDA00C24BFE /* Icon@2x.png */; };
+		6E500A6015AB70A1003958D8 /* MKMapView+MapRectForOverlays.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */; };
 		6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E705B6F157289DD00609596 /* CoreLocation.framework */; };
 		6E705B7B1573D15000609596 /* api call examples.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B7A1573D15000609596 /* api call examples.txt */; };
 		6E705B811573D7B100609596 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B801573D7B100609596 /* MBProgressHUD.m */; };
@@ -55,6 +56,8 @@
 /* Begin PBXFileReference section */
 		6E2DF5AE157C9FDA00C24BFE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6E2DF5AF157C9FDA00C24BFE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		6E500A5E15AB70A1003958D8 /* MKMapView+MapRectForOverlays.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+MapRectForOverlays.h"; sourceTree = "<group>"; };
+		6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+MapRectForOverlays.m"; sourceTree = "<group>"; };
 		6E705B6F157289DD00609596 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6E705B7A1573D15000609596 /* api call examples.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "api call examples.txt"; sourceTree = "<group>"; };
 		6E705B7F1573D7B100609596 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -261,11 +264,13 @@
 				6EB63E61157BC7A500041239 /* Javascript */,
 				6E705B831573D80A00609596 /* Storyboard */,
 				6E705B841573D81E00609596 /* View Controllers */,
+				6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */,
+				6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */,
+				6E500A5E15AB70A1003958D8 /* MKMapView+MapRectForOverlays.h */,
+				6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */,
 				6E81FAC7156CC7960063471D /* AppDelegate.h */,
 				6E81FAC8156CC7960063471D /* AppDelegate.m */,
 				6E81FABF156CC7960063471D /* Supporting Files */,
-				6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */,
-				6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */,
 			);
 			name = "Demo App";
 			path = StravaClub;
@@ -432,6 +437,7 @@
 				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
 				6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */,
 				6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */,
+				6E500A6015AB70A1003958D8 /* MKMapView+MapRectForOverlays.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -100,19 +100,21 @@
 
 - (void)loadAllRides
 {    
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?startDate=2012-05-20"];    
+    self.navigationItem.title = @"All Rides";
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides"];    
     [self loadRides:urlString];
 }
 
 - (void)loadClubRides:(int)clubID
 {    
-    // get rides by the club
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d&startDate=2012-05-20", clubID];    
+    self.navigationItem.title = @"Club Rides";
+    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d", clubID];    
     [self loadRides:urlString];
 }
 
 - (void)loadAthleteRides:(NSString*)username
 {    
+    self.navigationItem.title = @"Athlete Rides";
     NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?athleteName=%@", username];    
     [self loadRides:urlString];
 }

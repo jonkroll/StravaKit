@@ -81,7 +81,7 @@
                             <outlet property="delegate" destination="19" id="21"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="SF2G Rides" id="40"/>
+                    <navigationItem key="navigationItem" id="40"/>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1295" y="-1087"/>
@@ -220,6 +220,7 @@
                 <relationship kind="outlet" name="effortsTable" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="elevationGain" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="location" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="name" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="pageControl" candidateClass="DDPageControl"/>
