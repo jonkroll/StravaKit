@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "StravaAthlete.h"
+#import "StravaBike.h"
+#import "StravaClub.h"
+#import "StravaEffort.h"
 #import "StravaRide.h"
+#import "StravaSegment.h"
 
 @interface StravaManager : NSObject
 

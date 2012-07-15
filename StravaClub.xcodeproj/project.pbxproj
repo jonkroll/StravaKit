@@ -10,11 +10,11 @@
 		6E2DF5B0157C9FDA00C24BFE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E2DF5AE157C9FDA00C24BFE /* Icon.png */; };
 		6E2DF5B1157C9FDA00C24BFE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E2DF5AF157C9FDA00C24BFE /* Icon@2x.png */; };
 		6E2EF05C15B28A1900ACB10C /* MHTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EF05B15B28A1900ACB10C /* MHTabBarController.m */; };
-		6E500A6015AB70A1003958D8 /* MKMapView+MapRectForOverlays.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */; };
+		6E500A6015AB70A1003958D8 /* MKMapView+StravaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E500A5F15AB70A1003958D8 /* MKMapView+StravaManager.m */; };
 		6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E705B6F157289DD00609596 /* CoreLocation.framework */; };
 		6E705B7B1573D15000609596 /* api call examples.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B7A1573D15000609596 /* api call examples.txt */; };
 		6E705B811573D7B100609596 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B801573D7B100609596 /* MBProgressHUD.m */; };
-		6E705B8B157476D400609596 /* NSDictionary+StravaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */; };
+		6E705B8B157476D400609596 /* NSDictionary+StravaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B8A157476D400609596 /* NSDictionary+StravaManager.m */; };
 		6E705BA31575CED100609596 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E705B991575CED100609596 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6E705BA41575CED100609596 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9B1575CED100609596 /* blackArrow.png */; };
 		6E705BA51575CED100609596 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E705B9C1575CED100609596 /* blackArrow@2x.png */; };
@@ -59,14 +59,13 @@
 		6E2DF5AF157C9FDA00C24BFE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6E2EF05A15B28A1900ACB10C /* MHTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHTabBarController.h; sourceTree = "<group>"; };
 		6E2EF05B15B28A1900ACB10C /* MHTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHTabBarController.m; sourceTree = "<group>"; };
-		6E500A5E15AB70A1003958D8 /* MKMapView+MapRectForOverlays.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+MapRectForOverlays.h"; sourceTree = "<group>"; };
-		6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+MapRectForOverlays.m"; sourceTree = "<group>"; };
+		6E500A5F15AB70A1003958D8 /* MKMapView+StravaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+StravaManager.m"; sourceTree = "<group>"; };
 		6E705B6F157289DD00609596 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6E705B7A1573D15000609596 /* api call examples.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "api call examples.txt"; sourceTree = "<group>"; };
 		6E705B7F1573D7B100609596 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6E705B801573D7B100609596 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		6E705B89157476D400609596 /* NSDictionary+StravaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StravaClient.h"; sourceTree = "<group>"; };
-		6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StravaClient.m"; sourceTree = "<group>"; };
+		6E705B89157476D400609596 /* NSDictionary+StravaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StravaManager.h"; sourceTree = "<group>"; };
+		6E705B8A157476D400609596 /* NSDictionary+StravaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StravaManager.m"; sourceTree = "<group>"; };
 		6E705B981575CED100609596 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		6E705B991575CED100609596 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		6E705B9B1575CED100609596 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		6EB63E64157BC7E700041239 /* raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "raphael-min.js"; sourceTree = "<group>"; };
 		6EB63E6B157BCE5400041239 /* chart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = chart.html; sourceTree = "<group>"; };
 		6EC22DAC15B342C600F3B260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6EC22E2115B35EBC00F3B260 /* MKMapView+StravaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+StravaManager.h"; sourceTree = "<group>"; };
 		6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
 		6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -278,8 +278,6 @@
 				6E705B841573D81E00609596 /* View Controllers */,
 				6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */,
 				6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */,
-				6E500A5E15AB70A1003958D8 /* MKMapView+MapRectForOverlays.h */,
-				6E500A5F15AB70A1003958D8 /* MKMapView+MapRectForOverlays.m */,
 				6E81FAC7156CC7960063471D /* AppDelegate.h */,
 				6E81FAC8156CC7960063471D /* AppDelegate.m */,
 				6E81FABF156CC7960063471D /* Supporting Files */,
@@ -305,8 +303,10 @@
 				6EB63DEF1575F77600041239 /* Model */,
 				6E81FB0F156EE4450063471D /* StravaManager.h */,
 				6E81FB10156EE4450063471D /* StravaManager.m */,
-				6E705B89157476D400609596 /* NSDictionary+StravaClient.h */,
-				6E705B8A157476D400609596 /* NSDictionary+StravaClient.m */,
+				6EC22E2115B35EBC00F3B260 /* MKMapView+StravaManager.h */,
+				6E500A5F15AB70A1003958D8 /* MKMapView+StravaManager.m */,
+				6E705B89157476D400609596 /* NSDictionary+StravaManager.h */,
+				6E705B8A157476D400609596 /* NSDictionary+StravaManager.m */,
 			);
 			name = StravaKit;
 			path = StravaClub;
@@ -442,13 +442,13 @@
 				6E81FB06156E1F5C0063471D /* StravaAthlete.m in Sources */,
 				6E81FB11156EE4450063471D /* StravaManager.m in Sources */,
 				6E705B811573D7B100609596 /* MBProgressHUD.m in Sources */,
-				6E705B8B157476D400609596 /* NSDictionary+StravaClient.m in Sources */,
+				6E705B8B157476D400609596 /* NSDictionary+StravaManager.m in Sources */,
 				6E705BA31575CED100609596 /* EGORefreshTableHeaderView.m in Sources */,
 				6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */,
 				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
 				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
 				6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */,
-				6E500A6015AB70A1003958D8 /* MKMapView+MapRectForOverlays.m in Sources */,
+				6E500A6015AB70A1003958D8 /* MKMapView+StravaManager.m in Sources */,
 				6E2EF05C15B28A1900ACB10C /* MHTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

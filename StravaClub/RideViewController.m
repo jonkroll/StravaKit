@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 #import "StravaEffort.h"
 #import "MapAnnotation.h"
-#import "MKMapView+MapRectForOverlays.h"
+#import "MKMapView+StravaManager.h"
 
 #define MAP_INSETS UIEdgeInsetsMake(40.0, 40.0, 40.0, 40.0)
 
@@ -352,7 +352,7 @@
 
 - (void)expandMapView:(id)sender
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if (IDIOM == IPAD) {
 
         [self.view bringSubviewToFront:self.mapView];
 

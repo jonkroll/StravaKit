@@ -7,7 +7,8 @@
 //
 
 #import "StravaManager.h"
-#import "StravaEffort.h"
+
+
 
 @interface StravaManager ()
 
