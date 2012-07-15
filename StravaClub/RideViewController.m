@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Optionetics, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "RideViewController.h"
 #import "SegmentViewController.h"
 #import "MBProgressHUD.h"
@@ -29,6 +30,7 @@
 @synthesize name = _name;
 @synthesize startDate = _startDate;
 @synthesize distance = _distance;
+@synthesize movingTime = _movingTime;
 @synthesize averageSpeed = _averageSpeed;
 @synthesize elevationGain = _elevationGain;
 @synthesize location = _location;
@@ -41,7 +43,8 @@
 @synthesize efforts = _efforts;
 @synthesize effortsTable = _effortsTable;
 @synthesize pageControl = _pageControl;
-
+@synthesize actionButton = _actionButton;
+@synthesize popoverActionsheet = _popoverActionsheet;
 
 - (void)viewDidLoad
 {
@@ -114,10 +117,15 @@
         }
         [self.chartWebView setHidden:YES];
         [self.chartWebView loadHTMLString:@"" baseURL:nil];
+        
+        self.chartWebView.layer.borderColor = [[UIColor whiteColor] CGColor];
+        self.chartWebView.layer.borderWidth = 2.0;
+      
+        
         [self.effortsTable setHidden:YES];
         
+
         // add empty view on top of the mapView so it can respond to touch event
-        
         
         if (CGRectIsEmpty(_originalMapFrame)) {
             _originalMapFrame = self.mapView.frame;
@@ -136,12 +144,16 @@
 
             if (error) {
                 // handle error somehow
-            }
+            } else {
 
-            // set title
-            self.navigationItem.title = ride.name;
-        
-            [self showRideDetails:ride];
+                // set title
+                self.navigationItem.title = ride.name;
+            
+                [self showRideDetails:ride];
+                
+                self.actionButton.enabled = YES;
+                
+            }
             [self decrementPendingRequests];
         
         })];
@@ -151,59 +163,59 @@
 
             if (error) {
                 // handle error somehow
+            } else {
+
+                MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
+            
+                [self.mapView removeOverlays:[self.mapView overlays]];
+                [self.mapView removeAnnotations:[self.mapView annotations]];
+            
+                self.routeLine = polyline;
+                [self.mapView addOverlay:self.routeLine];    
+                
+                
+                NSArray *firstPoint = (NSArray*)[[streams objectForKey:@"latlng"] objectAtIndex:0];
+                NSArray *lastPoint  = (NSArray*)[[streams objectForKey:@"latlng"] lastObject];
+                
+                
+                CLLocationCoordinate2D startCoordinate = CLLocationCoordinate2DMake(
+                                                [[firstPoint objectAtIndex:0] doubleValue], 
+                                                [[firstPoint objectAtIndex:1] doubleValue]);
+                
+                MapAnnotation *startAnnotation = [[MapAnnotation alloc] initWithCoordinate:startCoordinate
+                                                                                   withTag:0
+                                                                                 withTitle:nil 
+                                                                              withSubtitle:nil];
+
+                
+                
+                CLLocationCoordinate2D endCoordinate = CLLocationCoordinate2DMake(
+                                                [[lastPoint objectAtIndex:0] doubleValue], 
+                                                [[lastPoint objectAtIndex:1] doubleValue]);
+
+                
+                MapAnnotation *endAnnotation = [[MapAnnotation alloc] initWithCoordinate:endCoordinate
+                                                                                   withTag:1
+                                                                                 withTitle:nil 
+                                                                              withSubtitle:nil];
+
+                
+                NSArray *annotations = [NSArray arrayWithObjects:startAnnotation, endAnnotation, nil];
+                
+                
+                [self.mapView addAnnotations:annotations];
+                
+                [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
+
+                [self.mapView setHidden:NO];
+                
+                
+                [self.chartWebView loadHTMLString:[self buildElevationChartHTMLFromStreams:streams] baseURL:nil];
+                [self.chartWebView setHidden:NO];
+                
             }
-
-            MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
-        
-            [self.mapView removeOverlays:[self.mapView overlays]];
-            [self.mapView removeAnnotations:[self.mapView annotations]];
-        
-            self.routeLine = polyline;
-            [self.mapView addOverlay:self.routeLine];    
-            
-            
-            NSArray *firstPoint = (NSArray*)[[streams objectForKey:@"latlng"] objectAtIndex:0];
-            NSArray *lastPoint  = (NSArray*)[[streams objectForKey:@"latlng"] lastObject];
-            
-            
-            CLLocationCoordinate2D startCoordinate = CLLocationCoordinate2DMake(
-                                            [[firstPoint objectAtIndex:0] doubleValue], 
-                                            [[firstPoint objectAtIndex:1] doubleValue]);
-            
-            MapAnnotation *startAnnotation = [[MapAnnotation alloc] initWithCoordinate:startCoordinate
-                                                                               withTag:0
-                                                                             withTitle:nil 
-                                                                          withSubtitle:nil];
-
-            
-            
-            CLLocationCoordinate2D endCoordinate = CLLocationCoordinate2DMake(
-                                            [[lastPoint objectAtIndex:0] doubleValue], 
-                                            [[lastPoint objectAtIndex:1] doubleValue]);
-
-            
-            MapAnnotation *endAnnotation = [[MapAnnotation alloc] initWithCoordinate:endCoordinate
-                                                                               withTag:1
-                                                                             withTitle:nil 
-                                                                          withSubtitle:nil];
-
-            
-            NSArray *annotations = [NSArray arrayWithObjects:startAnnotation, endAnnotation, nil];
-            
-            
-            [self.mapView addAnnotations:annotations];
-            
-            [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
-
-            [self.mapView setHidden:NO];
-            
-            
-            [self.chartWebView loadHTMLString:[self buildElevationChartHTMLFromStreams:streams] baseURL:nil];
-            [self.chartWebView setHidden:NO];
-            
         
             [self decrementPendingRequests];
-
         }) 
      ];    
     
@@ -267,6 +279,14 @@
 
 - (void)showRideDetails:(StravaRide *)ride {
 
+    // make labels visible
+    for (UIView *view in self.view.subviews) {
+        if ([view isMemberOfClass:[UILabel class]]) {
+            view.hidden = NO;
+        }
+    }
+    
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     [dateFormatter setDateFormat:@"h:mm a"];          
@@ -275,12 +295,28 @@
     [dateFormatter setDateFormat:@"EEEE MMMM dd, yyyy "];          
     NSString *activityDate = [dateFormatter stringFromDate:ride.startDateLocal];
     
+    
+    NSTimeInterval movingTime = ride.movingTime;
+    
+    int hours = floor(movingTime / (60 * 60));
+    int minutes = floor((movingTime - (hours * 60 * 60)) / 60);
+    int seconds = trunc(movingTime - (minutes * 60) - (hours * 60 * 60));
+    
+    NSString *movingTimeText;
+    if (hours > 0) {
+        movingTimeText = [NSString stringWithFormat:@"%d:%d:%d", hours, minutes, seconds];
+    } else {
+        movingTimeText = [NSString stringWithFormat:@"%d:%d", minutes, seconds];
+    }
+    
+    
     self.name.text          = ride.name;
     self.location.text      = [NSString stringWithFormat:@"Near %@", ride.location];       
     self.startDate.text     = [NSString stringWithFormat:@"Ridden by %@ at %@ on %@", ride.athlete.name, activityTime, activityDate];            
     self.distance.text      = [NSString stringWithFormat:@"%.1f miles", ride.distanceInMiles];
-    self.averageSpeed.text  = [NSString stringWithFormat:@"%.1f avg speed", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph    
-    self.elevationGain.text = [NSString stringWithFormat:@"%d ft elevation gain", ride.elevationGainInFeet];
+    self.movingTime.text    = movingTimeText;
+    self.averageSpeed.text  = [NSString stringWithFormat:@"%.1f", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph    
+    self.elevationGain.text = [NSString stringWithFormat:@"%d feet", ride.elevationGainInFeet];
 }
 
 
@@ -333,14 +369,17 @@
         [self.view bringSubviewToFront:self.mapView];
 
         // expand map to cover entire view controller        
-        [UIView beginAnimations:nil context:nil];
-        self.mapView.frame = self.view.frame;
-        [UIView commitAnimations];
-        
-        //[self.mapView setVisibleMapRectForAllOverlays];
-        
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
-        [self.navigationItem setLeftBarButtonItem:doneButton];
+        [UIView animateWithDuration:0.2
+                              delay: 0.0
+                            options: UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.mapView.frame = self.view.frame;
+                         }
+                         completion:^(BOOL finished){
+
+                             UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
+                             [self.navigationItem setLeftBarButtonItem:doneButton];
+                         }];
         
     } else {
         
@@ -353,20 +392,20 @@
 - (void)collapseMapView:(id)sender
 {
     // collpase map to original size        
-    [UIView beginAnimations:nil context:NULL];
-    // first animation
-    self.mapView.frame = _originalMapFrame;
-    [UIView commitAnimations];
-
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationBeginsFromCurrentState:NO];
-    // second animation
-    [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
-    [UIView commitAnimations];
     
-    [self.view sendSubviewToBack:self.mapView];
-        
-    [self.navigationItem setLeftBarButtonItem:nil];
+    [UIView animateWithDuration:0.2
+                          delay: 0.0
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.mapView.frame = _originalMapFrame;
+                     }
+                     completion:^(BOOL finished){
+                         
+                         [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];                         
+                         [self.view sendSubviewToBack:self.mapView];                
+                         [self.navigationItem setLeftBarButtonItem:nil];
+
+                     }];
 }
 
 
@@ -488,6 +527,84 @@
     }
 
     return html;
+}
+
+#pragma mark - UIActionSheet delegate
+
+- (IBAction) barButtonItemAction:(id)sender
+{
+    if (self.rideID) {    
+        
+        // If the actionsheet is visible it is dismissed, if it not visible a new one is created
+        if ([self.popoverActionsheet isVisible]) {
+            [self.popoverActionsheet dismissWithClickedButtonIndex:[self.popoverActionsheet cancelButtonIndex] animated:YES];
+            return;
+        }
+            
+        self.popoverActionsheet = [[UIActionSheet alloc] initWithTitle:nil 
+                                                              delegate:self 
+                                                     cancelButtonTitle:nil 
+                                                destructiveButtonTitle:nil 
+                                                     otherButtonTitles:nil];
+        
+        [self.popoverActionsheet addButtonWithTitle:@"Email Link to This Ride"];
+        [self.popoverActionsheet addButtonWithTitle:@"Open in Safari"];
+        
+        // only show Open in Chomr butter if user has Chrome browser installed
+        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome:"]]) {
+            [self.popoverActionsheet addButtonWithTitle:@"Open in Chrome"];
+        }
+        
+        [self.popoverActionsheet showFromBarButtonItem:sender animated:YES];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) return;
+    
+    NSURL *rideURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.strava.com/rides/%d", self.rideID]];
+    
+    switch (buttonIndex) {
+        case 0: {
+            // email link to ride
+            break;
+        }
+        case 1: {
+            // open in Safari
+            [[UIApplication sharedApplication] openURL:rideURL];
+            break;
+        }
+        case 2: {
+            // open in Chrome
+    
+            NSString *scheme = rideURL.scheme;
+            
+            // Replace the URL Scheme with the Chrome equivalent.
+            NSString *chromeScheme = nil;
+            if ([scheme isEqualToString:@"http"]) {
+                chromeScheme = @"googlechrome";
+            } else if ([scheme isEqualToString:@"https"]) {
+                chromeScheme = @"googlechromes";
+            }
+            
+            // Proceed only if a valid Google Chrome URI Scheme is available.
+            if (chromeScheme) {
+                NSString *absoluteString = [rideURL absoluteString];
+                NSRange rangeForScheme = [absoluteString rangeOfString:@":"];
+                NSString *urlNoScheme = [absoluteString substringFromIndex:rangeForScheme.location];
+                NSString *chromeURLString = [chromeScheme stringByAppendingString:urlNoScheme];
+                NSURL *chromeURL = [NSURL URLWithString:chromeURLString];
+                
+                // Open the URL with Chrome.
+                [[UIApplication sharedApplication] openURL:chromeURL];
+            }
+            
+            break;
+        }
+    }
+
+    
 }
 
 @end

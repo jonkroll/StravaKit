@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "EGORefreshTableHeaderView.h"
 
-@interface RideListViewController : UITableViewController <UISplitViewControllerDelegate, EGORefreshTableHeaderDelegate>
+@interface RideListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate, EGORefreshTableHeaderDelegate>
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) id detailItem;
 
 @property (nonatomic) int clubID;

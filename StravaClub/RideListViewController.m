@@ -22,6 +22,7 @@
 
 @implementation RideListViewController
 
+@synthesize tableView = _tableView;
 @synthesize detailItem = _detailItem;
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;
 @synthesize masterPopoverController = _masterPopoverController;
