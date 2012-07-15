@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "RideViewController.h"
-#import "SegmentViewController.h"
 #import "MBProgressHUD.h"
 #import "StravaEffort.h"
 #import "MapAnnotation.h"
@@ -18,7 +17,6 @@
 
 @interface RideViewController ()
 {
-    int _pendingRequests;
     CGRect _originalMapFrame;
 }
 @end
@@ -91,8 +89,7 @@
         self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
         self.chartWebView.userInteractionEnabled=NO;
         [self.scrollView addSubview:self.chartWebView];
-       
-        
+               
         // (3) set up eforts table
         
         self.effortsTable = [[UITableView alloc] init];
@@ -138,25 +135,20 @@
     }
 
 
-    // load info    
+    // load ride info    
     [StravaManager fetchRideWithID:rideID
                         completion:(^(StravaRide *ride, NSError *error) {
 
             if (error) {
                 // handle error somehow
             } else {
-
-                // set title
-                self.navigationItem.title = ride.name;
-            
+                self.navigationItem.title = ride.name;            
                 [self showRideDetails:ride];
-                
-                self.actionButton.enabled = YES;
-                
+                self.actionButton.enabled = YES;                
             }
-            [self decrementPendingRequests];
         
         })];
+    
     
     [StravaManager fetchRideStreams:rideID
                         completion:(^(NSDictionary *streams, NSError *error) {
@@ -214,12 +206,11 @@
                 [self.chartWebView setHidden:NO];
                 
             }
-        
-            [self decrementPendingRequests];
         }) 
-     ];    
+    ];
     
-    [StravaManager fetchRideEfforts:rideID
+/*
+ [StravaManager fetchRideEfforts:rideID
                          completion:(^(NSArray *efforts, NSError *error) {
                       
             if (error) {
@@ -228,14 +219,12 @@
         
             self.efforts = efforts;
             [self.effortsTable reloadData];
-            [self decrementPendingRequests];
             [self.effortsTable setHidden:NO];
 
         })   
      ];
+*/
     
-    _pendingRequests = 3;
-
 }
 
 
@@ -248,34 +237,34 @@
     }   
 }
 
-- (void)decrementPendingRequests
-{
-    _pendingRequests--;
-    
-    if (_pendingRequests <= 0) {
-        
-        if (IDIOM == IPHONE) {
-
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            
-            // set up page control
-            self.pageControl = [[DDPageControl alloc] init];    
-            self.pageControl.center = CGPointMake(160,240);
-            self.pageControl.numberOfPages = 3;
-            self.pageControl.currentPage = 0;
-            
-            [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
-            [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
-            [self.pageControl setOnColor:[UIColor lightGrayColor]];
-            [self.pageControl setOffColor:[UIColor lightGrayColor]];
-            [self.pageControl setIndicatorDiameter: 10.0f];
-            [self.pageControl setIndicatorSpace: 10.0f];
-            
-            
-            [self.view addSubview:self.pageControl];
-        }
-    }    
-}
+//- (void)decrementPendingRequests
+//{
+//    _pendingRequests--;
+//    
+//    if (_pendingRequests <= 0) {
+//        
+//        if (IDIOM == IPHONE) {
+//
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            
+//            // set up page control
+//            self.pageControl = [[DDPageControl alloc] init];    
+//            self.pageControl.center = CGPointMake(160,240);
+//            self.pageControl.numberOfPages = 3;
+//            self.pageControl.currentPage = 0;
+//            
+//            [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
+//            [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
+//            [self.pageControl setOnColor:[UIColor lightGrayColor]];
+//            [self.pageControl setOffColor:[UIColor lightGrayColor]];
+//            [self.pageControl setIndicatorDiameter: 10.0f];
+//            [self.pageControl setIndicatorSpace: 10.0f];
+//            
+//            
+//            [self.view addSubview:self.pageControl];
+//        }
+//    }    
+//}
 
 - (void)showRideDetails:(StravaRide *)ride {
 
@@ -285,7 +274,6 @@
             view.hidden = NO;
         }
     }
-    
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
@@ -409,7 +397,7 @@
 }
 
 
-#pragma mark - Table View
+#pragma mark - TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -568,6 +556,9 @@
     switch (buttonIndex) {
         case 0: {
             // email link to ride
+            if ([MFMailComposeViewController canSendMail]) {
+                [self showEmailModalView];
+            }
             break;
         }
         case 1: {
@@ -577,10 +568,9 @@
         }
         case 2: {
             // open in Chrome
-    
-            NSString *scheme = rideURL.scheme;
             
-            // Replace the URL Scheme with the Chrome equivalent.
+            NSString *scheme = rideURL.scheme;
+
             NSString *chromeScheme = nil;
             if ([scheme isEqualToString:@"http"]) {
                 chromeScheme = @"googlechrome";
@@ -603,8 +593,54 @@
             break;
         }
     }
+}
 
+#pragma mark - MFMailComposeViewController delegate
+
+- (IBAction)showEmailModalView
+{
+    MFMailComposeViewController *mcvc = [[MFMailComposeViewController alloc] init];
+    mcvc.mailComposeDelegate = self;
+    //mcvc.navigationBar.tintColor = ;
     
+    [mcvc setSubject:[NSString stringWithFormat:@"Strava Ride: %@", self.name.text]];
+     
+     NSString *messageBody = [NSString stringWithFormat: @"\n\n\n<p>Check out this ride I found on Strava:</p><p><a href='http://app.strava.com/rides/%d'>%@</a></p>", self.rideID, self.name.text];
+    [mcvc setMessageBody:messageBody isHTML:YES];
+    
+    [self.navigationController presentModalViewController:mcvc animated:YES];
+}
+
+
+// Dismisses the email composition interface when users tap Cancel or Send. 
+// Proceeds to update the message field with the result of the operation.
+- (void)mailComposeController:(MFMailComposeViewController*)controller 
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error
+{ 
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            break;
+        case MFMailComposeResultSaved:
+            break;
+        case MFMailComposeResultSent:
+            break;
+        case MFMailComposeResultFailed:
+            break;            
+        default:
+        {
+            UIAlertView *alert = 
+            [[UIAlertView alloc] initWithTitle:@"Email" 
+                                       message:@"Sending Failed - Unknown Error"
+                                      delegate:self 
+                             cancelButtonTitle:@"OK" 
+                             otherButtonTitles: nil];
+            [alert show];
+        }    
+            break;
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

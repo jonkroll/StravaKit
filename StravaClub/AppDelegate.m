@@ -15,7 +15,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if (IDIOM == IPAD) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
@@ -56,9 +56,6 @@
 - (void)customizeAppearance
 {
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:252.0/255 green:76.0/255 blue:2.0/255 alpha:1.0]];    
-    
-    // make background of navbar solid like this:
-    // http://foobarpig.com/iphone/uinavigationbar-with-solid-color-or-image-background.html
 }
 
 @end

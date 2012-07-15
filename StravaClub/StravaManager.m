@@ -248,6 +248,8 @@
 + (void)stravaAPIRequest:(NSString*)urlString 
                  handler:(void (^)(id json, NSError *error))completionHandler
 {
+    NSLog(@"%@", urlString);
+    
     // first check if the response is already in the cache
     id json = [[self cache] objectForKey:urlString];    
     if (json) {

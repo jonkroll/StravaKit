@@ -46,11 +46,11 @@
 		6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63DED1575F75A00041239 /* StravaSegment.m */; };
 		6EB63DF11576A3DC00041239 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63DF01576A3DC00041239 /* todo.txt */; };
 		6EB63E05157B291C00041239 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63E04157B291C00041239 /* DDPageControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB63E0C157B41EA00041239 /* SegmentViewController.m */; };
 		6EB63E68157BCBF900041239 /* g.line-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E62157BC7E700041239 /* g.line-min.js */; };
 		6EB63E69157BCBF900041239 /* g.raphael-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E63157BC7E700041239 /* g.raphael-min.js */; };
 		6EB63E6A157BCBF900041239 /* raphael-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E64157BC7E700041239 /* raphael-min.js */; };
 		6EB63E6C157BCE5400041239 /* chart.html in Resources */ = {isa = PBXBuildFile; fileRef = 6EB63E6B157BCE5400041239 /* chart.html */; };
+		6EC22DAD15B342C600F3B260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC22DAC15B342C600F3B260 /* MessageUI.framework */; };
 		6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */; };
 /* End PBXBuildFile section */
 
@@ -114,12 +114,11 @@
 		6EB63DF01576A3DC00041239 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		6EB63E03157B291C00041239 /* DDPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPageControl.h; sourceTree = "<group>"; };
 		6EB63E04157B291C00041239 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
-		6EB63E0B157B41EA00041239 /* SegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentViewController.h; sourceTree = "<group>"; };
-		6EB63E0C157B41EA00041239 /* SegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentViewController.m; sourceTree = "<group>"; };
 		6EB63E62157BC7E700041239 /* g.line-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "g.line-min.js"; sourceTree = "<group>"; };
 		6EB63E63157BC7E700041239 /* g.raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "g.raphael-min.js"; sourceTree = "<group>"; };
 		6EB63E64157BC7E700041239 /* raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "raphael-min.js"; sourceTree = "<group>"; };
 		6EB63E6B157BCE5400041239 /* chart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = chart.html; sourceTree = "<group>"; };
+		6EC22DAC15B342C600F3B260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6EDFE6F215A95BA800E64AD7 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
 		6EDFE6F315A95BA800E64AD7 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,12 +128,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E705BAE1575D1F200609596 /* QuartzCore.framework in Frameworks */,
-				6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */,
-				6E81FB18156EF4F50063471D /* MapKit.framework in Frameworks */,
-				6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */,
-				6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */,
 				6E81FABD156CC7960063471D /* CoreGraphics.framework in Frameworks */,
+				6E705B70157289DD00609596 /* CoreLocation.framework in Frameworks */,
+				6E81FABB156CC7960063471D /* Foundation.framework in Frameworks */,
+				6E81FB18156EF4F50063471D /* MapKit.framework in Frameworks */,
+				6EC22DAD15B342C600F3B260 /* MessageUI.framework in Frameworks */,
+				6E705BAE1575D1F200609596 /* QuartzCore.framework in Frameworks */,
+				6E81FAB9156CC7960063471D /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,8 +186,6 @@
 				6E81FAD4156CC7960063471D /* RideListViewController.m */,
 				6E81FAF7156E0C160063471D /* RideViewController.h */,
 				6E81FAF8156E0C160063471D /* RideViewController.m */,
-				6EB63E0B157B41EA00041239 /* SegmentViewController.h */,
-				6EB63E0C157B41EA00041239 /* SegmentViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -260,6 +258,7 @@
 		6E81FAB7156CC7960063471D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6EC22DAC15B342C600F3B260 /* MessageUI.framework */,
 				6E705BAD1575D1F200609596 /* QuartzCore.framework */,
 				6E705B6F157289DD00609596 /* CoreLocation.framework */,
 				6E81FB17156EF4F50063471D /* MapKit.framework */,
@@ -448,7 +447,6 @@
 				6EB63DEA1575F74F00041239 /* StravaEffort.m in Sources */,
 				6EB63DEE1575F75B00041239 /* StravaSegment.m in Sources */,
 				6EB63E05157B291C00041239 /* DDPageControl.m in Sources */,
-				6EB63E0D157B41EA00041239 /* SegmentViewController.m in Sources */,
 				6EDFE6F415A95BA800E64AD7 /* MapAnnotation.m in Sources */,
 				6E500A6015AB70A1003958D8 /* MKMapView+MapRectForOverlays.m in Sources */,
 				6E2EF05C15B28A1900ACB10C /* MHTabBarController.m in Sources */,

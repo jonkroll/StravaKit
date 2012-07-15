@@ -25,11 +25,8 @@
 		_tag = tag;
 		_title = title;
 		_subtitle = subtitle;
-	}
-    
+	}    
 	return self;
 }
 
-
 @end
-

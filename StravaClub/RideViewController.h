@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <MessageUI/MessageUI.h>
 #import "StravaManager.h"
 #import "DDPageControl.h"
 
-@interface RideViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIActionSheetDelegate>
+@interface RideViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic) int rideID;
 
@@ -43,6 +44,5 @@
 - (void)loadRideDetails:(int)rideID;
 
 - (IBAction)barButtonItemAction:(id)sender;
-
 
 @end
