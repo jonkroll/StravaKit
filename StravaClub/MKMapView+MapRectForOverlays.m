@@ -10,13 +10,13 @@
 
 @implementation MKMapView (MapRectForOverlays)
 
-- (void)setVisibleMapRectForAllOverlays
+- (void)setVisibleMapRectForAllOverlaysWithPadding:(UIEdgeInsets)insets
 {
     MKMapRect totalRect = MKMapRectNull;
     for (id<MKOverlay> overlay in self.overlays) {
         totalRect = MKMapRectUnion(totalRect, overlay.boundingMapRect);
-    }
-    [self setVisibleMapRect:totalRect];
+    }    
+    [self setVisibleMapRect:[self mapRectThatFits:totalRect edgePadding:insets]];
 }
 
 @end

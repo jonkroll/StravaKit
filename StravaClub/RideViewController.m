@@ -13,6 +13,8 @@
 #import "MapAnnotation.h"
 #import "MKMapView+MapRectForOverlays.h"
 
+#define MAP_INSETS UIEdgeInsetsMake(40.0, 40.0, 40.0, 40.0)
+
 @interface RideViewController ()
 {
     int _pendingRequests;
@@ -30,7 +32,6 @@
 @synthesize averageSpeed = _averageSpeed;
 @synthesize elevationGain = _elevationGain;
 @synthesize location = _location;
-@synthesize athleteName = _athleteName;
 @synthesize scrollView = _scrollView;
 @synthesize mapButton = _mapButton;
 @synthesize mapView = _mapView;
@@ -192,7 +193,7 @@
             
             [self.mapView addAnnotations:annotations];
             
-            [self.mapView setVisibleMapRectForAllOverlays];
+            [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
 
             [self.mapView setHidden:NO];
             
@@ -267,12 +268,16 @@
 - (void)showRideDetails:(StravaRide *)ride {
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMM dd, yyyy h:mm a"];          
     
-    self.name.text          = ride.name;            
-    self.location.text      = ride.location;       
-    self.athleteName.text   = ride.athlete.name;       
-    self.startDate.text     = [dateFormatter stringFromDate:ride.startDateLocal];            
+    [dateFormatter setDateFormat:@"h:mm a"];          
+    NSString *activityTime = [dateFormatter stringFromDate:ride.startDateLocal];
+
+    [dateFormatter setDateFormat:@"EEEE MMMM dd, yyyy "];          
+    NSString *activityDate = [dateFormatter stringFromDate:ride.startDateLocal];
+    
+    self.name.text          = ride.name;
+    self.location.text      = [NSString stringWithFormat:@"Near %@", ride.location];       
+    self.startDate.text     = [NSString stringWithFormat:@"Ridden by %@ at %@ on %@", ride.athlete.name, activityTime, activityDate];            
     self.distance.text      = [NSString stringWithFormat:@"%.1f miles", ride.distanceInMiles];
     self.averageSpeed.text  = [NSString stringWithFormat:@"%.1f avg speed", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph    
     self.elevationGain.text = [NSString stringWithFormat:@"%d ft elevation gain", ride.elevationGainInFeet];
@@ -320,7 +325,6 @@
     annView.canShowCallout = NO;
     return annView;
 }
-        
 
 - (void)expandMapView:(id)sender
 {
@@ -333,11 +337,7 @@
         self.mapView.frame = self.view.frame;
         [UIView commitAnimations];
         
-        [self.mapView setVisibleMapRectForAllOverlays];
-        
-        self.mapView.userInteractionEnabled = YES;
-        self.mapView.scrollEnabled = YES;
-        self.mapView.zoomEnabled = YES;
+        //[self.mapView setVisibleMapRectForAllOverlays];
         
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
         [self.navigationItem setLeftBarButtonItem:doneButton];
@@ -352,20 +352,23 @@
 
 - (void)collapseMapView:(id)sender
 {
-    self.mapView.userInteractionEnabled = NO;
-    
     // collpase map to original size        
     [UIView beginAnimations:nil context:NULL];
+    // first animation
     self.mapView.frame = _originalMapFrame;
     [UIView commitAnimations];
-    
-    [self.mapView setVisibleMapRectForAllOverlays];
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationBeginsFromCurrentState:NO];
+    // second animation
+    [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
+    [UIView commitAnimations];
     
     [self.view sendSubviewToBack:self.mapView];
         
     [self.navigationItem setLeftBarButtonItem:nil];
-
 }
+
 
 #pragma mark - Table View
 
@@ -414,7 +417,7 @@
 }
 
 
-#pragma mark UIScrollView delegate methods
+#pragma mark - UIScrollView delegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -442,45 +445,47 @@
 #pragma mark
 
 - (NSString*)buildElevationChartHTMLFromStreams:(NSDictionary*)streams
-{    
-    NSError *err;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:streams options:0 error:&err];
-    
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
-    
-    int chartHeight, chartWidth;
-    if (IDIOM == IPAD) {
-        chartWidth  = 640;
-        chartHeight = 160;
-        
-    } else {
-        chartWidth  = 280;        
-        chartHeight = 120;
-    }
-    
+{   
     NSMutableString *html = [[NSMutableString alloc] init];
-    
-    NSArray *jsFileIncludes = [NSArray arrayWithObjects:@"raphael-min",@"g.raphael-min",@"g.line-min",nil];
-    
-    [html appendString:@"<script>"];
-    for (NSString *jsFilename in jsFileIncludes) {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:jsFilename ofType:@"js"];  
-        if (filePath) {  
-            [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
-        } else {
-            NSLog(@"ERROR: missing javascript include file %@.js", jsFilename);
-        }
-    }
-    [html appendString:@"</script>"];
-    
-    [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@; var chartWidth=%d; var chartHeight=%d;</script>", jsonString, chartWidth, chartHeight]]; 
 
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
-    if (filePath) {  
-        [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]]; 
-    } else {
-        NSLog(@"ERROR: missing html file %@", @"chart.html");
-    }  
+    if (streams) {
+        NSError *err;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:streams options:0 error:&err];
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
+        
+        int chartHeight, chartWidth;
+        if (IDIOM == IPAD) {
+            chartWidth  = 640;
+            chartHeight = 160;
+            
+        } else {
+            chartWidth  = 280;        
+            chartHeight = 120;
+        }
+        
+        NSArray *jsFileIncludes = [NSArray arrayWithObjects:@"raphael-min",@"g.raphael-min",@"g.line-min",nil];
+        
+        [html appendString:@"<script>"];
+        for (NSString *jsFilename in jsFileIncludes) {
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:jsFilename ofType:@"js"];  
+            if (filePath) {  
+                [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]];  
+            } else {
+                NSLog(@"ERROR: missing javascript include file %@.js", jsFilename);
+            }
+        }
+        [html appendString:@"</script>"];
+        
+        [html appendString:[NSString stringWithFormat:@"<script>var jdata=%@; var chartWidth=%d; var chartHeight=%d;</script>", jsonString, chartWidth, chartHeight]]; 
+
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"chart" ofType:@"html"];  
+        if (filePath) {  
+            [html appendString:[NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&err]]; 
+        } else {
+            NSLog(@"ERROR: missing html file %@", @"chart.html");
+        }  
+    }
 
     return html;
 }

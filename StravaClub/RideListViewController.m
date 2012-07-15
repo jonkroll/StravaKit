@@ -76,9 +76,11 @@
     
     [self configureView];
 
-    [self loadAllRides];
+    //[self loadAllRides];
     //[self loadClubRides:9];
     //[self loadAthleteRides:@"jonkroll"];
+    
+    [self reloadTableViewDataSource];
     
 }
 
@@ -177,7 +179,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
     NSDictionary *object = [_objects objectAtIndex:indexPath.row];
-    cell.textLabel.text = [object objectForKey:@"name"];
+    
+    UILabel *textLabel = (UILabel*)[cell viewWithTag:1];                            
+
+    textLabel.text = [object objectForKey:@"name"];
     //cell.detailTextLabel.text = @"";
             
     //cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [object objectForKey:@"id"]];
@@ -185,11 +190,11 @@
     [StravaManager fetchRideWithID:[[object objectForKey:@"id"] intValue]
                         completion:^(StravaRide *ride, NSError *error) {
                             
-                            // todo:   maybe we should start loading them all once the tableview loads, instead of only loading the cones that appear on the screen
+                            // todo:   maybe we should start loading them all once the tableview loads, instead of only loading the ones that appear on the screen
                             
-                            cell.detailTextLabel.text = ride.location;
+                            UILabel *detailTextLabel = (UILabel*)[cell viewWithTag:2];                            
+                            detailTextLabel.text = ride.location;
 
-                            
                         }];
     
     return cell;
@@ -232,7 +237,8 @@
 - (void)reloadTableViewDataSource
 {    
 	_reloading = YES;    
-    [self loadClubRides:9];  // TODO: fix this, should not be hard coded
+    //[self loadClubRides:9];  // TODO: fix this, should not be hard coded
+    [self loadAllRides];
 }
 
 - (void)doneLoadingTableViewData

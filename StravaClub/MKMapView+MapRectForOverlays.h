@@ -10,6 +10,6 @@
 
 @interface MKMapView (MapRectForOverlays)
 
-- (void)setVisibleMapRectForAllOverlays;
+- (void)setVisibleMapRectForAllOverlaysWithPadding:(UIEdgeInsets)insets;
 
 @end

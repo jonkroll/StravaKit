@@ -21,7 +21,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *averageSpeed;
 @property (nonatomic, strong) IBOutlet UILabel *elevationGain;
 @property (nonatomic, strong) IBOutlet UILabel *location;
-@property (nonatomic, strong) IBOutlet UILabel *athleteName;
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
