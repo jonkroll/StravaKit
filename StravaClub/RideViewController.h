@@ -17,6 +17,7 @@
 @property (nonatomic) int rideID;
 
 @property (nonatomic, strong) IBOutlet UILabel *name;
+@property (nonatomic, strong) IBOutlet UILabel *athleteName;
 @property (nonatomic, strong) IBOutlet UILabel *startDate;
 @property (nonatomic, strong) IBOutlet UILabel *distance;
 @property (nonatomic, strong) IBOutlet UILabel *movingTime;

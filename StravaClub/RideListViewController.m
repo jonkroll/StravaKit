@@ -76,10 +76,6 @@
 	}
     
     [self configureView];
-
-    //[self loadAllRides];
-    //[self loadClubRides:9];
-    //[self loadAthleteRides:@"jonkroll"];
     
     [self reloadTableViewDataSource];
     
@@ -221,6 +217,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+
+
     if ([[segue identifier] isEqualToString:@"ShowRide"]) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
@@ -238,7 +236,12 @@
 - (void)reloadTableViewDataSource
 {    
 	_reloading = YES;    
-    //[self loadClubRides:9];  // TODO: fix this, should not be hard coded
+    
+    // examples of how to load different subsets of rides:
+    
+    //[self loadClubRides:9];  
+    //[self loadAthleteRides:@"jonkroll"];
+
     [self loadAllRides];
 }
 

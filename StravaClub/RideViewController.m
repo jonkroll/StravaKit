@@ -26,6 +26,7 @@
 @synthesize rideID = _rideID;
 
 @synthesize name = _name;
+@synthesize athleteName = _athleteName;
 @synthesize startDate = _startDate;
 @synthesize distance = _distance;
 @synthesize movingTime = _movingTime;
@@ -54,7 +55,7 @@
 }
 
 - (void)loadRideDetails:(int)rideID
-{
+{    
     self.rideID = rideID;
 
     // cancel any previous requests
@@ -63,9 +64,9 @@
         
     if (IDIOM == IPHONE) {
     
-        // scrollView width = 960 (320 * 3 = three sliding content panels)
-        self.scrollView.contentSize = CGSizeMake(960, self.scrollView.frame.size.height);
-        
+        int numScrollPanels = 2;
+        self.scrollView.contentSize = CGSizeMake(320 * numScrollPanels, 
+                                                 self.scrollView.frame.size.height);
         
         // (1) set up map view
         
@@ -81,7 +82,7 @@
         self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
         [self.scrollView addSubview:self.mapButton];
         [self.scrollView bringSubviewToFront:self.mapButton];
-        //[mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
 
         
         // (2) set up elevation chart
@@ -92,12 +93,12 @@
                
         // (3) set up eforts table
         
-        self.effortsTable = [[UITableView alloc] init];
-        self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
-        self.effortsTable.delegate = self;
-        self.effortsTable.dataSource = self;
-
-        [self.scrollView addSubview:self.effortsTable];
+//        self.effortsTable = [[UITableView alloc] init];
+//        self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
+//        self.effortsTable.delegate = self;
+//        self.effortsTable.dataSource = self;
+//
+//        [self.scrollView addSubview:self.effortsTable];
 
         // show spinner
         if (![MBProgressHUD HUDForView:self.view]) {
@@ -146,6 +147,8 @@
                 [self showRideDetails:ride];
                 self.actionButton.enabled = YES;                
             }
+        
+            [self hideSpinnerIfDone];
         
         })];
     
@@ -206,6 +209,8 @@
                 [self.chartWebView setHidden:NO];
                 
             }
+        
+            [self hideSpinnerIfDone];
         }) 
     ];
     
@@ -237,34 +242,34 @@
     }   
 }
 
-//- (void)decrementPendingRequests
-//{
-//    _pendingRequests--;
-//    
-//    if (_pendingRequests <= 0) {
-//        
-//        if (IDIOM == IPHONE) {
-//
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//            
-//            // set up page control
-//            self.pageControl = [[DDPageControl alloc] init];    
-//            self.pageControl.center = CGPointMake(160,240);
-//            self.pageControl.numberOfPages = 3;
-//            self.pageControl.currentPage = 0;
-//            
-//            [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
-//            [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
-//            [self.pageControl setOnColor:[UIColor lightGrayColor]];
-//            [self.pageControl setOffColor:[UIColor lightGrayColor]];
-//            [self.pageControl setIndicatorDiameter: 10.0f];
-//            [self.pageControl setIndicatorSpace: 10.0f];
-//            
-//            
-//            [self.view addSubview:self.pageControl];
-//        }
-//    }    
-//}
+- (void)hideSpinnerIfDone
+{
+    if ([[StravaManager pendingRequests] count] == 0) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        if (IDIOM == IPHONE && !self.pageControl) {
+            [self showPageControl];
+        }
+    }
+}
+
+- (void)showPageControl
+{
+    self.pageControl = [[DDPageControl alloc] init];    
+    self.pageControl.center = CGPointMake(160,240);
+    self.pageControl.numberOfPages = 2;
+    self.pageControl.currentPage = 0;
+                
+    [self.pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
+    [self.pageControl setType: DDPageControlTypeOnFullOffEmpty];
+    [self.pageControl setOnColor:[UIColor lightGrayColor]];
+    [self.pageControl setOffColor:[UIColor lightGrayColor]];
+    [self.pageControl setIndicatorDiameter: 10.0f];
+    [self.pageControl setIndicatorSpace: 10.0f];
+    
+    [self.view addSubview:self.pageControl];    
+}
+
 
 - (void)showRideDetails:(StravaRide *)ride {
 
@@ -299,8 +304,15 @@
     
     
     self.name.text          = ride.name;
+    self.athleteName.text   = [NSString stringWithFormat:@"Ridden by %@", ride.athlete.name];
     self.location.text      = [NSString stringWithFormat:@"Near %@", ride.location];       
-    self.startDate.text     = [NSString stringWithFormat:@"Ridden by %@ at %@ on %@", ride.athlete.name, activityTime, activityDate];            
+    
+    self.startDate.text     = [NSString stringWithFormat:@"%@ on %@", activityTime, activityDate];         
+    if (IDIOM == IPAD) {
+        // add athlete name on the same line as the date in the ipad version
+        self.startDate.text = [NSString stringWithFormat:@"Ridden by %@ at %@", ride.athlete.name, self.startDate.text]; 
+    } 
+    
     self.distance.text      = [NSString stringWithFormat:@"%.1f miles", ride.distanceInMiles];
     self.movingTime.text    = movingTimeText;
     self.averageSpeed.text  = [NSString stringWithFormat:@"%.1f", (ride.averageSpeed * 60 * 60 / 1609.344)];  // have to convert meters/sec to mph    
@@ -531,7 +543,7 @@
             
         self.popoverActionsheet = [[UIActionSheet alloc] initWithTitle:nil 
                                                               delegate:self 
-                                                     cancelButtonTitle:nil 
+                                                     cancelButtonTitle:@"Cancel" 
                                                 destructiveButtonTitle:nil 
                                                      otherButtonTitles:nil];
         
@@ -554,19 +566,19 @@
     NSURL *rideURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.strava.com/rides/%d", self.rideID]];
     
     switch (buttonIndex) {
-        case 0: {
+        case 1: {
             // email link to ride
             if ([MFMailComposeViewController canSendMail]) {
                 [self showEmailModalView];
             }
             break;
         }
-        case 1: {
+        case 2: {
             // open in Safari
             [[UIApplication sharedApplication] openURL:rideURL];
             break;
         }
-        case 2: {
+        case 3: {
             // open in Chrome
             
             NSString *scheme = rideURL.scheme;
