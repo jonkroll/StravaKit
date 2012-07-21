@@ -258,6 +258,7 @@
             <relationships>
                 <relationship kind="action" name="barButtonItemAction:"/>
                 <relationship kind="outlet" name="actionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="athleteName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="averageSpeed" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="chartWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="distance" candidateClass="UILabel"/>
