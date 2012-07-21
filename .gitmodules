@@ -1,0 +1,6 @@
+[submodule "EGOTableViewPullRefresh"]
+	path = EGOTableViewPullRefresh
+	url = git://github.com/enormego/EGOTableViewPullRefresh.git
+[submodule "DDPageControl"]
+	path = DDPageControl
+	url = git://github.com/ddeville/DDPageControl.git
