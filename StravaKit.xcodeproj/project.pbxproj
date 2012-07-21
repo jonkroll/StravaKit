@@ -59,13 +59,15 @@
 		6E705B7F1573D7B100609596 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6E705B801573D7B100609596 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6E705BAD1575D1F200609596 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		6E81FAB4156CC7960063471D /* StravaClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StravaClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E81FAB4156CC7960063471D /* StravaKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StravaKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E81FAB8156CC7960063471D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6E81FABA156CC7960063471D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6E81FABC156CC7960063471D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6E81FB17156EF4F50063471D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6EB63DF01576A3DC00041239 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		6EC22DAC15B342C600F3B260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6ECCAEF015BA87E500B56B88 /* StravaKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "StravaKit-Info.plist"; path = "Demo App/Supporting Files/StravaKit-Info.plist"; sourceTree = SOURCE_ROOT; };
+		6ECCAEF115BA87E500B56B88 /* StravaKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StravaKit-Prefix.pch"; path = "Demo App/Supporting Files/StravaKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		6EE0902415BA769100FBA73F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = "Demo App/Images/Icon.png"; sourceTree = SOURCE_ROOT; };
 		6EE0902515BA769100FBA73F /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Demo App/Images/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		6EE0902815BA76A200FBA73F /* chart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = chart.html; path = "Demo App/Charting/chart.html"; sourceTree = SOURCE_ROOT; };
@@ -86,8 +88,6 @@
 		6EE0905215BA779300FBA73F /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard_iPhone.storyboard; path = "Demo App/Storyboard/MainStoryboard_iPhone.storyboard"; sourceTree = SOURCE_ROOT; };
 		6EE0905715BA77F900FBA73F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		6EE0905815BA77F900FBA73F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Demo App/Supporting Files/main.m"; sourceTree = SOURCE_ROOT; };
-		6EE0905915BA77F900FBA73F /* StravaClub-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "StravaClub-Info.plist"; path = "Demo App/Supporting Files/StravaClub-Info.plist"; sourceTree = SOURCE_ROOT; };
-		6EE0905A15BA77F900FBA73F /* StravaClub-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StravaClub-Prefix.pch"; path = "Demo App/Supporting Files/StravaClub-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		6EE0907B15BA7B0E00FBA73F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		6EE0907C15BA7B0E00FBA73F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		6EE0907E15BA7B0E00FBA73F /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 		6E81FAB5156CC7960063471D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6E81FAB4156CC7960063471D /* StravaClub.app */,
+				6E81FAB4156CC7960063471D /* StravaKit.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,10 +235,10 @@
 		6E81FABF156CC7960063471D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6ECCAEF015BA87E500B56B88 /* StravaKit-Info.plist */,
+				6ECCAEF115BA87E500B56B88 /* StravaKit-Prefix.pch */,
 				6EE0905515BA77F900FBA73F /* en.lproj */,
 				6EE0905815BA77F900FBA73F /* main.m */,
-				6EE0905915BA77F900FBA73F /* StravaClub-Info.plist */,
-				6EE0905A15BA77F900FBA73F /* StravaClub-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -351,9 +351,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6E81FAB3156CC7960063471D /* StravaClub */ = {
+		6E81FAB3156CC7960063471D /* StravaKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaClub" */;
+			buildConfigurationList = 6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaKit" */;
 			buildPhases = (
 				6E81FAB0156CC7960063471D /* Sources */,
 				6E81FAB1156CC7960063471D /* Frameworks */,
@@ -363,9 +363,9 @@
 			);
 			dependencies = (
 			);
-			name = StravaClub;
+			name = StravaKit;
 			productName = StravaClub;
-			productReference = 6E81FAB4156CC7960063471D /* StravaClub.app */;
+			productReference = 6E81FAB4156CC7960063471D /* StravaKit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -375,9 +375,9 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "Optionetics, Inc.";
+				ORGANIZATIONNAME = "";
 			};
-			buildConfigurationList = 6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaClub" */;
+			buildConfigurationList = 6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -389,7 +389,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6E81FAB3156CC7960063471D /* StravaClub */,
+				6E81FAB3156CC7960063471D /* StravaKit */,
 			);
 		};
 /* End PBXProject section */
@@ -516,8 +516,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo App/Supporting Files/StravaClub-Prefix.pch";
-				INFOPLIST_FILE = "Demo App/Supporting Files/StravaClub-Info.plist";
+				GCC_PREFIX_HEADER = "Demo App/Supporting Files/StravaKit-Prefix.pch";
+				INFOPLIST_FILE = "Demo App/Supporting Files/StravaKit-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -528,8 +528,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo App/Supporting Files/StravaClub-Prefix.pch";
-				INFOPLIST_FILE = "Demo App/Supporting Files/StravaClub-Info.plist";
+				GCC_PREFIX_HEADER = "Demo App/Supporting Files/StravaKit-Prefix.pch";
+				INFOPLIST_FILE = "Demo App/Supporting Files/StravaKit-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -539,7 +539,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaClub" */ = {
+		6E81FAAE156CC7950063471D /* Build configuration list for PBXProject "StravaKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6E81FAD6156CC7960063471D /* Debug */,
@@ -548,7 +548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaClub" */ = {
+		6E81FAD8156CC7960063471D /* Build configuration list for PBXNativeTarget "StravaKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6E81FAD9156CC7960063471D /* Debug */,

@@ -1,9 +1,9 @@
 //
 //  MapAnnotation.h
-//  StravaClub
+//  StravaKit
 //
-//  Created by Jon Kroll on 7/7/12.
-//  Copyright (c) 2012 Optionetics, Inc. All rights reserved.
+//  Created by Jon Kroll.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

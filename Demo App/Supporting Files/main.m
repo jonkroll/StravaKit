@@ -1,6 +1,6 @@
 //
 //  main.m
-//  StravaClub
+//  StravaKit
 //
 //  Created by Jon Kroll.
 //  Copyright (c) 2012. All rights reserved.
