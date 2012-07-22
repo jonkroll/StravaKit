@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "RideViewController.h"
-#import "MBProgressHUD.h"
 #import "StravaEffort.h"
 #import "MapAnnotation.h"
 #import "MKMapView+StravaManager.h"
@@ -100,10 +99,10 @@
 //
 //        [self.scrollView addSubview:self.effortsTable];
 
-        // show spinner
-        if (![MBProgressHUD HUDForView:self.view]) {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        }
+        // show spinner - TODO
+//        if (![MBProgressHUD HUDForView:self.view]) {
+//            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        }
         
     } 
     
@@ -245,7 +244,7 @@
 - (void)hideSpinnerIfDone
 {
     if ([[StravaManager pendingRequests] count] == 0) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        //        [MBProgressHUD hideHUDForView:self.view animated:YES];  // TODO
         
         if (IDIOM == IPHONE && !self.pageControl) {
             [self showPageControl];
