@@ -122,13 +122,8 @@
         [self.effortsTable setHidden:YES];
         
 
-        // add empty view on top of the mapView so it can respond to touch event
-        
-        if (CGRectIsEmpty(_originalMapFrame)) {
-            _originalMapFrame = self.mapView.frame;
-        }
-        
-        self.mapButton = [[UIButton alloc] initWithFrame:_originalMapFrame];
+        // add empty view on top of the mapView so it can respond to touch event        
+        self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
         [self.view addSubview:self.mapButton];
         [self.view bringSubviewToFront:self.mapButton];
         [self.mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
@@ -287,7 +282,6 @@
     [dateFormatter setDateFormat:@"EEEE MMMM dd, yyyy "];          
     NSString *activityDate = [dateFormatter stringFromDate:ride.startDateLocal];
     
-    
     NSTimeInterval movingTime = ride.movingTime;
     
     int hours = floor(movingTime / (60 * 60));
@@ -367,6 +361,8 @@
 
         [self.view bringSubviewToFront:self.mapView];
 
+        _originalMapFrame = self.mapView.frame;
+        
         // expand map to cover entire view controller        
         [UIView animateWithDuration:0.2
                               delay: 0.0
@@ -537,24 +533,24 @@
         // If the actionsheet is visible it is dismissed, if it not visible a new one is created
         if ([self.popoverActionsheet isVisible]) {
             [self.popoverActionsheet dismissWithClickedButtonIndex:[self.popoverActionsheet cancelButtonIndex] animated:YES];
-            return;
-        }
+        } else {
             
-        self.popoverActionsheet = [[UIActionSheet alloc] initWithTitle:nil 
-                                                              delegate:self 
-                                                     cancelButtonTitle:@"Cancel" 
-                                                destructiveButtonTitle:nil 
-                                                     otherButtonTitles:nil];
-        
-        [self.popoverActionsheet addButtonWithTitle:@"Email Link to This Ride"];
-        [self.popoverActionsheet addButtonWithTitle:@"Open in Safari"];
-        
-        // only show Open in Chomr butter if user has Chrome browser installed
-        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome:"]]) {
-            [self.popoverActionsheet addButtonWithTitle:@"Open in Chrome"];
+            self.popoverActionsheet = [[UIActionSheet alloc] initWithTitle:nil 
+                                                                  delegate:self 
+                                                         cancelButtonTitle:@"Cancel" 
+                                                    destructiveButtonTitle:nil 
+                                                         otherButtonTitles:nil];
+            
+            [self.popoverActionsheet addButtonWithTitle:@"Email Link to This Ride"];
+            [self.popoverActionsheet addButtonWithTitle:@"Open in Safari"];
+            
+            // show "Open in Chrome" button if user has Chrome browser app installed
+            if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome:"]]) {
+                [self.popoverActionsheet addButtonWithTitle:@"Open in Chrome"];
+            }
+            
+            [self.popoverActionsheet showFromBarButtonItem:sender animated:YES];
         }
-        
-        [self.popoverActionsheet showFromBarButtonItem:sender animated:YES];
     }
 }
 

@@ -97,7 +97,11 @@
                 athlete.name = [athleteInfo objectForKey:@"name"];
                 athlete.username = [athleteInfo objectForKey:@"username"];        
                 ride.athlete = athlete;
-
+                
+                ride.description = [rideInfo objectForKey:@"description"];
+                ride.commute = [[rideInfo objectForKey:@"commute"] boolValue];
+                ride.trainer = [[rideInfo objectForKey:@"trainer"] boolValue];
+                
                 completionHandler(ride, nil);
             }
         }

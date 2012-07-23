@@ -23,6 +23,7 @@
 		6E9B99BB15BC6DCA001A158E /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B315BC6DCA001A158E /* grayArrow@2x.png */; };
 		6E9B99BC15BC6DCA001A158E /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B415BC6DCA001A158E /* whiteArrow.png */; };
 		6E9B99BD15BC6DCA001A158E /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */; };
+		6E9CAA1E15BCC109009F2354 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CAA1D15BCC109009F2354 /* README.md */; };
 		6EC22DAD15B342C600F3B260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC22DAC15B342C600F3B260 /* MessageUI.framework */; };
 		6EE0902615BA769100FBA73F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902415BA769100FBA73F /* Icon.png */; };
 		6EE0902715BA769100FBA73F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902515BA769100FBA73F /* Icon@2x.png */; };
@@ -52,8 +53,6 @@
 
 /* Begin PBXFileReference section */
 		6E705B6F157289DD00609596 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		6E705B7F1573D7B100609596 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		6E705B801573D7B100609596 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6E705BAD1575D1F200609596 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6E81FAB4156CC7960063471D /* StravaKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StravaKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E81FAB8156CC7960063471D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -72,6 +71,7 @@
 		6E9B99B315BC6DCA001A158E /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grayArrow@2x.png"; path = "Demo App/EGOTableViewPullRefresh/Resources/grayArrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		6E9B99B415BC6DCA001A158E /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow.png"; sourceTree = SOURCE_ROOT; };
 		6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		6E9CAA1D15BCC109009F2354 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6EC22DAC15B342C600F3B260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6ECCAEF015BA87E500B56B88 /* StravaKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "StravaKit-Info.plist"; path = "Demo App/Supporting Files/StravaKit-Info.plist"; sourceTree = SOURCE_ROOT; };
 		6ECCAEF115BA87E500B56B88 /* StravaKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StravaKit-Prefix.pch"; path = "Demo App/Supporting Files/StravaKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -194,15 +194,6 @@
 			path = "Demo App/EGOTableViewPullRefresh/EGOTableViewPullRefresh/Resources";
 			sourceTree = SOURCE_ROOT;
 		};
-		6E705B7E1573D7B100609596 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				6E705B7F1573D7B100609596 /* MBProgressHUD.h */,
-				6E705B801573D7B100609596 /* MBProgressHUD.m */,
-			);
-			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
 		6E705B831573D80A00609596 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,7 +219,7 @@
 		6E81FAA9156CC7950063471D = {
 			isa = PBXGroup;
 			children = (
-				6E705B7E1573D7B100609596 /* MBProgressHUD */,
+				6E9CAA1D15BCC109009F2354 /* README.md */,
 				6E81FAFA156E1D870063471D /* StravaKit */,
 				6E81FABE156CC7960063471D /* Demo App */,
 				6E81FAB7156CC7960063471D /* Frameworks */,
@@ -410,6 +401,7 @@
 				6E9B99BB15BC6DCA001A158E /* grayArrow@2x.png in Resources */,
 				6E9B99BC15BC6DCA001A158E /* whiteArrow.png in Resources */,
 				6E9B99BD15BC6DCA001A158E /* whiteArrow@2x.png in Resources */,
+				6E9CAA1E15BCC109009F2354 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
