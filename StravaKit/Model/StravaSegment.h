@@ -23,4 +23,7 @@
 @property (nonatomic) CLLocationCoordinate2D endLatLong;
 @property (nonatomic) double elevationDifference;
 
+// parse NSDictionary for segment attributes and return a new StravaSegment object
++ (StravaSegment*)segmentFromDictionary:(NSDictionary*)segmentInfo;
+
 @end

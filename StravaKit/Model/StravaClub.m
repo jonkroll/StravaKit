@@ -7,6 +7,7 @@
 //
 
 #import "StravaClub.h"
+#import "NSDictionary+StravaManager.h"
 
 @implementation StravaClub
 

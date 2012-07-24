@@ -14,4 +14,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
 
+// parse NSDictionary for athlete attributes and return a new StravaAthlete object
++ (StravaAthlete*)athleteFromDictionary:(NSDictionary*)athleteInfo;
+
 @end

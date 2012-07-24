@@ -20,4 +20,7 @@
 
 @property (nonatomic, strong) StravaSegment* segment;
 
+// parse NSDictionary for effort attributes and return a new StravaEffort object
++ (StravaEffort*)effortFromDictionary:(NSDictionary*)effortInfo;
+
 @end

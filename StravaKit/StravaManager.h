@@ -19,6 +19,12 @@
 
 
 // data request methods
+
++ (void)fetchRideListWithCompletion:(void (^)(NSArray *rides, NSError* error))completionHandler
+                         usingCache:(BOOL)usingCache;
+
+
+
 + (void)fetchRideWithID:(int)rideID
              completion:(void (^)(StravaRide *ride, NSError* error))completionHandler;
 
@@ -29,8 +35,7 @@
               completion:(void (^)(NSArray *efforts, NSError *error))completionHandler;
 
 
-
-// queue management methods
+// request management methods
 + (NSMutableSet*)pendingRequests;
 + (void)cancelAllRequests;
 

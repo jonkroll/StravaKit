@@ -8,6 +8,7 @@
 
 #import "StravaManager.h"
 
+#define BASE_URL @"http://www.strava.com"
 
 @interface StravaManager ()
 
@@ -21,6 +22,8 @@
 
 @synthesize pendingRequests = _pendingRequests;
 @synthesize cache = _cache;
+
+#pragma mark - request management methods
 
 + (NSMutableSet*)pendingRequests
 {
@@ -47,12 +50,45 @@
     [[self pendingRequests] removeAllObjects];
 }
 
+
+#pragma mark - Data Request methods
+
++ (void)fetchRideListWithCompletion:(void (^)(NSArray *rides, NSError* error))completionHandler
+                         usingCache:(BOOL)usingCache
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides", BASE_URL];
+    
+    [StravaManager stravaAPIRequest:(NSString*)urlString
+                         usingCache:usingCache
+                            handler:^(id json, NSError *error) {
+    
+        if (completionHandler) {
+            if (error) {
+                completionHandler(nil, error);
+            } else {
+                
+                NSMutableArray *rides = [[NSMutableArray alloc] init];
+                NSDictionary *jsonDict = (NSDictionary*)json;
+                NSArray *jsonArray = [jsonDict objectForKey:@"rides"];
+                
+                for (NSDictionary *rideInfo in jsonArray) {
+                    StravaRide *ride = [StravaRide rideFromDictionary:rideInfo];
+                    [rides addObject:ride];
+                }
+                completionHandler([NSArray arrayWithArray:rides], nil);
+            }
+        }
+    }];
+}
+
+
 + (void)fetchRideWithID:(int)rideID 
       completion:(void (^)(StravaRide *ride, NSError *error))completionHandler
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://www.strava.com/api/v1/rides/%d", rideID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides/%d", BASE_URL, rideID];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString 
+                         usingCache:YES
                           handler:^(id json, NSError *error) {
                               
         if (completionHandler) {
@@ -62,45 +98,7 @@
                               
                 NSDictionary *jsonDict = (NSDictionary*)json;        
                 NSDictionary *rideInfo = [jsonDict objectForKey:@"ride"];
-
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];                  
-
-                // fill object
-                StravaRide *ride = [[StravaRide alloc] init];
-
-                ride.id = rideID;
-                ride.startDate = [rideInfo dateForKey:@"startDate"];
-                ride.startDateLocal = [rideInfo dateForKey:@"startDateLocal"];
-                ride.timeZoneOffset = [rideInfo intForKey:@"timeZoneOffset"];
-                ride.elapsedTime = [rideInfo intForKey:@"elapsedTime"];
-                ride.movingTime = [rideInfo intForKey:@"movingTime"];
-                ride.distanceInMeters = [rideInfo doubleForKey:@"distance"];
-                ride.distanceInMiles = [rideInfo doubleForKey:@"distance"]/ 1609.344;
-                ride.averageSpeed = [rideInfo doubleForKey:@"averageSpeed"];
-                ride.averageWatts = [rideInfo doubleForKey:@"averageWatts"];
-                ride.maximumSpeed = [rideInfo doubleForKey:@"maximumSpeed"];                
-                ride.elevationGainInMeters = [rideInfo intForKey:@"elevationGain"];
-                ride.elevationGainInFeet = [rideInfo intForKey:@"elevationGain"] / 0.3048;
-                ride.location = [rideInfo objectForKey:@"location"];
-                ride.name = [rideInfo objectForKey:@"name"];
-
-                NSDictionary* bikeInfo = [rideInfo objectForKey:@"bike"];                
-                StravaBike *bike = [[StravaBike alloc] init];
-                bike.id = [bikeInfo intForKey:@"id"];
-                bike.name = [bikeInfo objectForKey:@"name"];
-                ride.bike = bike;
-
-                NSDictionary* athleteInfo = [rideInfo objectForKey:@"athlete"];                
-                StravaAthlete *athlete = [[StravaAthlete alloc] init];
-                athlete.id = [athleteInfo intForKey:@"id"];
-                athlete.name = [athleteInfo objectForKey:@"name"];
-                athlete.username = [athleteInfo objectForKey:@"username"];        
-                ride.athlete = athlete;
-                
-                ride.description = [rideInfo objectForKey:@"description"];
-                ride.commute = [[rideInfo objectForKey:@"commute"] boolValue];
-                ride.trainer = [[rideInfo objectForKey:@"trainer"] boolValue];
+                StravaRide *ride = [StravaRide rideFromDictionary:rideInfo];
                 
                 completionHandler(ride, nil);
             }
@@ -111,9 +109,10 @@
 + (void)fetchRideStreams:(int)rideID
               completion:(void (^)(NSDictionary *streams, NSError *error))completionHandler
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://www.strava.com/api/v1/streams/%d?streams[]=latlng,distance,altitude", rideID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/streams/%d?streams[]=latlng,distance,altitude", BASE_URL, rideID];
     
-    [StravaManager stravaAPIRequest:(NSString*)urlString 
+    [StravaManager stravaAPIRequest:(NSString*)urlString
+                         usingCache:YES
                          handler:^(id json, NSError *error) {
           
          if(completionHandler) {
@@ -130,10 +129,11 @@
 + (void)fetchRideEfforts:(int)rideID
               completion:(void (^)(NSArray *efforts, NSError *error))completionHandler
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v2/rides/%d/efforts", rideID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/v2/rides/%d/efforts", BASE_URL, rideID];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString 
-                         handler:^(id json, NSError *error) {
+                         usingCache:YES 
+                            handler:^(id json, NSError *error) {
                              
          if (completionHandler) {
              if (error) {
@@ -145,38 +145,10 @@
                  NSDictionary *jsonDict = (NSDictionary*)json;        
                  NSArray *effortsArray = [jsonDict objectForKey:@"efforts"];
                  
-                 for (NSDictionary *effortInfo in effortsArray) {
+                 for (NSDictionary *effortDict in effortsArray) {
                      
-                     NSDictionary *effortDict = [effortInfo objectForKey:@"effort"];             
-                     StravaEffort *effort = [[StravaEffort alloc] init];
-                     
-                     effort.id = [effortDict intForKey:@"id"];
-                     effort.startDateLocal = [effortDict dateForKey:@"start_date_local"];
-                     effort.elapsedTime = [effortDict intForKey:@"elapsed_time"];
-                     effort.movingTime = [effortDict intForKey:@"moving_time"];
-                     effort.distance = [effortDict doubleForKey:@"distance"];
-                     effort.averageSpeed = [effortDict doubleForKey:@"average_speed"];
-                     
-                     
-                     NSDictionary *segmentDict = [effortInfo objectForKey:@"segment"];
-                     StravaSegment *segment = [[StravaSegment alloc] init];
-                     
-                     segment.id = [segmentDict intForKey:@"id"];
-                     segment.name = [segmentDict objectForKey:@"name"];
-                     segment.climbCategory = [segmentDict intForKey:@"climb_category"];
-                     segment.averageGrade = [segmentDict doubleForKey:@"average_grade"];
-                     segment.elevationDifference = [segmentDict doubleForKey:@"elev_difference"];
-                     
-                     NSArray *startLoc = [segmentDict objectForKey:@"start_latlng"];
-                     NSArray *endLoc = [segmentDict objectForKey:@"end_latlng"];
-                     
-                     segment.startLatLong = CLLocationCoordinate2DMake([[startLoc objectAtIndex:0] doubleValue],
-                                                                       [[startLoc objectAtIndex:1] doubleValue]);
-                     segment.endLatLong = CLLocationCoordinate2DMake([[endLoc objectAtIndex:0] doubleValue],
-                                                                     [[endLoc objectAtIndex:1] doubleValue]);
-                     
-                     effort.segment = segment;
-                     
+                     NSDictionary *effortInfo = [effortDict objectForKey:@"effort"];                                  
+                     StravaEffort *effort = [StravaEffort effortFromDictionary:effortInfo];
                      [outputArray addObject:effort];
                  }
     
@@ -250,14 +222,20 @@
 #pragma mark - Internal methods
 
 + (void)stravaAPIRequest:(NSString*)urlString 
+              usingCache:(BOOL)usingCache
                  handler:(void (^)(id json, NSError *error))completionHandler
 {
     NSLog(@"%@", urlString);
     
-    // first check if the response is already in the cache
-    id json = [[self cache] objectForKey:urlString];    
+    id json;
+    
+    if (usingCache) {
+        // check if the response is already in the cache
+        json = [[self cache] objectForKey:urlString];
+    }
+    
     if (json) {
-        
+    
         dispatch_async(dispatch_get_main_queue(), ^{ completionHandler(json, nil); });                            
     
     } else {

@@ -33,4 +33,8 @@
 @property (nonatomic) BOOL commute;
 @property (nonatomic) BOOL trainer;
 
+
+// parse NSDictionary for ride attributes and return a new StravaRide object
++ (StravaRide*)rideFromDictionary:(NSDictionary*)rideInfo;
+
 @end

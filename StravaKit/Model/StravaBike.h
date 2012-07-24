@@ -20,4 +20,7 @@
 
 @property (nonatomic) int athleteId;
 
+// parse NSDictionary for bike attributes and return a new StravaBike object
++ (StravaBike*)bikeFromDictionary:(NSDictionary*)bikeInfo;
+
 @end

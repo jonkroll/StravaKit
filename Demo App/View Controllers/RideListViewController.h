@@ -18,7 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 
-- (void)loadClubRides:(int)clubID;
-- (void)loadAthleteRides:(NSString*)username;
+- (void)loadAllRides;
+//- (void)loadClubRides:(int)clubID;
+//- (void)loadAthleteRides:(NSString*)username;
 
 @end

@@ -28,7 +28,6 @@
 		6EE0902615BA769100FBA73F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902415BA769100FBA73F /* Icon.png */; };
 		6EE0902715BA769100FBA73F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902515BA769100FBA73F /* Icon@2x.png */; };
 		6EE0902C15BA76A200FBA73F /* chart.html in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902815BA76A200FBA73F /* chart.html */; };
-		6EE0903615BA76B400FBA73F /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903115BA76B400FBA73F /* MasterViewController.m */; };
 		6EE0903715BA76B400FBA73F /* RideListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903315BA76B400FBA73F /* RideListViewController.m */; };
 		6EE0903815BA76B400FBA73F /* RideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903515BA76B400FBA73F /* RideViewController.m */; };
 		6EE0903D15BA76C600FBA73F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903A15BA76C600FBA73F /* AppDelegate.m */; };
@@ -81,8 +80,6 @@
 		6EE0902915BA76A200FBA73F /* g.line-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "g.line-min.js"; path = "Demo App/Charting/g.line-min.js"; sourceTree = SOURCE_ROOT; };
 		6EE0902A15BA76A200FBA73F /* g.raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "g.raphael-min.js"; path = "Demo App/Charting/g.raphael-min.js"; sourceTree = SOURCE_ROOT; };
 		6EE0902B15BA76A200FBA73F /* raphael-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "raphael-min.js"; path = "Demo App/Charting/raphael-min.js"; sourceTree = SOURCE_ROOT; };
-		6EE0903015BA76B400FBA73F /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = "Demo App/View Controllers/MasterViewController.h"; sourceTree = SOURCE_ROOT; };
-		6EE0903115BA76B400FBA73F /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = "Demo App/View Controllers/MasterViewController.m"; sourceTree = SOURCE_ROOT; };
 		6EE0903215BA76B400FBA73F /* RideListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RideListViewController.h; path = "Demo App/View Controllers/RideListViewController.h"; sourceTree = SOURCE_ROOT; };
 		6EE0903315BA76B400FBA73F /* RideListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RideListViewController.m; path = "Demo App/View Controllers/RideListViewController.m"; sourceTree = SOURCE_ROOT; };
 		6EE0903415BA76B400FBA73F /* RideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RideViewController.h; path = "Demo App/View Controllers/RideViewController.h"; sourceTree = SOURCE_ROOT; };
@@ -206,8 +203,6 @@
 		6E705B841573D81E00609596 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6EE0903015BA76B400FBA73F /* MasterViewController.h */,
-				6EE0903115BA76B400FBA73F /* MasterViewController.m */,
 				6EE0903215BA76B400FBA73F /* RideListViewController.h */,
 				6EE0903315BA76B400FBA73F /* RideListViewController.m */,
 				6EE0903415BA76B400FBA73F /* RideViewController.h */,
@@ -412,7 +407,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EE0903615BA76B400FBA73F /* MasterViewController.m in Sources */,
 				6EE0903715BA76B400FBA73F /* RideListViewController.m in Sources */,
 				6EE0903815BA76B400FBA73F /* RideViewController.m in Sources */,
 				6EE0903D15BA76C600FBA73F /* AppDelegate.m in Sources */,

@@ -14,7 +14,7 @@
     EGORefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;
     
-    NSMutableArray *_objects;
+    NSArray *_rides;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -88,6 +88,14 @@
     self.detailDescriptionLabel = nil;
 }
 
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if (IDIOM == IPHONE) {
@@ -100,64 +108,36 @@
 - (void)loadAllRides
 {    
     self.navigationItem.title = @"All Rides";
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides"];    
-    [self loadRides:urlString];
-}
-
-- (void)loadClubRides:(int)clubID
-{    
-    self.navigationItem.title = @"Club Rides";
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?clubId=%d", clubID];    
-    [self loadRides:urlString];
-}
-
-- (void)loadAthleteRides:(NSString*)username
-{    
-    self.navigationItem.title = @"Athlete Rides";
-    NSString *urlString = [NSString stringWithFormat:@"http://app.strava.com/api/v1/rides?athleteName=%@", username];    
-    [self loadRides:urlString];
-}
-
-- (void)loadRides:(NSString*)urlString
-{    
-    NSLog(@"%@",urlString);
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
+    [StravaManager fetchRideListWithCompletion:(^(NSArray *rides, NSError *error) {
         
-        NSURLResponse *response = nil;
-        NSError *error = nil;
-        NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
-                                                     returningResponse:&response
-                                                                 error:&error];
         if (error) {
-            NSLog(@"%@", error);
+            
         } else {
-        
-            NSDictionary *json = [NSJSONSerialization
-                                  JSONObjectWithData:receivedData
-                                  options:NSJSONReadingMutableLeaves
-                                  error:&error];
-            
-            if (error) {
-                NSLog(@"%@", error);                
-            } else {
-            
-                NSArray *rides = [json objectForKey:@"rides"];
-                _objects = [NSArray arrayWithArray:rides];
-                
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-                
-            }
+            _rides = rides;
+            [self.tableView performSelectorOnMainThread:@selector(reloadData) 
+                                             withObject:nil 
+                                          waitUntilDone:NO];
         }
-        
-        [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) withObject:nil waitUntilDone:NO];
-        
-    });
+    
+        [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
+                               withObject:nil 
+                            waitUntilDone:NO];
+    }) usingCache:NO];
 }
+
+//- (void)loadClubRides:(int)clubID
+//{    
+//    self.navigationItem.title = @"Club Rides";
+//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?clubId=%d", clubID];    
+//}
+
+//- (void)loadAthleteRides:(NSString*)username
+//{    
+//    self.navigationItem.title = @"Athlete Rides";
+//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?athleteName=%@", username];    
+//}
+
 
 #pragma mark - Table View
 
@@ -168,23 +148,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return _rides.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
-    NSDictionary *object = [_objects objectAtIndex:indexPath.row];
+    StravaRide *ride = (StravaRide*)[_rides objectAtIndex:indexPath.row];
     
     UILabel *textLabel = (UILabel*)[cell viewWithTag:1];                            
 
-    textLabel.text = [object objectForKey:@"name"];
-    //cell.detailTextLabel.text = @"";
-            
-    //cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [object objectForKey:@"id"]];
+    textLabel.text = ride.name;
     
-    [StravaManager fetchRideWithID:[[object objectForKey:@"id"] intValue]
+    [StravaManager fetchRideWithID:ride.id
                         completion:^(StravaRide *ride, NSError *error) {
                             
                             // todo:   maybe we should start loading them all once the tableview loads, instead of only loading the ones that appear on the screen
@@ -202,31 +179,25 @@
     if (IDIOM == IPAD) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSString *object = [_objects objectAtIndex:indexPath.row];
+        StravaRide *ride = (StravaRide*)[_rides objectAtIndex:indexPath.row];
         
-        int rideID = [(NSNumber*)[(NSDictionary *)object objectForKey:@"id"] intValue];
-
         UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
 
         RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
         
-        [vc loadRideDetails:rideID];
+        [vc loadRideDetails:ride.id];
         
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
-
     if ([[segue identifier] isEqualToString:@"ShowRide"]) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSString *object = [_objects objectAtIndex:indexPath.row];
-                
-        int rideID = [(NSNumber*)[(NSDictionary *)object objectForKey:@"id"] intValue];
+        StravaRide *ride = (StravaRide*)[_rides objectAtIndex:indexPath.row];
         
-        [(RideViewController *)[segue destinationViewController] setRideID:rideID];
+        [(RideViewController *)[segue destinationViewController] setRideID:ride.id];
         
     }
 }
