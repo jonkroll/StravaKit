@@ -155,54 +155,19 @@
                 // handle error somehow
             } else {
 
+                // map
                 MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
-            
+                self.routeLine = polyline;
                 [self.mapView removeOverlays:[self.mapView overlays]];
                 [self.mapView removeAnnotations:[self.mapView annotations]];
-            
-                self.routeLine = polyline;
-                [self.mapView addOverlay:self.routeLine];    
-                
-                
-                NSArray *firstPoint = (NSArray*)[[streams objectForKey:@"latlng"] objectAtIndex:0];
-                NSArray *lastPoint  = (NSArray*)[[streams objectForKey:@"latlng"] lastObject];
-                
-                
-                CLLocationCoordinate2D startCoordinate = CLLocationCoordinate2DMake(
-                                                [[firstPoint objectAtIndex:0] doubleValue], 
-                                                [[firstPoint objectAtIndex:1] doubleValue]);
-                
-                MapAnnotation *startAnnotation = [[MapAnnotation alloc] initWithCoordinate:startCoordinate
-                                                                                   withTag:0
-                                                                                 withTitle:nil 
-                                                                              withSubtitle:nil];
-
-                
-                
-                CLLocationCoordinate2D endCoordinate = CLLocationCoordinate2DMake(
-                                                [[lastPoint objectAtIndex:0] doubleValue], 
-                                                [[lastPoint objectAtIndex:1] doubleValue]);
-
-                
-                MapAnnotation *endAnnotation = [[MapAnnotation alloc] initWithCoordinate:endCoordinate
-                                                                                   withTag:1
-                                                                                 withTitle:nil 
-                                                                              withSubtitle:nil];
-
-                
-                NSArray *annotations = [NSArray arrayWithObjects:startAnnotation, endAnnotation, nil];
-                
-                
-                [self.mapView addAnnotations:annotations];
-                
+                [self.mapView addRouteLine:polyline showEndpoints:YES];
                 [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
-
                 [self.mapView setHidden:NO];
                 
                 
+                // elevation chart
                 [self.chartWebView loadHTMLString:[self buildElevationChartHTMLFromStreams:streams] baseURL:nil];
                 [self.chartWebView setHidden:NO];
-                
             }
         
             [self hideSpinnerIfDone];
@@ -381,7 +346,16 @@
         
         UIViewController *vc = [[UIViewController alloc] init];
         
-        [self.navigationController pushViewController:vc animated:NO];
+        MKMapView * mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        [mapView setDelegate:self];
+                
+        [mapView addRouteLine:self.routeLine showEndpoints:YES];
+        [mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
+
+        vc.navigationItem.title = self.name.text;
+        [vc.view addSubview:mapView];
+        [self.navigationController pushViewController:vc animated:YES];
+
     }  
 }
 
@@ -491,11 +465,12 @@
         
         int chartHeight, chartWidth;
         if (IDIOM == IPAD) {
+            // iPad
             chartWidth  = 640;
             chartHeight = 160;
-            
         } else {
-            chartWidth  = 280;        
+            // iPhone
+            chartWidth  = 260;        
             chartHeight = 120;
         }
         

@@ -24,6 +24,7 @@
 		6E9B99BC15BC6DCA001A158E /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B415BC6DCA001A158E /* whiteArrow.png */; };
 		6E9B99BD15BC6DCA001A158E /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */; };
 		6E9CAA1E15BCC109009F2354 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CAA1D15BCC109009F2354 /* README.md */; };
+		6E9CAA2F15C09758009F2354 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9CAA2E15C09758009F2354 /* MapAnnotation.m */; };
 		6EC22DAD15B342C600F3B260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC22DAC15B342C600F3B260 /* MessageUI.framework */; };
 		6EE0902615BA769100FBA73F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902415BA769100FBA73F /* Icon.png */; };
 		6EE0902715BA769100FBA73F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0902515BA769100FBA73F /* Icon@2x.png */; };
@@ -31,7 +32,6 @@
 		6EE0903715BA76B400FBA73F /* RideListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903315BA76B400FBA73F /* RideListViewController.m */; };
 		6EE0903815BA76B400FBA73F /* RideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903515BA76B400FBA73F /* RideViewController.m */; };
 		6EE0903D15BA76C600FBA73F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903A15BA76C600FBA73F /* AppDelegate.m */; };
-		6EE0903E15BA76C600FBA73F /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0903C15BA76C600FBA73F /* MapAnnotation.m */; };
 		6EE0905315BA779300FBA73F /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0905115BA779300FBA73F /* MainStoryboard_iPad.storyboard */; };
 		6EE0905415BA779300FBA73F /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0905215BA779300FBA73F /* MainStoryboard_iPhone.storyboard */; };
 		6EE0905B15BA77F900FBA73F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0905615BA77F900FBA73F /* InfoPlist.strings */; };
@@ -71,6 +71,8 @@
 		6E9B99B415BC6DCA001A158E /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow.png"; sourceTree = SOURCE_ROOT; };
 		6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		6E9CAA1D15BCC109009F2354 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		6E9CAA2D15C09758009F2354 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnnotation.h; path = StravaKit/MapAnnotation.h; sourceTree = SOURCE_ROOT; };
+		6E9CAA2E15C09758009F2354 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAnnotation.m; path = StravaKit/MapAnnotation.m; sourceTree = SOURCE_ROOT; };
 		6EC22DAC15B342C600F3B260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6ECCAEF015BA87E500B56B88 /* StravaKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "StravaKit-Info.plist"; path = "Demo App/Supporting Files/StravaKit-Info.plist"; sourceTree = SOURCE_ROOT; };
 		6ECCAEF115BA87E500B56B88 /* StravaKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StravaKit-Prefix.pch"; path = "Demo App/Supporting Files/StravaKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -86,8 +88,6 @@
 		6EE0903515BA76B400FBA73F /* RideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RideViewController.m; path = "Demo App/View Controllers/RideViewController.m"; sourceTree = SOURCE_ROOT; };
 		6EE0903915BA76C600FBA73F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Demo App/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		6EE0903A15BA76C600FBA73F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "Demo App/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
-		6EE0903B15BA76C600FBA73F /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnnotation.h; path = "Demo App/MapAnnotation.h"; sourceTree = SOURCE_ROOT; };
-		6EE0903C15BA76C600FBA73F /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAnnotation.m; path = "Demo App/MapAnnotation.m"; sourceTree = SOURCE_ROOT; };
 		6EE0905115BA779300FBA73F /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard_iPad.storyboard; path = "Demo App/Storyboard/MainStoryboard_iPad.storyboard"; sourceTree = SOURCE_ROOT; };
 		6EE0905215BA779300FBA73F /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard_iPhone.storyboard; path = "Demo App/Storyboard/MainStoryboard_iPhone.storyboard"; sourceTree = SOURCE_ROOT; };
 		6EE0905715BA77F900FBA73F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -256,8 +256,6 @@
 				6E81FABF156CC7960063471D /* Supporting Files */,
 				6EE0903915BA76C600FBA73F /* AppDelegate.h */,
 				6EE0903A15BA76C600FBA73F /* AppDelegate.m */,
-				6EE0903B15BA76C600FBA73F /* MapAnnotation.h */,
-				6EE0903C15BA76C600FBA73F /* MapAnnotation.m */,
 			);
 			name = "Demo App";
 			path = StravaClub;
@@ -280,6 +278,8 @@
 				6EB63DEF1575F77600041239 /* Model */,
 				6EE090BF15BA7DFF00FBA73F /* MKMapView+StravaManager.h */,
 				6EE090C015BA7DFF00FBA73F /* MKMapView+StravaManager.m */,
+				6E9CAA2D15C09758009F2354 /* MapAnnotation.h */,
+				6E9CAA2E15C09758009F2354 /* MapAnnotation.m */,
 				6EE090C115BA7DFF00FBA73F /* NSDictionary+StravaManager.h */,
 				6EE090C215BA7DFF00FBA73F /* NSDictionary+StravaManager.m */,
 				6EE090C315BA7DFF00FBA73F /* StravaManager.h */,
@@ -410,7 +410,6 @@
 				6EE0903715BA76B400FBA73F /* RideListViewController.m in Sources */,
 				6EE0903815BA76B400FBA73F /* RideViewController.m in Sources */,
 				6EE0903D15BA76C600FBA73F /* AppDelegate.m in Sources */,
-				6EE0903E15BA76C600FBA73F /* MapAnnotation.m in Sources */,
 				6EE0905C15BA77F900FBA73F /* main.m in Sources */,
 				6EE090B915BA7DF200FBA73F /* StravaAthlete.m in Sources */,
 				6EE090BA15BA7DF200FBA73F /* StravaBike.m in Sources */,
@@ -423,6 +422,7 @@
 				6EE090C715BA7DFF00FBA73F /* StravaManager.m in Sources */,
 				6E9B99A915BC6D71001A158E /* EGORefreshTableHeaderView.m in Sources */,
 				6E9B99AD15BC6D9B001A158E /* DDPageControl.m in Sources */,
+				6E9CAA2F15C09758009F2354 /* MapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

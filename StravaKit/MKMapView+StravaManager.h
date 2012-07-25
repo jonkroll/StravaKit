@@ -12,4 +12,6 @@
 
 - (void)setVisibleMapRectForAllOverlaysWithPadding:(UIEdgeInsets)insets;
 
+- (void)addRouteLine:(MKPolyline*)polyline showEndpoints:(BOOL)showEndpoints;
+
 @end
