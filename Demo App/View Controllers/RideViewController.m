@@ -256,9 +256,9 @@
     
     NSString *movingTimeText;
     if (hours > 0) {
-        movingTimeText = [NSString stringWithFormat:@"%d:%d:%d", hours, minutes, seconds];
+        movingTimeText = [NSString stringWithFormat:@"%d:%.2d:%.2d", hours, minutes, seconds];
     } else {
-        movingTimeText = [NSString stringWithFormat:@"%d:%d", minutes, seconds];
+        movingTimeText = [NSString stringWithFormat:@"%d:%.2d", minutes, seconds];
     }
     
     
