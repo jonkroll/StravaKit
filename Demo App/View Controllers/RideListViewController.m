@@ -127,7 +127,7 @@
         [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
                                withObject:nil 
                             waitUntilDone:NO];
-    }) usingCache:NO];
+    }) useCache:NO];
 }
 
 //- (void)loadClubRides:(int)clubID

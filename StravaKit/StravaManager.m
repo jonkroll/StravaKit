@@ -54,12 +54,12 @@
 #pragma mark - Data Request methods
 
 + (void)fetchRideListWithCompletion:(void (^)(NSArray *rides, NSError* error))completionHandler
-                         usingCache:(BOOL)usingCache
+                         useCache:(BOOL)useCache
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides", BASE_URL];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString
-                         usingCache:usingCache
+                         useCache:useCache
                             handler:^(id json, NSError *error) {
     
         if (completionHandler) {
@@ -88,7 +88,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides/%d", BASE_URL, rideID];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString 
-                         usingCache:YES
+                         useCache:YES
                           handler:^(id json, NSError *error) {
                               
         if (completionHandler) {
@@ -107,22 +107,36 @@
 }
 
 + (void)fetchRideStreams:(int)rideID
+              forStreams:(NSArray*)streams
               completion:(void (^)(NSDictionary *streams, NSError *error))completionHandler
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/streams/%d?streams[]=latlng,distance,altitude", BASE_URL, rideID];
+{    
+    NSMutableString *streamList = [[NSMutableString alloc] init];
+    for (id streamName in streams) {
+        if ([streamName isKindOfClass:[NSString class]]) {
+            if ([streamList length] > 0) {
+                [streamList appendString:@","];
+            }
+            [streamList appendString:streamName];
+        }
+    }
     
-    [StravaManager stravaAPIRequest:(NSString*)urlString
-                         usingCache:YES
-                         handler:^(id json, NSError *error) {
-          
-         if(completionHandler) {
-             if (error) {
-                 completionHandler(nil, error);
+    if ([streamList length] > 0) { 
+    
+        NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/streams/%d?streams[]=%@", BASE_URL, rideID, streamList];
+        
+        [StravaManager stravaAPIRequest:(NSString*)urlString
+                             useCache:YES
+                             handler:^(id json, NSError *error) {
+              
+             if(completionHandler) {
+                 if (error) {
+                     completionHandler(nil, error);
+                 }
+                 NSDictionary *streams = (NSDictionary*)json;
+                 completionHandler(streams, nil);
              }
-             NSDictionary *streams = (NSDictionary*)json;
-             completionHandler(streams, nil);
-         }
-    }];
+        }];
+    }
 
 }
 
@@ -132,7 +146,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/api/v2/rides/%d/efforts", BASE_URL, rideID];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString 
-                         usingCache:YES 
+                         useCache:YES
                             handler:^(id json, NSError *error) {
                              
          if (completionHandler) {
@@ -222,14 +236,14 @@
 #pragma mark - Internal methods
 
 + (void)stravaAPIRequest:(NSString*)urlString 
-              usingCache:(BOOL)usingCache
+              useCache:(BOOL)useCache
                  handler:(void (^)(id json, NSError *error))completionHandler
 {
     NSLog(@"%@", urlString);
     
     id json;
     
-    if (usingCache) {
+    if (useCache) {
         // check if the response is already in the cache
         json = [[self cache] objectForKey:urlString];
     }

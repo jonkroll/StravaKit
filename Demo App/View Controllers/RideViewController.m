@@ -147,8 +147,10 @@
         
         })];
     
-    
+    NSArray *streamsArray = [NSArray arrayWithObjects:@"latlng", @"distance", @"altitude", nil];
+        
     [StravaManager fetchRideStreams:rideID
+                         forStreams:streamsArray
                         completion:(^(NSDictionary *streams, NSError *error) {
 
             if (error) {
