@@ -61,6 +61,10 @@
     // override default text on back button when we go to detail view controller 
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	
+    // insert logo into nav bar
+    UIImageView* logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NavLogo.png"]];
+    self.navigationItem.titleView = logo;
+    
     if (_refreshHeaderView == nil) {
         
 		EGORefreshTableHeaderView *view = 

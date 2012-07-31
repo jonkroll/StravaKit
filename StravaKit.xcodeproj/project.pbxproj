@@ -23,6 +23,8 @@
 		6E9B99BB15BC6DCA001A158E /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B315BC6DCA001A158E /* grayArrow@2x.png */; };
 		6E9B99BC15BC6DCA001A158E /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B415BC6DCA001A158E /* whiteArrow.png */; };
 		6E9B99BD15BC6DCA001A158E /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */; };
+		6E9BAB2D15C7B38A0026414A /* NavLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9BAB2B15C7B38A0026414A /* NavLogo.png */; };
+		6E9BAB2E15C7B38A0026414A /* NavLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E9BAB2C15C7B38A0026414A /* NavLogo@2x.png */; };
 		6E9CAA1E15BCC109009F2354 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CAA1D15BCC109009F2354 /* README.md */; };
 		6E9CAA2F15C09758009F2354 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9CAA2E15C09758009F2354 /* MapAnnotation.m */; };
 		6EC22DAD15B342C600F3B260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC22DAC15B342C600F3B260 /* MessageUI.framework */; };
@@ -70,6 +72,8 @@
 		6E9B99B315BC6DCA001A158E /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grayArrow@2x.png"; path = "Demo App/EGOTableViewPullRefresh/Resources/grayArrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		6E9B99B415BC6DCA001A158E /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow.png"; sourceTree = SOURCE_ROOT; };
 		6E9B99B515BC6DCA001A158E /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "Demo App/EGOTableViewPullRefresh/Resources/whiteArrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		6E9BAB2B15C7B38A0026414A /* NavLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavLogo.png; path = "Demo App/Images/NavLogo.png"; sourceTree = SOURCE_ROOT; };
+		6E9BAB2C15C7B38A0026414A /* NavLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NavLogo@2x.png"; path = "Demo App/Images/NavLogo@2x.png"; sourceTree = SOURCE_ROOT; };
 		6E9CAA1D15BCC109009F2354 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6E9CAA2D15C09758009F2354 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnnotation.h; path = StravaKit/MapAnnotation.h; sourceTree = SOURCE_ROOT; };
 		6E9CAA2E15C09758009F2354 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAnnotation.m; path = StravaKit/MapAnnotation.m; sourceTree = SOURCE_ROOT; };
@@ -133,6 +137,8 @@
 		6E2DF5AC157C9FC400C24BFE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6E9BAB2B15C7B38A0026414A /* NavLogo.png */,
+				6E9BAB2C15C7B38A0026414A /* NavLogo@2x.png */,
 				6EE0902415BA769100FBA73F /* Icon.png */,
 				6EE0902515BA769100FBA73F /* Icon@2x.png */,
 			);
@@ -397,6 +403,8 @@
 				6E9B99BC15BC6DCA001A158E /* whiteArrow.png in Resources */,
 				6E9B99BD15BC6DCA001A158E /* whiteArrow@2x.png in Resources */,
 				6E9CAA1E15BCC109009F2354 /* README.md in Resources */,
+				6E9BAB2D15C7B38A0026414A /* NavLogo.png in Resources */,
+				6E9BAB2E15C7B38A0026414A /* NavLogo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
