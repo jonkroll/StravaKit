@@ -14,7 +14,7 @@
     EGORefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;
     
-    NSArray *_rides;
+    NSMutableArray *_rides;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -113,12 +113,16 @@
 {    
     self.navigationItem.title = @"All Rides";
     
-    [StravaManager fetchRideListWithCompletion:(^(NSArray *rides, NSError *error) {
+    //NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"jonkroll", @"athleteName", nil];
+    NSDictionary * parameters = nil;
+    
+    [StravaManager fetchRideListWithParameters:parameters
+                                    completion:(^(NSArray *rides, NSError *error) {
         
         if (error) {
-            
+            NSLog(@"ERROR: %@", error);
         } else {
-            _rides = rides;
+            _rides = [NSMutableArray arrayWithArray:rides];
             [self.tableView performSelectorOnMainThread:@selector(reloadData) 
                                              withObject:nil 
                                           waitUntilDone:NO];
@@ -127,19 +131,37 @@
         [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
                                withObject:nil 
                             waitUntilDone:NO];
+        
+        
+        // begin loading ride details
+        
+        for (int i=0; i < [rides count]; i++) {
+        
+            [StravaManager fetchRideWithID:[[rides objectAtIndex:i] id]
+                                completion:^(StravaRide *ride, NSError *error) {
+                                    
+                                    [_rides replaceObjectAtIndex:i withObject:ride];  // ride contains complete ride info now
+                                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                                    
+                                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:NO];
+                                    //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                                }];
+        }
+        
     }) useCache:NO];
 }
 
-//- (void)loadClubRides:(int)clubID
-//{    
-//    self.navigationItem.title = @"Club Rides";
-//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?clubId=%d", clubID];    
+//- (void)loadAthleteRides:(NSString*)username
+//{
+//    self.navigationItem.title = username;
+//
+//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?athleteName=%@", username];    
 //}
 
-//- (void)loadAthleteRides:(NSString*)username
-//{    
-//    self.navigationItem.title = @"Athlete Rides";
-//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?athleteName=%@", username];    
+//- (void)loadClubRides:(int)clubID
+//{
+//    self.navigationItem.title = @"Club Rides";
+//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?clubId=%d", clubID];
 //}
 
 
@@ -157,24 +179,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideCell"];
     
     StravaRide *ride = (StravaRide*)[_rides objectAtIndex:indexPath.row];
     
-    UILabel *textLabel = (UILabel*)[cell viewWithTag:1];                            
+    UILabel *textLabel = (UILabel*)[[cell contentView] viewWithTag:1];
+    UILabel *detailTextLabel = (UILabel*)[[cell contentView] viewWithTag:2];
 
     textLabel.text = ride.name;
     
-    [StravaManager fetchRideWithID:ride.id
-                        completion:^(StravaRide *ride, NSError *error) {
-                            
-                            // todo:   maybe we should start loading them all once the tableview loads, instead of only loading the ones that appear on the screen
-                            
-                            UILabel *detailTextLabel = (UILabel*)[cell viewWithTag:2];                            
-                            detailTextLabel.text = ride.location;
+    if (ride.location) {
+        detailTextLabel.text = [NSString stringWithFormat:@"%@ • %.1f mi", ride.location, ride.distanceInMiles];
+    } else {
+        detailTextLabel.text = @"";
+    }
 
-                        }];
-    
     return cell;
 }
 
