@@ -20,8 +20,9 @@
 
 // data request methods
 
-+ (void)fetchRideListWithCompletion:(void (^)(NSArray *rides, NSError* error))completionHandler
-                         useCache:(BOOL)useCache;
++ (void)fetchRideListWithParameters:(NSDictionary*)parameters
+                         completion:(void (^)(NSArray *rides, NSError* error))completionHandler
+                           useCache:(BOOL)useCache;
 
 + (void)fetchRideWithID:(int)rideID
              completion:(void (^)(StravaRide *ride, NSError* error))completionHandler;
@@ -35,6 +36,12 @@
 + (void)fetchRideStreams:(int)rideID
               forStreams:(NSArray*)streams
               completion:(void (^)(NSDictionary *streams, NSError *error))completionHandler;
+
+
+// TODO: add methods for rest of API data access
+//    https://stravasite-main.pbworks.com/w/page/51754105/Strava%20API%20Overview
+
+
 
 
 // request management methods

@@ -53,10 +53,25 @@
 
 #pragma mark - Data Request methods
 
-+ (void)fetchRideListWithCompletion:(void (^)(NSArray *rides, NSError* error))completionHandler
-                         useCache:(BOOL)useCache
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides", BASE_URL];
++ (void)fetchRideListWithParameters:(NSDictionary*)parameters
+                         completion:(void (^)(NSArray *rides, NSError* error))completionHandler
+                           useCache:(BOOL)useCache
+{    
+    NSMutableString *paramString = [[NSMutableString alloc] init];
+    
+    if (parameters) {
+        for (NSString *key in parameters.allKeys) {
+            NSString *keyValueString = [NSString stringWithFormat:@"%@=%@", key, [parameters valueForKey:key]];
+            
+            if ([paramString length] > 0) {
+                [paramString appendFormat:@"&%@", keyValueString];
+            } else {
+                [paramString appendFormat:@"?%@", keyValueString];
+            }
+        }
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides%@", BASE_URL, paramString];
     
     [StravaManager stravaAPIRequest:(NSString*)urlString
                          useCache:useCache
@@ -239,8 +254,6 @@
               useCache:(BOOL)useCache
                  handler:(void (^)(id json, NSError *error))completionHandler
 {
-    NSLog(@"%@", urlString);
-    
     id json;
     
     if (useCache) {
@@ -249,11 +262,13 @@
     }
     
     if (json) {
-    
-        dispatch_async(dispatch_get_main_queue(), ^{ completionHandler(json, nil); });                            
+
+        dispatch_async(dispatch_get_main_queue(), ^{ completionHandler(json, nil); });
     
     } else {
     
+        NSLog(@"%@", urlString);
+
         NSURL *url = [NSURL URLWithString:urlString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
