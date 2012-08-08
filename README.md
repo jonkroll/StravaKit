@@ -9,9 +9,10 @@ StravaKit Notes
 
 For iOS 5.0 and above.
 
-The *StravaManager* class provides static methods for fetching data and uses brocks-based callbacks for interacting wth the data once it has been received from the Strava API.  Here is an example usage:
+The `StravaManager` class provides static methods for fetching data and uses blocks-based callbacks for interacting wth the data once received from the Strava API.  Here is an example usage:
 
-```[StravaManager fetchRideWithID:rideID completion:(^(StravaRide *ride, NSError *error) {
+
+    [StravaManager fetchRideWithID:rideID completion:(^(StravaRide *ride, NSError *error) {
 
             if (error) {
                 NSLog(@"Error fetching ride data: @%", [error localizedDescription]);
@@ -20,8 +21,7 @@ The *StravaManager* class provides static methods for fetching data and uses bro
                 NSDate *startDate = ride.startDate;
                 // etc...
             }
-        })];
-```
+    })];
 
 
 Demo App Notes
