@@ -54,13 +54,13 @@ Credit to Open Source iOS Libraries used in the Demo App
 - [gRafael](http://g.raphaeljs.com/), a javascript library for for drawing charts, used in a UIWebView
 
 
-Areas for Improvement
+Future Development
 -------------
 
 * Complete implementation of StravaManager class for remaining Strava API v1 REST methods.
 
 
-Ideas for future enhancement to demo app:
+Ideas for future enhancement to Demo App:
 
 * Update demo app to support landscape orientation (for iPhone) and portrait (for iPad)
 * Switch from javascript charting to CorePlot-based charting
