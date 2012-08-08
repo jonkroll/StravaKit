@@ -33,15 +33,16 @@ The table view controller will show the fifty most recent rides that have been u
 
 Here are some screen shots:
 
-### iPad Version
+### Demo App (iPad Version)
 
 ![iPad Screenshot](https://github.com/downloads/jonkroll/StravaKit/stravakit-ipad-screenshot-1.png)
 
 
+### Demo App (iPhone Version)
 
-### iPhone Version
-
-
+![iPhone Screenshot 1](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-1.png)
+![iPhone Screenshot 2](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-2.png)
+![iPhone Screenshot 3](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-3.png)
 
 
 
