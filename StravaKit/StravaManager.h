@@ -18,8 +18,8 @@
 @interface StravaManager : NSObject
 
 
-// data request methods
-
+// the following parameters can be passed in the NSDictionary object:
+//     clubId, athleteId, athleteName, startDate, endDate, startId
 + (void)fetchRideListWithParameters:(NSDictionary*)parameters
                          completion:(void (^)(NSArray *rides, NSError* error))completionHandler
                            useCache:(BOOL)useCache;
@@ -40,8 +40,6 @@
 
 // TODO: add methods for rest of API data access
 //    https://stravasite-main.pbworks.com/w/page/51754105/Strava%20API%20Overview
-
-
 
 
 // request management methods
