@@ -35,6 +35,7 @@ Here are some screen shots:
 
 ### iPad Version
 
+![iPad Screenshot](https://github.com/downloads/jonkroll/StravaKit/stravakit-ipad-screenshot-1.png)
 
 
 
