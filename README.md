@@ -41,7 +41,9 @@ Here are some screen shots:
 ### Demo App (iPhone Version)
 
 ![iPhone Screenshot 1](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-1.png)
+
 ![iPhone Screenshot 2](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-2.png)
+
 ![iPhone Screenshot 3](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-3.png)
 
 
