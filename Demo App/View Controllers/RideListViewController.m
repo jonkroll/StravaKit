@@ -47,7 +47,7 @@
 
 - (void)configureView
 {
-    // Update the user interface for the detail item.
+    // Update the user interface for the detail item (iPad version)
 
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
@@ -109,13 +109,10 @@
     }
 }
 
-- (void)loadAllRides
+- (void)loadRidesWithParameters:(NSDictionary*)parameters
 {    
     self.navigationItem.title = @"All Rides";
-    
-    //NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"jonkroll", @"athleteName", nil];
-    NSDictionary * parameters = nil;
-    
+        
     [StravaManager fetchRideListWithParameters:parameters
                                     completion:(^(NSArray *rides, NSError *error) {
         
@@ -150,20 +147,6 @@
         
     }) useCache:NO];
 }
-
-//- (void)loadAthleteRides:(NSString*)username
-//{
-//    self.navigationItem.title = username;
-//
-//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?athleteName=%@", username];    
-//}
-
-//- (void)loadClubRides:(int)clubID
-//{
-//    self.navigationItem.title = @"Club Rides";
-//    NSString *urlString = [NSString stringWithFormat:@"%@/api/v1/rides?clubId=%d", clubID];
-//}
-
 
 #pragma mark - Table View
 
@@ -230,13 +213,16 @@
 - (void)reloadTableViewDataSource
 {    
 	_reloading = YES;    
-    
-    // examples of how to load different subsets of rides:
-    
-    //[self loadClubRides:9];  
-    //[self loadAthleteRides:@"jonkroll"];
+        
+    NSDictionary * parameters = nil;
 
-    [self loadAllRides];
+    // examples of how to load different subsets of rides:
+
+    //NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"9", @"clubId", nil];
+    //NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"jonkroll", @"athleteName", nil];
+    
+    
+    [self loadRidesWithParameters:parameters];
 }
 
 - (void)doneLoadingTableViewData
