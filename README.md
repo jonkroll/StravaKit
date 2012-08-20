@@ -33,14 +33,16 @@ The table view controller will show the fifty most recent rides that have been u
 
 Here are some screen shots:
 
-### iPad Version
+### Demo App (iPad Version)
+
+![iPad Screenshot](https://github.com/downloads/jonkroll/StravaKit/stravakit-ipad-screenshot-1.png)
 
 
+### Demo App (iPhone Version)
 
-
-### iPhone Version
-
-
+![iPhone Screenshot 1](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-1.png)
+![iPhone Screenshot 2](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-2.png)
+![iPhone Screenshot 3](https://github.com/downloads/jonkroll/StravaKit/stravakit-iphone-screenshot-3.png)
 
 
 
@@ -52,13 +54,13 @@ Credit to Open Source iOS Libraries used in the Demo App
 - [gRafael](http://g.raphaeljs.com/), a javascript library for for drawing charts, used in a UIWebView
 
 
-Areas for Improvement
+Future Development
 -------------
 
 * Complete implementation of StravaManager class for remaining Strava API v1 REST methods.
 
 
-Ideas for future enhancement to demo app:
+Ideas for future enhancement to Demo App:
 
 * Update demo app to support landscape orientation (for iPhone) and portrait (for iPad)
 * Switch from javascript charting to CorePlot-based charting
