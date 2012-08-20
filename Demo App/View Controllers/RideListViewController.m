@@ -110,9 +110,8 @@
 }
 
 - (void)loadRidesWithParameters:(NSDictionary*)parameters
-{    
-    self.navigationItem.title = @"All Rides";
-        
+{
+    
     [StravaManager fetchRideListWithParameters:parameters
                                     completion:(^(NSArray *rides, NSError *error) {
         
@@ -123,30 +122,55 @@
             [self.tableView performSelectorOnMainThread:@selector(reloadData) 
                                              withObject:nil 
                                           waitUntilDone:NO];
-        }
     
-        [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
-                               withObject:nil 
-                            waitUntilDone:NO];
-        
-        
-        // begin loading ride details
-        
-        for (int i=0; i < [rides count]; i++) {
-        
-            [StravaManager fetchRideWithID:[[rides objectAtIndex:i] id]
-                                completion:^(StravaRide *ride, NSError *error) {
-                                    
-                                    [_rides replaceObjectAtIndex:i withObject:ride];  // ride contains complete ride info now
-                                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                                    
-                                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:NO];
-                                    //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-                                }];
+            [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+            
+            if (_rides) {
+                UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
+                RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
+                
+                // show the first ride in the detail view if no ride is showing yet
+                if (!vc.rideID) {
+                    StravaRide *ride = (StravaRide*)[_rides objectAtIndex:0];
+                    [self showRideInDetailView:ride.id];
+                }
+            }
+            
+            // fetchRideListWithParameters only returns the rideName and rideID
+            // loop through the array now to fetch the rest of the details for each ride
+            for (int i=0; i < [rides count]; i++) {
+            
+                [StravaManager fetchRideWithID:[[rides objectAtIndex:i] id]
+                                    completion:^(StravaRide *ride, NSError *error) {
+                                        
+                    if (error) {
+                        NSLog(@"ERROR: %@", error);
+                    } else {
+                        [_rides replaceObjectAtIndex:i withObject:ride];  // ride contains complete ride info now
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                        
+                        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:NO];
+                    }
+                }];
+            }
         }
         
     }) useCache:NO];
 }
+
+- (void)showRideInDetailView:(int)rideID
+{
+    if (IDIOM == IPAD) {
+        
+        UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
+        RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
+        [vc loadRideDetails:rideID];
+
+    }
+}
+
 
 #pragma mark - Table View
 
@@ -186,12 +210,7 @@
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         StravaRide *ride = (StravaRide*)[_rides objectAtIndex:indexPath.row];
-        
-        UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
-
-        RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
-        
-        [vc loadRideDetails:ride.id];
+        [self showRideInDetailView:ride.id];
         
     }
 }
