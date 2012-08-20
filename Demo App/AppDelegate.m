@@ -13,15 +13,15 @@
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
+    [self customizeAppearance];
+
     // Override point for customization after application launch.
     if (IDIOM == IPAD) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
     }
-    
-    [self customizeAppearance];
     
     return YES;
 }
@@ -55,7 +55,8 @@
 
 - (void)customizeAppearance
 {
-    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:252.0/255 green:76.0/255 blue:2.0/255 alpha:1.0]];    
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:252.0/255 green:76.0/255 blue:2.0/255 alpha:1.0]];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 }
 
 @end
