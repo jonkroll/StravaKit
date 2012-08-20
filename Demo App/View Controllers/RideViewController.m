@@ -59,7 +59,7 @@
     self.rideID = rideID;
 
     // cancel any previous requests
-    [StravaManager cancelAllRequests];
+    //[StravaManager cancelAllRequests];
     
         
     if (IDIOM == IPHONE) {
@@ -513,9 +513,14 @@
             [self.popoverActionsheet dismissWithClickedButtonIndex:[self.popoverActionsheet cancelButtonIndex] animated:YES];
         } else {
             
+            NSString *cancelTitle;
+            if (IDIOM != IPAD) {
+                cancelTitle = @"Cancel";
+            }
+            
             self.popoverActionsheet = [[UIActionSheet alloc] initWithTitle:nil 
                                                                   delegate:self 
-                                                         cancelButtonTitle:@"Cancel" 
+                                                         cancelButtonTitle:cancelTitle
                                                     destructiveButtonTitle:nil 
                                                          otherButtonTitles:nil];
             
