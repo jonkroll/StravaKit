@@ -541,6 +541,14 @@
 {
     if (buttonIndex == [actionSheet cancelButtonIndex]) return;
     
+    if (IDIOM == IPAD) {
+        // the iPad version will not include a cancel button
+        // (because you can just dismiss by clicking outside of the UIPopover)
+        // so we increment the buttonIndex here to compensate in the switch statement
+        // for the missing cancel button
+        buttonIndex = buttonIndex + 1;
+    }
+    
     NSURL *rideURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.strava.com/rides/%d", self.rideID]];
     
     switch (buttonIndex) {
