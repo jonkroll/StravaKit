@@ -118,16 +118,13 @@
         if (error) {
             NSLog(@"ERROR: %@", error);
         } else {
-            _rides = [NSMutableArray arrayWithArray:rides];
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) 
-                                             withObject:nil 
-                                          waitUntilDone:NO];
-    
-            [self performSelectorOnMainThread:@selector(doneLoadingTableViewData) 
-                                   withObject:nil 
-                                waitUntilDone:NO];
             
-            if (_rides) {
+            _rides = [NSMutableArray arrayWithArray:rides];
+
+            [self.tableView reloadData];
+            [self doneLoadingTableViewData];
+            
+            if (_rides && IDIOM == IPAD) {
                 UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
                 RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
                 
