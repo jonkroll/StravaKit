@@ -91,7 +91,7 @@
         self.chartWebView.userInteractionEnabled=NO;
         [self.scrollView addSubview:self.chartWebView];
                
-        // (3) set up eforts table
+        // (3) set up eforts table - TODO
         
 //        self.effortsTable = [[UITableView alloc] init];
 //        self.effortsTable.frame = CGRectMake(640, 0, 320, 160);
@@ -100,10 +100,6 @@
 //
 //        [self.scrollView addSubview:self.effortsTable];
 
-        // show spinner - TODO
-//        if (![MBProgressHUD HUDForView:self.view]) {
-//            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        }
         
     } 
     
@@ -148,11 +144,24 @@
         })];
     
     NSArray *streamsArray = [NSArray arrayWithObjects:@"latlng", @"distance", @"altitude", nil];
-        
+    
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
+    int spinnerSize = 20.0f;
+    spinner.center = CGPointMake((self.mapButton.frame.size.width / 2.0f ) - (spinnerSize / 2.0f),
+                                 (self.mapButton.frame.size.height / 2.0f ) - (spinnerSize / 2.0f));
+    [self.mapButton addSubview:spinner];
+    [spinner startAnimating];
+    
+    
+    
     [StravaManager fetchRideStreams:rideID
                          forStreams:streamsArray
                         completion:(^(NSDictionary *streams, NSError *error) {
 
+        [spinner stopAnimating];
+        
             if (error) {
                 // handle error somehow
             } else {
@@ -207,7 +216,6 @@
 - (void)hideSpinnerIfDone
 {
     if ([[StravaManager pendingRequests] count] == 0) {
-        //        [MBProgressHUD hideHUDForView:self.view animated:YES];  // TODO
         
         if (IDIOM == IPHONE && !self.pageControl) {
             [self showPageControl];
