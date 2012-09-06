@@ -163,7 +163,10 @@
         
         UISplitViewController *splitVC = (UISplitViewController*)[(UINavigationController*)[self parentViewController] parentViewController];
         RideViewController *vc = (RideViewController*)[(UINavigationController*)[[splitVC viewControllers] objectAtIndex:1] topViewController];
-        [vc loadRideDetails:rideID];
+        
+        if (vc.rideID != rideID) {  // don't reload if we are already showing the targeted ride
+            [vc loadRideDetails:rideID];
+        }
 
     }
 }
