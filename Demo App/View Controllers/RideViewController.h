@@ -42,6 +42,8 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *actionButton;
 @property (nonatomic, strong) UIActionSheet *popoverActionsheet;
 
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+
 - (void)loadRideDetails:(int)rideID;
 
 - (IBAction)barButtonItemAction:(id)sender;

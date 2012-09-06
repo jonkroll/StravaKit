@@ -33,7 +33,6 @@
 @synthesize elevationGain = _elevationGain;
 @synthesize location = _location;
 @synthesize scrollView = _scrollView;
-@synthesize mapButton = _mapButton;
 @synthesize mapView = _mapView;
 @synthesize routeLine = _routeLine;
 @synthesize routeLineView = _routeLineView;
@@ -43,6 +42,7 @@
 @synthesize pageControl = _pageControl;
 @synthesize actionButton = _actionButton;
 @synthesize popoverActionsheet = _popoverActionsheet;
+@synthesize spinner = _spinner;
 
 - (void)viewDidLoad
 {
@@ -51,16 +51,19 @@
     if (self.rideID > 0) {
         [self loadRideDetails:self.rideID];
     }
+    
+    if (IDIOM == IPAD) {
+        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        self.spinner.center = CGPointMake(364, 340);
+        [self.view addSubview:self.spinner];
+    }
 }
 
 
 - (void)loadRideDetails:(int)rideID
 {    
     self.rideID = rideID;
-
-    // cancel any previous requests
-    //[StravaManager cancelAllRequests];
-    
         
     if (IDIOM == IPHONE) {
     
@@ -77,12 +80,6 @@
         self.mapView.delegate = self;
         [self.mapView setHidden:YES];  // hide map until points load
         [self.scrollView addSubview:self.mapView];
-
-        // add empty view on top of the mapView so it can respond to touch event
-        self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
-        [self.scrollView addSubview:self.mapButton];
-        [self.scrollView bringSubviewToFront:self.mapButton];
-        [self.mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
 
         
         // (2) set up elevation chart
@@ -101,6 +98,11 @@
 //        [self.scrollView addSubview:self.effortsTable];
 
         
+        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        self.spinner.center = CGPointMake(160, 80);
+        [self.scrollView addSubview:self.spinner];
+        
     } 
     
     if (IDIOM == IPAD) {
@@ -114,16 +116,8 @@
         
         self.chartWebView.layer.borderColor = [[UIColor whiteColor] CGColor];
         self.chartWebView.layer.borderWidth = 2.0;
-      
-        
-        [self.effortsTable setHidden:YES];
-        
-
-        // add empty view on top of the mapView so it can respond to touch event        
-        self.mapButton = [[UIButton alloc] initWithFrame:self.mapView.frame];
-        [self.view addSubview:self.mapButton];
-        [self.view bringSubviewToFront:self.mapButton];
-        [self.mapButton addTarget:self action:@selector(expandMapView:) forControlEvents:UIControlEventTouchUpInside];
+              
+        [self.effortsTable setHidden:YES];        
     }
 
 
@@ -139,33 +133,24 @@
                 self.actionButton.enabled = YES;                
             }
         
-            [self hideSpinnerIfDone];
-        
         })];
     
     NSArray *streamsArray = [NSArray arrayWithObjects:@"latlng", @"distance", @"altitude", nil];
     
     
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-
-    int spinnerSize = 20.0f;
-    spinner.center = CGPointMake((self.mapButton.frame.size.width / 2.0f ) - (spinnerSize / 2.0f),
-                                 (self.mapButton.frame.size.height / 2.0f ) - (spinnerSize / 2.0f));
-    [self.mapButton addSubview:spinner];
-    [spinner startAnimating];
-    
+    [self.spinner startAnimating];
     
     
     [StravaManager fetchRideStreams:rideID
                          forStreams:streamsArray
                         completion:(^(NSDictionary *streams, NSError *error) {
 
-        [spinner stopAnimating];
+            [self.spinner stopAnimating];
         
             if (error) {
-                // handle error somehow
+                NSLog(@"error: %@", error);
             } else {
-
+                
                 // map
                 MKPolyline *polyline = [StravaManager polylineForMapPoints:[streams objectForKey:@"latlng"]];
                 self.routeLine = polyline;
@@ -175,13 +160,20 @@
                 [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];
                 [self.mapView setHidden:NO];
                 
+                UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
+                                               initWithTarget:self action:@selector(expandMapView:)];
+                [self.mapView addGestureRecognizer:tgr];
+                
                 
                 // elevation chart
                 [self.chartWebView loadHTMLString:[self buildElevationChartHTMLFromStreams:streams] baseURL:nil];
                 [self.chartWebView setHidden:NO];
             }
+                        
+            if (IDIOM == IPHONE && !self.pageControl) {
+                [self showPageControl];
+            }
         
-            [self hideSpinnerIfDone];
         }) 
     ];
     
@@ -211,16 +203,6 @@
     } else {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }   
-}
-
-- (void)hideSpinnerIfDone
-{
-    if ([[StravaManager pendingRequests] count] == 0) {
-        
-        if (IDIOM == IPHONE && !self.pageControl) {
-            [self showPageControl];
-        }
-    }
 }
 
 - (void)showPageControl
@@ -331,26 +313,33 @@
     return annView;
 }
 
-- (void)expandMapView:(id)sender
+- (IBAction)expandMapView:(id)sender
 {
     if (IDIOM == IPAD) {
-
-        [self.view bringSubviewToFront:self.mapView];
-
-        _originalMapFrame = self.mapView.frame;
         
-        // expand map to cover entire view controller        
-        [UIView animateWithDuration:0.2
-                              delay: 0.0
-                            options: UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.mapView.frame = self.view.frame;
-                         }
-                         completion:^(BOOL finished){
+        if (!CGRectEqualToRect(self.mapView.frame, self.view.frame)) {
+        
+            _originalMapFrame = self.mapView.frame;
 
-                             UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
-                             [self.navigationItem setLeftBarButtonItem:doneButton];
-                         }];
+            
+            [self.view bringSubviewToFront:self.mapView];
+            
+            // expand map to cover entire view controller        
+            [UIView animateWithDuration:0.2
+                                  delay: 0.0
+                                options: UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 self.mapView.frame = self.view.frame;
+                             }
+                             completion:^(BOOL finished){
+
+                                 UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(collapseMapView:)];
+                                 [self.navigationItem setLeftBarButtonItem:doneButton];
+                                 
+                                 [self.mapView setScrollEnabled:YES];
+                                 [self.mapView setZoomEnabled:YES];
+                             }];
+        }
         
     } else {
         
@@ -371,8 +360,11 @@
 
 - (void)collapseMapView:(id)sender
 {
-    // collpase map to original size        
     
+    self.mapView.scrollEnabled = NO;
+    self.mapView.zoomEnabled = NO;
+    
+    // collpase map to original size
     [UIView animateWithDuration:0.2
                           delay: 0.0
                         options: UIViewAnimationOptionCurveEaseInOut
@@ -382,7 +374,6 @@
                      completion:^(BOOL finished){
                          
                          [self.mapView setVisibleMapRectForAllOverlaysWithPadding:MAP_INSETS];                         
-                         [self.view sendSubviewToBack:self.mapView];                
                          [self.navigationItem setLeftBarButtonItem:nil];
 
                      }];
