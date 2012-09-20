@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="dqt-Dy-Qjs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="dqt-Dy-Qjs">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
     <scenes>
         <!--Ride List View Controller-->
         <scene sceneID="sYy-RR-Ii0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yuU-tC-Cjb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="9jy-S6-jH4" customClass="RideListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3oY-bD-erm">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="NKv-OW-AIE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
@@ -61,13 +60,13 @@
                         <outlet property="tableView" destination="NKv-OW-AIE" id="i2q-n3-3tb"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yuU-tC-Cjb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="320" y="-722"/>
         </scene>
         <!--Ride View Controller-->
         <scene sceneID="2kF-j7-YfS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Keg-56-yxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="YWl-NQ-Grq" customClass="RideViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="61B-io-QIN">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -159,7 +158,7 @@
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="nA8-gC-T8n">
                                 <rect key="frame" x="0.0" y="256" width="320" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="YWl-NQ-Grq" id="4Os-eM-GQs"/>
                                 </connections>
@@ -186,15 +185,16 @@
                         <outlet property="startDate" destination="QUm-pd-Pyf" id="hdd-MI-jJC"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Keg-56-yxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="799" y="-722"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hqo-3m-rNk">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oM1-Mq-LAp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="dqt-Dy-Qjs" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0Lv-Ss-ger">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -204,6 +204,7 @@
                         <segue destination="9jy-S6-jH4" kind="relationship" relationship="rootViewController" id="OcL-Ne-LUn"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oM1-Mq-LAp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-139" y="-722"/>
         </scene>
@@ -223,6 +224,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RideViewController.h"/>
             <relationships>
                 <relationship kind="action" name="barButtonItemAction:"/>
+                <relationship kind="action" name="expandMapView:"/>
                 <relationship kind="outlet" name="actionButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="athleteName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="averageSpeed" candidateClass="UILabel"/>

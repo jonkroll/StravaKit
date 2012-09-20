@@ -74,7 +74,7 @@
         // (1) set up map view
         
         self.mapView = [[MKMapView alloc] init];
-        self.mapView.frame = CGRectMake(0, 0, 320, 160);
+        self.mapView.frame = CGRectMake(0, 0, 320, self.scrollView.frame.size.height);
         self.mapView.scrollEnabled = NO;
         self.mapView.zoomEnabled = NO;
         self.mapView.delegate = self;
@@ -84,7 +84,7 @@
         
         // (2) set up elevation chart
         
-        self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, 160)];
+        self.chartWebView = [[UIWebView alloc] initWithFrame:CGRectMake(320, 0, 320, self.scrollView.frame.size.height)];
         self.chartWebView.userInteractionEnabled=NO;
         [self.scrollView addSubview:self.chartWebView];
                
@@ -100,7 +100,7 @@
         
         self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         
-        self.spinner.center = CGPointMake(160, 80);
+        self.spinner.center = CGPointMake(160, (self.scrollView.frame.size.height / 2));
         [self.scrollView addSubview:self.spinner];
         
     } 
@@ -345,7 +345,7 @@
         
         UIViewController *vc = [[UIViewController alloc] init];
         
-        MKMapView * mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        MKMapView * mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
         [mapView setDelegate:self];
                 
         [mapView addRouteLine:self.routeLine showEndpoints:YES];
